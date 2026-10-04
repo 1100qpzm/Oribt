@@ -842,12 +842,42 @@ const DEFAULT_COURSES=Object.freeze([{
  id:'orbit-mercury',name:'제1단 · MERCURY',subtitle:'3곡 연속 · 라이프 500',
  life:500,lifeCap:500,heal:50,
  damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
- tracks:[{song:'Tutorial',slot:4},{song:'balsamina',slot:4},{song:'umiyuri kaiten',slot:4}]
+ tracks:[{song:'tutorial',slot:4},{song:'balsamina',slot:4},{song:'umiyuri kaiten',slot:4}]
 },{
  id:'orbit-venus',name:'제2단 · VENUS',subtitle:'3곡 연속 · 라이프 500',
  life:500,lifeCap:500,heal:50,
  damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
  tracks:[{song:'cutlery',slot:4},{song:'Cloudless',slot:4},{song:'Kuneru Engazer',slot:4}]
+},{
+ id:'orbit-earth',name:'제3단 · EARTH',subtitle:'3곡 연속 · 라이프 500',
+ life:500,lifeCap:500,heal:50,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'kaiju',slot:4},{song:"Hartmann's Youkai Girl",slot:4},{song:'HELP!!',slot:4}]
+},{
+ id:'orbit-mars',name:'제4단 · MARS',subtitle:'3곡 연속 · 라이프 600',
+ life:600,lifeCap:600,heal:30,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'umiyuri kaiten',slot:4},{song:'Engraved in Myth',slot:4},{song:'Meru',slot:5}]
+},{
+ id:'orbit-jupiter',name:'제5단 · JUPITER',subtitle:'3곡 연속 · 라이프 600',
+ life:600,lifeCap:600,heal:30,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'Kuneru Engazer',slot:4},{song:'Evans',slot:4},{song:'Transparent Elegy',slot:5}]
+},{
+ id:'orbit-saturn',name:'제6단 · SATURN',subtitle:'3곡 연속 · 라이프 600',
+ life:600,lifeCap:600,heal:30,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'Compass',slot:5},{song:'meltdown',slot:5},{song:'The Peach Key',slot:5}]
+},{
+ id:'orbit-uranus',name:'제7단 · URANUS',subtitle:'3곡 연속 · 라이프 700',
+ life:700,lifeCap:700,heal:20,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'balsamina',slot:5},{song:'YARARARA',slot:5},{song:'One Room Sugar Life',slot:5}]
+},{
+ id:'orbit-neptune',name:'제8단 · NEPTUNE',subtitle:'3곡 연속 · 라이프 700',
+ life:700,lifeCap:700,heal:20,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'Execution Clap',slot:5},{song:'THE WORLD REVOLVING',slot:5},{song:'Evans',slot:5}]
 }]);
 // Friendly names for built-in songs (used only when no R2 song matches).
 const COURSE_SONG_ALIASES=Object.freeze({'first orbit':'builtin:first-orbit'});
@@ -878,7 +908,7 @@ function renderCourseScreen(){const list=$('#courseList'),detail=$('#courseDetai
  <section class="cd-record">${r?.plays?`<span class="${r.passed?'pass':''}">${r.passed?'합격':'불합격'}</span><p>${r.passed?`최고 남은 라이프 <b>${r.bestLife}</b>`:`최고 ${r.bestCleared||0}곡 클리어`} · 도전 ${r.plays}회</p>`:'<p>아직 도전 기록이 없습니다. 라이프가 0이 되면 그 자리에서 실패합니다.</p>'}</section>
  <div class="cd-actions"><button id="courseStart" class="cd-start" type="button" ${ready?'':'disabled'}><span>도전 시작</span><kbd>Enter</kbd></button><button id="courseAuto" class="cd-auto" type="button" ${ready?'':'disabled'}>시연 보기<kbd>A</kbd></button></div>`;
  void loadCourseRanking('course',course.id);$('#courseStart').onclick=()=>startCourse(course);$('#courseAuto').onclick=()=>startCourse(course,{autoplay:true})}
-function moveCourseSelection(step){const list=state.courses;if(!list.length)return;const i=Math.max(0,list.findIndex(c=>c.id===state.selectedCourseId));state.selectedCourseId=list[(i+step+list.length)%list.length].id;renderCourseScreen()}
+function moveCourseSelection(step){const list=state.courses;if(!list.length)return;const i=Math.max(0,list.findIndex(c=>c.id===state.selectedCourseId));state.selectedCourseId=list[(i+step+list.length)%list.length].id;renderCourseScreen();$('#courseList .course-card.selected')?.scrollIntoView({block:'nearest'})}
 
 /* ---- running a course ---- */
 function startCourse(course,{autoplay=false}={}){if(!course||state.transitioning)return;const tracks=resolveCourseTracks(course);if(!tracks.every(t=>t.ready))return;stopCourseBgm(.4);
