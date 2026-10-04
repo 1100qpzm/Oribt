@@ -24,12 +24,12 @@ img{-webkit-user-drag:none}
 .catalog-sort{margin-left:auto;display:flex;gap:6px;min-width:0}
 .catalog-sort select{min-width:0;max-width:110px;padding:6px 7px;border:1px solid rgba(169,121,255,.4);border-radius:6px;background:#151b2c;color:#e6dcff;font:inherit;font-size:11px;cursor:pointer}
 #settingsButton{margin:0 8px 8px;flex-shrink:0}
-</style></head><body><div class="app"><header class="topbar"><div class="brand">ORBIT <small>PROTOTYPE</small></div><nav class="nav"><button data-nav="select">SONG SELECT</button><button data-nav="course">단위 인정</button><button data-nav="library">LIBRARY</button></nav></header>
+</style></head><body><div class="app"><header class="topbar"><div class="brand">ORBIT <small>PROTOTYPE</small></div><nav class="nav"><button data-nav="select">SONG SELECT</button><button data-nav="course" data-tier="normal">단위 인정</button><button data-nav="course" data-tier="true"><svg class="lock" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v5A1.5 1.5 0 0 1 12.5 15h-9A1.5 1.5 0 0 1 2 13.5v-5A1.5 1.5 0 0 1 3.5 7H4Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>진단위인정</button><button data-nav="library">LIBRARY</button></nav></header>
 <main id="gateScreen" class="screen gate-screen active"><div class="gate-box"><span class="gate-mark" aria-hidden="true"></span><p class="gate-main">클릭하거나 아무 키나 누르세요</p><p class="gate-sub">소리가 재생됩니다 · 볼륨을 확인해 주세요</p></div></main>
-<main id="titleScreen" class="screen title-screen"><div class="title-orbit" aria-hidden="true"><svg viewBox="0 0 600 600"><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="59.8"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="59.8"/><circle class="t-ring2" cx="300" cy="300" r="214"/><circle class="t-ring" cx="300" cy="300" r="260"/><circle class="t-lane" cx="399.5" cy="59.8" r="11"/><circle class="t-lane" cx="540.2" cy="200.5" r="11"/><circle class="t-lane" cx="540.2" cy="399.5" r="11"/><circle class="t-lane" cx="399.5" cy="540.2" r="11"/><circle class="t-lane" cx="200.5" cy="540.2" r="11"/><circle class="t-lane" cx="59.8" cy="399.5" r="11"/><circle class="t-lane" cx="59.8" cy="200.5" r="11"/><circle class="t-lane" cx="200.5" cy="59.8" r="11"/><g class="t-sat"><circle cx="300" cy="40" r="7"/></g></svg></div><div class="title-copy"><h1 class="title-logo">ORBIT</h1><p class="title-tag">8레인 원형 리듬게임</p></div><div class="title-modes" role="group" aria-label="모드 선택"><button class="title-mode" data-mode="select" type="button"><small>1 · FREE PLAY</small><b>프리 플레이</b><span>원하는 곡과 난이도를 골라 플레이</span></button><button class="title-mode" data-mode="course" type="button"><small>2 · COURSE</small><b>단위 인정</b><span>여러 곡을 하나의 라이프로 연속 도전</span></button></div><p class="title-prompt">← → 로 선택 · Enter로 시작</p><p class="title-status" id="titleStatus"></p></main>
+<main id="titleScreen" class="screen title-screen"><div class="title-orbit" aria-hidden="true"><svg viewBox="0 0 600 600"><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="59.8"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="59.8"/><circle class="t-ring2" cx="300" cy="300" r="214"/><circle class="t-ring" cx="300" cy="300" r="260"/><circle class="t-lane" cx="399.5" cy="59.8" r="11"/><circle class="t-lane" cx="540.2" cy="200.5" r="11"/><circle class="t-lane" cx="540.2" cy="399.5" r="11"/><circle class="t-lane" cx="399.5" cy="540.2" r="11"/><circle class="t-lane" cx="200.5" cy="540.2" r="11"/><circle class="t-lane" cx="59.8" cy="399.5" r="11"/><circle class="t-lane" cx="59.8" cy="200.5" r="11"/><circle class="t-lane" cx="200.5" cy="59.8" r="11"/><g class="t-sat"><circle cx="300" cy="40" r="7"/></g></svg></div><div class="title-copy"><h1 class="title-logo">ORBIT</h1><p class="title-tag">8레인 원형 리듬게임</p></div><div class="title-modes" role="group" aria-label="모드 선택"><button class="title-mode" data-mode="select" type="button"><small>1 · FREE PLAY</small><b>프리 플레이</b><span>원하는 곡과 난이도를 골라 플레이</span></button><button class="title-mode" data-mode="course" type="button"><small>2 · COURSE</small><b>단위 인정</b><span>여러 곡을 하나의 라이프로 연속 도전</span></button><button class="title-mode" data-mode="trueCourse" type="button"><small><svg class="lock" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v5A1.5 1.5 0 0 1 12.5 15h-9A1.5 1.5 0 0 1 2 13.5v-5A1.5 1.5 0 0 1 3.5 7H4Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>3 · TRUE COURSE</small><b>진단위인정</b><span>단위인정 제8단 합격 시 해금</span></button></div><p class="title-prompt">방향키로 선택 · Enter로 시작</p><p class="title-status" id="titleStatus"></p></main>
 <div id="libraryLoading" class="library-loading" hidden role="dialog" aria-modal="true" aria-labelledby="libraryLoadingTitle"><section><h2 id="libraryLoadingTitle">온라인 곡 불러오는 중</h2><div class="ll-count"><span id="libraryLoadingCount">— / —</span><small>곡</small></div><div class="ll-bar" role="progressbar" aria-label="곡 불러오기 진행률"><i id="libraryLoadingBar"></i></div><p class="ll-note" id="libraryLoadingNote" aria-live="polite"></p><button id="libraryLoadingSkip" type="button" hidden>기다리지 않고 들어가기</button></section></div>
-<main id="courseScreen" class="screen course-screen"><div class="course-layout"><section class="panel course-list-panel"><div class="panel-head"><span class="eyebrow">단위 인정</span><span class="count" id="courseCount"></span></div><div id="courseList" class="course-list"></div></section><section class="course-detail" id="courseDetail"></section><section class="panel course-side" id="courseSide"><button id="courseSettingsButton" class="settings-button course-settings" type="button">설정</button></section></div><footer class="key-hints" aria-label="키보드 조작"><span><kbd>W</kbd><kbd>S</kbd>단위인정 선택</span><span><kbd>Enter</kbd>도전 시작</span><span><kbd>A</kbd>시연</span><span><kbd>Backspace</kbd>길게 · 도전 중 나가기</span></footer></main>
-<main id="courseResultScreen" class="screen course-result-screen"><div class="cr-shell"><div class="cr-main"><header><small>단위 인정 결과</small><h1 id="crCourseName"></h1></header><div class="cr-verdict" id="crVerdict"></div><p id="crSub"></p><div class="cr-summary"><div class="cr-life"><small>LIFE</small><div class="cr-life-bar"><i id="crLifeFill"></i></div><span id="crLifeText"></span></div><div class="cr-total"><small>달성률 합산</small><b id="crTotal">0.0000%</b><span id="crTotalMax"></span></div></div><ol class="cr-tracks" id="crTracks"></ol><footer class="cr-actions"><button id="crRetry" class="cr-primary" type="button"><span>다시 도전</span><kbd>Enter</kbd></button><button id="crBack" type="button"><span>단위 인정 목록</span><kbd>Esc</kbd></button></footer></div><aside class="cr-side" id="crSide"><form id="crRegister" class="ranking-registration cr-register"><label for="crNickname">단위인정 랭킹 등록 · 닉네임 <small>1–12자</small></label><input id="crNickname" type="text" autocomplete="nickname" placeholder="닉네임"><button id="crRegisterButton" type="submit">등록</button><p id="crRegisterStatus" role="status" aria-live="polite"></p></form><p id="crRegisterNote" class="cr-register-note" hidden></p></aside></div></main>
+<main id="courseScreen" class="screen course-screen"><div class="course-layout"><section class="panel course-list-panel"><div class="panel-head"><span class="eyebrow" id="courseTierLabel">단위 인정</span><span class="count" id="courseCount"></span></div><div id="courseList" class="course-list"></div></section><section class="course-detail" id="courseDetail"></section><section class="panel course-side" id="courseSide"><button id="courseSettingsButton" class="settings-button course-settings" type="button">설정</button></section></div><footer class="key-hints" aria-label="키보드 조작"><span><kbd>W</kbd><kbd>S</kbd>단위인정 선택</span><span><kbd>Enter</kbd>도전 시작</span><span><kbd>A</kbd>시연</span><span><kbd>Backspace</kbd>길게 · 도전 중 나가기</span></footer></main>
+<main id="courseResultScreen" class="screen course-result-screen"><div class="cr-shell"><div class="cr-main"><header><small id="crTierLabel">단위 인정 결과</small><h1 id="crCourseName"></h1></header><div class="cr-verdict" id="crVerdict"></div><p id="crSub"></p><div class="cr-summary"><div class="cr-life"><small>LIFE</small><div class="cr-life-bar"><i id="crLifeFill"></i></div><span id="crLifeText"></span></div><div class="cr-total"><small>달성률 합산</small><b id="crTotal">0.0000%</b><span id="crTotalMax"></span></div></div><ol class="cr-tracks" id="crTracks"></ol><footer class="cr-actions"><button id="crRetry" class="cr-primary" type="button"><span>다시 도전</span><kbd>Enter</kbd></button><button id="crBack" type="button"><span>단위 인정 목록</span><kbd>Esc</kbd></button></footer></div><aside class="cr-side" id="crSide"><form id="crRegister" class="ranking-registration cr-register"><label for="crNickname">단위인정 랭킹 등록 · 닉네임 <small>1–12자</small></label><input id="crNickname" type="text" autocomplete="nickname" placeholder="닉네임"><button id="crRegisterButton" type="submit">등록</button><p id="crRegisterStatus" role="status" aria-live="polite"></p></form><p id="crRegisterNote" class="cr-register-note" hidden></p></aside></div></main>
 <main id="selectScreen" class="screen"><div class="select-layout"><section class="panel catalog"><div class="panel-head"><span class="eyebrow">곡 목록</span><span class="count" id="songCount"></span><div class="catalog-sort"><select id="songSortBy" aria-label="곡 정렬 기준"><option value="name">이름순</option><option value="bpm">BPM순</option><option value="difficulty">난이도순</option></select><select id="songSortDirection" aria-label="곡 정렬 방향"><option value="asc">오름차순</option><option value="desc">내림차순</option></select></div><div class="catalog-filter"><input id="songSearch" type="search" placeholder="곡 · 아티스트 검색  ( / )" autocomplete="off" spellcheck="false" aria-label="곡 검색"><span class="lv">Lv</span><select id="levelMin" aria-label="최소 레벨"></select><span class="range-sep">~</span><select id="levelMax" aria-label="최대 레벨"></select><button id="catalogFilterReset" type="button" hidden title="검색·필터 초기화">초기화</button></div></div><div id="songList" class="song-list" aria-label="곡 목록"></div></section><section class="detail" id="songDetail"></section><section class="panel side-detail"><header class="side-head"><h2 id="chartTitle">난이도</h2><span class="keycaps" aria-hidden="true"><kbd>Q</kbd><kbd>E</kbd></span></header><div id="difficultyList" class="difficulty-list"></div><button id="playButton" class="play"><span>PLAY</span><kbd>Enter</kbd></button><button id="autoplayButton" class="autoplay-button" type="button">시연 보기<kbd>A</kbd></button><button id="settingsButton" class="settings-button" type="button">설정</button></section></div><footer class="key-hints" aria-label="키보드 조작"><span><kbd>W</kbd><kbd>S</kbd><kbd>↑</kbd><kbd>↓</kbd>곡 이동</span><span><kbd>Q</kbd><kbd>E</kbd>난이도 변경</span><span><kbd>Enter</kbd>플레이</span><span><kbd>A</kbd>시연</span><span><kbd>/</kbd>검색</span><span><kbd>Esc</kbd>플레이 중 곡 선택으로</span></footer></main>
 <main id="libraryScreen" class="screen"><div class="library-layout"><section class="panel"><div class="panel-head"><span class="eyebrow">SONG LIBRARY</span><span class="count">채보 · 리소스 점검</span></div><div id="libraryList" class="library-list"></div></section><section class="panel editor" id="editor"></section></div></main>
 <main id="calibrationScreen" class="screen calibration-screen"><section class="calibration-shell" aria-live="polite"><header><span>SYNC CALIBRATION</span><small>120 BPM · KEYBOARD OR LEFT CLICK</small></header><div id="calibrationPad" class="calibration-pad"><div id="calibrationPulse" class="calibration-pulse"><i></i></div><strong id="calibrationError">READY</strong><span id="calibrationProgress">4 WARMUP + 12 MEASURED TAPS</span><small>Tap with the clock. The first four inputs are excluded.</small></div><section id="calibrationResult" class="calibration-result"><div><span>CURRENT</span><b id="calibrationCurrent">+0 ms</b></div><div><span>MEAN</span><b id="calibrationMean">—</b></div><div><span>MEDIAN</span><b id="calibrationMedian">—</b></div><div class="recommended"><span>RECOMMENDED</span><b id="calibrationRecommended">—</b></div><p id="calibrationSummary">Calibration starts automatically.</p></section><footer><button id="calibrationApply" class="result-primary" disabled>APPLY</button><button id="calibrationRetry">RETRY</button><button id="calibrationBack">BACK</button></footer></section></main>
@@ -52,7 +52,7 @@ const effectiveBgmVolume=()=>audioVolume.master*audioVolume.bgm;
 const effectiveSfxVolume=()=>audioVolume.master*audioVolume.sfx;
 const resultBgmBaseVolume=()=>GAME_CONFIG.RESULT_BGM_VOLUME*effectiveBgmVolume();
 function syncVolumeUi(){document.querySelectorAll('[data-volume-channel]').forEach(input=>input.value=String(Math.round(audioVolume[input.dataset.volumeChannel]*100)));document.querySelectorAll('[data-volume-output]').forEach(output=>output.textContent=`${Math.round(audioVolume[output.dataset.volumeOutput]*100)}%`)}
-function applyAudioVolumes(){if(courseBgm?.gain&&gameplayAudio.ctx)courseBgm.gain.gain.setTargetAtTime(courseBgmVolume(),gameplayAudio.ctx.currentTime,.05);const bgm=effectiveBgmVolume();if(state.playing&&!gameplayDemo.ending)state.playing.volume=clampVolume(bgm*(state.playingGain??1));previewAudioEl.volume=clampVolume(previewState.envelope*bgm*previewGain());if(!resultBgmState.fading)resultBgmAudio.volume=resultBgmBaseVolume();const ctx=gameplayAudio.ctx,bus=gameplayAudio.sfxBus;if(ctx&&bus)bus.gain.setTargetAtTime(effectiveSfxVolume(),ctx.currentTime,.012)}
+function applyAudioVolumes(){for(const bgm of [courseBgm,trueCourseBgm])if(bgm?.gain&&gameplayAudio.ctx)bgm.gain.gain.setTargetAtTime(courseBgmVolume(),gameplayAudio.ctx.currentTime,.05);const bgm=effectiveBgmVolume();if(state.playing&&!gameplayDemo.ending)state.playing.volume=clampVolume(bgm*(state.playingGain??1));previewAudioEl.volume=clampVolume(previewState.envelope*bgm*previewGain());if(!resultBgmState.fading)resultBgmAudio.volume=resultBgmBaseVolume();const ctx=gameplayAudio.ctx,bus=gameplayAudio.sfxBus;if(ctx&&bus)bus.gain.setTargetAtTime(effectiveSfxVolume(),ctx.currentTime,.012)}
 function setAudioVolume(channel,value){if(!Object.hasOwn(audioVolume,channel))return;audioVolume[channel]=clampVolume(Number(value)/100);persistSettings();syncVolumeUi();applyAudioVolumes()}
 function syncVisualSettingsUi(){const toggle=$('#centerPointToggle'),slider=$('#maxAchievementOpacity'),output=$('#maxAchievementOpacityValue');if(toggle)toggle.checked=visualSettings.showCenterPoint;if(slider)slider.value=String(Math.round(visualSettings.maxAchievementOpacity*100));if(output)output.textContent=`${Math.round(visualSettings.maxAchievementOpacity*100)}%`}
 function setCenterPointVisible(value){visualSettings.showCenterPoint=!!value;persistSettings();syncVisualSettingsUi()}
@@ -551,7 +551,7 @@ function transitionFromResult(target){if(state.view!=='result'||state.transition
 function syncSongTextTooltips(){document.querySelectorAll('.song-title,.song-artist').forEach(element=>{if(!element.title)element.title=element.textContent.trim()})}
 function syncMaidataLabels(){const root=$('#editor');if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let node;while((node=walker.nextNode())){if(node.parentElement?.closest('textarea'))continue;const label=node.nodeValue.replaceAll('chart.txt','maidata.txt').replaceAll('CHART PARSE ERROR','MAIDATA PARSE ERROR').replaceAll('CHART MISSING','MAIDATA MISSING').replaceAll('Chart unavailable','Maidata unavailable').replace(/^CHART$/,'MAIDATA');if(label!==node.nodeValue)node.nodeValue=label}}
 const renderLibraryCore=renderLibrary;renderLibrary=function(){renderLibraryCore();syncMaidataLabels()};
-function render(){if(state.view==='course')renderCourseScreen();if(state.view==='courseResult')renderCourseResult();renderField();renderSongList();renderDetail();renderDifficulties();if(state.view==='library')renderLibrary();renderResult();syncSongTextTooltips();setSyncOffset(SYNC_OFFSET_MS,false);setChartOffset(CHART_OFFSET_ADJUSTMENT_MS,false);syncVolumeUi();syncVisualSettingsUi();syncSongPreview()}
+function render(){syncCourseNav();if(state.view==='course')renderCourseScreen();if(state.view==='courseResult')renderCourseResult();renderField();renderSongList();renderDetail();renderDifficulties();if(state.view==='library')renderLibrary();renderResult();syncSongTextTooltips();setSyncOffset(SYNC_OFFSET_MS,false);setChartOffset(CHART_OFFSET_ADJUSTMENT_MS,false);syncVolumeUi();syncVisualSettingsUi();syncSongPreview()}
 function esc(v){return String(v??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}function attr(v){return esc(v).replace(/"/g,'&quot;')}
 function openSettings(){if(!['select','course'].includes(state.view)||state.transitioning||state.settingsOpen)return;state.settingsOpen=true;const modal=$('#settingsModal');modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.getElementById(`${state.view}Screen`).inert=true;document.querySelector('.topbar').inert=true;syncVolumeUi();syncVisualSettingsUi();$('#settingsClose').focus()}
 function closeSettings(){if(!state.settingsOpen)return;state.settingsOpen=false;const modal=$('#settingsModal');modal.classList.remove('open');modal.setAttribute('aria-hidden','true');$('#selectScreen').inert=false;$('#courseScreen').inert=false;document.querySelector('.topbar').inert=false;(state.view==='course'?$('#courseSettingsButton'):$('#settingsButton'))?.focus()}
@@ -878,17 +878,30 @@ const DEFAULT_COURSES=Object.freeze([{
  life:700,lifeCap:700,heal:20,
  damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
  tracks:[{song:'Execution Clap',slot:5},{song:'THE WORLD REVOLVING',slot:5},{song:'Evans',slot:5}]
+},{
+ /* ---- 진단위인정 (tier:'true'): unlocked by passing 제8단 · NEPTUNE ---- */
+ id:'orbit-shin-1',tier:'true',name:'진1단 · HERMES',subtitle:'3곡 연속 · 라이프 50',
+ life:50,lifeCap:50,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'Engraved in Myth',slot:4},{song:'Compass',slot:5},{song:'balsamina',slot:5}]
 }]);
+const TRUE_COURSE_UNLOCK_ID='orbit-neptune';
+const COURSE_TIER_LABEL=Object.freeze({normal:'단위 인정',true:'진단위인정'});
 // Friendly names for built-in songs (used only when no R2 song matches).
 const COURSE_SONG_ALIASES=Object.freeze({'first orbit':'builtin:first-orbit'});
 const COURSE_RECORD_KEY='orbit.courseRecords.v1',COURSE_ACCENT='#ffb547',COURSE_INTERLUDE_MS=2800,COURSE_FAIL_MS=2600;
 const courseRun={active:false,course:null,tracks:[],index:0,life:0,maxLife:0,results:[],failed:false,autoplay:false,timer:0,prevSelection:null};
-function normalizeCourse(c,i){if(!c||typeof c!=='object'||!Array.isArray(c.tracks)||!c.tracks.length)return null;const life=Math.max(1,Math.round(Number(c.life)||500)),cap=c.lifeCap===null?null:Math.max(1,Math.round(Number(c.lifeCap)||life)),damage={};for(const k of ['critical_perfect','perfect','great','good','miss'])damage[k]=Math.max(0,Number(c.damage?.[k])||0);return {id:String(c.id||`course-${i+1}`),name:String(c.name||`단위인정 ${i+1}`),subtitle:String(c.subtitle||''),life,lifeCap:cap,heal:Math.max(0,Number(c.heal)||0),damage,tracks:c.tracks.map(t=>({song:String(t.song||''),slot:Number(t.slot)}))}}
-function applyCourseTable(table){const list=Array.isArray(table)?table:Array.isArray(table?.courses)?table.courses:null,courses=(list||[]).map(normalizeCourse).filter(Boolean);state.courses=courses.length?courses:DEFAULT_COURSES.map(normalizeCourse);if(!state.courses.some(c=>c.id===state.selectedCourseId))state.selectedCourseId=state.courses[0]?.id||null}
+function normalizeCourse(c,i){if(!c||typeof c!=='object'||!Array.isArray(c.tracks)||!c.tracks.length)return null;const life=Math.max(1,Math.round(Number(c.life)||500)),cap=c.lifeCap===null?null:Math.max(1,Math.round(Number(c.lifeCap)||life)),damage={};for(const k of ['critical_perfect','perfect','great','good','miss'])damage[k]=Math.max(0,Number(c.damage?.[k])||0);return {id:String(c.id||`course-${i+1}`),tier:c.tier==='true'?'true':'normal',name:String(c.name||`단위인정 ${i+1}`),subtitle:String(c.subtitle||''),life,lifeCap:cap,heal:Math.max(0,Number(c.heal)||0),damage,tracks:c.tracks.map(t=>({song:String(t.song||''),slot:Number(t.slot)}))}}
+function applyCourseTable(table){const list=Array.isArray(table)?table:Array.isArray(table?.courses)?table.courses:null,courses=(list||[]).map(normalizeCourse).filter(Boolean);state.courses=courses.length?courses:DEFAULT_COURSES.map(normalizeCourse);state.courseTier=state.courseTier||'normal';state.courseSelectionByTier=state.courseSelectionByTier||{};if(!coursesForTier().some(c=>c.id===state.selectedCourseId))state.selectedCourseId=coursesForTier()[0]?.id||null}
+function coursesForTier(tier=state.courseTier){return state.courses.filter(c=>c.tier===tier)}
+function isTrueCourseUnlocked(){return !!readCourseRecords()[TRUE_COURSE_UNLOCK_ID]?.passed}
+const courseTierLabel=course=>COURSE_TIER_LABEL[course?.tier||'normal'];
+// Switch between 단위 인정 and 진단위인정 (same screen, different list, colours and music).
+function setCourseTier(tier){tier=tier==='true'?'true':'normal';if(state.courseTier!==tier){state.courseSelectionByTier[state.courseTier]=state.selectedCourseId;state.courseTier=tier;const list=coursesForTier();state.selectedCourseId=list.some(c=>c.id===state.courseSelectionByTier[tier])?state.courseSelectionByTier[tier]:list[0]?.id||null}document.body.dataset.courseTier=tier}
 applyCourseTable(null);
 function findCourseSong(ref){const direct=state.songs.find(s=>s.id===ref||s.directory===ref||s.id===`r2:${encodeURIComponent(ref)}`);if(direct)return direct;const key=normalizeSearch(ref),online=[...state.songs].sort((a,b)=>(a.source==='r2'?0:1)-(b.source==='r2'?0:1)),loose=online.find(s=>normalizeSearch(s.directory)===key)||online.find(s=>normalizeSearch(s.title)===key);if(loose)return loose;const alias=COURSE_SONG_ALIASES[String(ref).trim().toLowerCase()];return alias?state.songs.find(s=>s.id===alias)||null:null}
 function resolveCourseTracks(course){return course.tracks.map(ref=>{const s=findCourseSong(ref.song),c=s?.charts.find(x=>x.index===ref.slot)||null,ready=!!(s&&c&&s.validation.ready);return {ref,song:s,chart:c,ready,reason:!s?(state.r2Loading?'곡 불러오는 중':'곡을 찾을 수 없음'):!c?'해당 난이도 채보 없음':!s.validation.ready?(s.validation.errors[0]||'준비 중'):''}})}
-function selectedCourse(){return state.courses.find(c=>c.id===state.selectedCourseId)||state.courses[0]||null}
+function selectedCourse(){const list=coursesForTier();return list.find(c=>c.id===state.selectedCourseId)||list[0]||null}
 function readCourseRecords(){try{const v=JSON.parse(localStorage.getItem(COURSE_RECORD_KEY));return v&&typeof v==='object'?v:{}}catch{return {}}}
 function saveCourseRecord(run,passed){const all=readCourseRecords(),prev=all[run.course.id]||{},cleared=run.results.filter(r=>r.cleared).length,total=run.results.reduce((a,r)=>a+(r.achievement||0),0),better=passed?(!prev.passed||run.life>(prev.bestLife??-1)||(run.life===prev.bestLife&&total>(prev.bestTotal??-1))):(!prev.passed&&cleared>(prev.bestCleared??-1));const next={...prev,plays:(prev.plays||0)+1,lastPlayedAt:new Date().toISOString()};if(passed)next.passed=true;if(better){next.bestLife=passed?run.life:0;next.bestCleared=cleared;next.bestTotal=+total.toFixed(4)}all[run.course.id]=next;try{localStorage.setItem(COURSE_RECORD_KEY,JSON.stringify(all))}catch{}return better}
 const lifeRatio=()=>courseRun.maxLife?courseRun.life/courseRun.maxLife:courseRun.life/(courseRun.course?.life||1);
@@ -897,27 +910,27 @@ function lifeTone(r){return r>.5?'#6fe0a0':r>.2?'#ffc23d':'#ff5f7e'}
 const courseStartLife=()=>courseRun.course?.life||1;
 
 /* ---- course select screen ---- */
-function renderCourseScreen(){const list=$('#courseList'),detail=$('#courseDetail');if(!list||!detail)return;const records=readCourseRecords(),course=selectedCourse();$('#courseCount').textContent=`${state.courses.length}개`;
- list.innerHTML=state.courses.map(c=>{const r=records[c.id];return `<button class="course-card ${c.id===course?.id?'selected':''}" data-course="${attr(c.id)}" type="button"><span class="cc-name">${esc(c.name)}</span><span class="cc-sub">${esc(c.subtitle||`${c.tracks.length}곡`)}</span><span class="cc-badge ${r?.passed?'pass':r?.plays?'tried':''}">${r?.passed?'합격':r?.plays?'도전 중':'미도전'}</span></button>`}).join('');
+function renderCourseScreen(){const list=$('#courseList'),detail=$('#courseDetail');if(!list||!detail)return;if(state.courseTier==='true'&&!isTrueCourseUnlocked())setCourseTier('normal');const records=readCourseRecords(),course=selectedCourse(),tierCourses=coursesForTier(),label=COURSE_TIER_LABEL[state.courseTier];document.body.dataset.courseTier=state.courseTier;$('#courseScreen').classList.toggle('is-true',state.courseTier==='true');$('#courseTierLabel').textContent=label;$('#courseCount').textContent=`${tierCourses.length}개`;
+ list.innerHTML=tierCourses.map(c=>{const r=records[c.id];return `<button class="course-card ${c.id===course?.id?'selected':''}" data-course="${attr(c.id)}" type="button"><span class="cc-name">${esc(c.name)}</span><span class="cc-sub">${esc(c.subtitle||`${c.tracks.length}곡`)}</span><span class="cc-badge ${r?.passed?'pass':r?.plays?'tried':''}">${r?.passed?'합격':r?.plays?'도전 중':'미도전'}</span></button>`}).join('');
  list.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{if(state.transitioning)return;state.selectedCourseId=b.dataset.course;renderCourseScreen()});
  if(!course){detail.innerHTML='<div class="empty">단위인정이 없습니다.</div>';return}
  const tracks=resolveCourseTracks(course),ready=tracks.every(t=>t.ready),r=records[course.id],d=course.damage,dmgText=[['great','GREAT'],['good','GOOD'],['miss','MISS'],['perfect','PERFECT'],['critical_perfect','CRITICAL PERFECT']].filter(([k])=>d[k]>0).map(([k,l])=>`<span><b>${l}</b> −${d[k]}</span>`).join('');
- detail.innerHTML=`<header class="cd-head"><small>단위 인정</small><h1>${esc(course.name)}</h1>${course.subtitle?`<p>${esc(course.subtitle)}</p>`:''}</header>
+ detail.innerHTML=`<header class="cd-head"><small>${esc(label)}</small><h1>${esc(course.name)}</h1>${course.subtitle?`<p>${esc(course.subtitle)}</p>`:''}</header>
  <ol class="cd-tracks">${tracks.map((t,i)=>`<li class="${t.ready?'':'missing'}" style="--track-diff:${difficultyColor(t.chart?.difficulty)}"><span class="cd-no">TRACK ${i+1}</span><img src="${t.song?jacketSrc(t.song):''}" alt=""><b title="${attr(t.song?.title||t.ref.song)}">${esc(t.song?.title||t.ref.song)}</b><span class="cd-diff">${esc(t.chart?.difficulty||'—')} <em>${esc(t.chart?.level||'—')}</em></span>${t.reason?`<span class="cd-warn">${esc(t.reason)}</span>`:''}</li>`).join('')}</ol>
  <section class="cd-rules"><div><small>시작 라이프</small><b>${course.life}</b></div><div><small>곡 클리어 회복</small><b>+${course.heal}</b>${course.lifeCap?`<em>최대 ${course.lifeCap}</em>`:''}</div><div class="cd-damage"><small>판정별 감소</small><p>${dmgText||'<span>감소 없음</span>'}</p></div></section>
  <section class="cd-record">${r?.plays?`<span class="${r.passed?'pass':''}">${r.passed?'합격':'불합격'}</span><p>${r.passed?`최고 남은 라이프 <b>${r.bestLife}</b>`:`최고 ${r.bestCleared||0}곡 클리어`} · 도전 ${r.plays}회</p>`:'<p>아직 도전 기록이 없습니다. 라이프가 0이 되면 그 자리에서 실패합니다.</p>'}</section>
  <div class="cd-actions"><button id="courseStart" class="cd-start" type="button" ${ready?'':'disabled'}><span>도전 시작</span><kbd>Enter</kbd></button><button id="courseAuto" class="cd-auto" type="button" ${ready?'':'disabled'}>시연 보기<kbd>A</kbd></button></div>`;
  void loadCourseRanking('course',course.id);$('#courseStart').onclick=()=>startCourse(course);$('#courseAuto').onclick=()=>startCourse(course,{autoplay:true})}
-function moveCourseSelection(step){const list=state.courses;if(!list.length)return;const i=Math.max(0,list.findIndex(c=>c.id===state.selectedCourseId));state.selectedCourseId=list[(i+step+list.length)%list.length].id;renderCourseScreen();$('#courseList .course-card.selected')?.scrollIntoView({block:'nearest'})}
+function moveCourseSelection(step){const list=coursesForTier();if(!list.length)return;const i=Math.max(0,list.findIndex(c=>c.id===state.selectedCourseId));state.selectedCourseId=list[(i+step+list.length)%list.length].id;renderCourseScreen();$('#courseList .course-card.selected')?.scrollIntoView({block:'nearest'})}
 
 /* ---- running a course ---- */
 function startCourse(course,{autoplay=false}={}){if(!course||state.transitioning)return;const tracks=resolveCourseTracks(course);if(!tracks.every(t=>t.ready))return;stopCourseBgm(.4);
- Object.assign(courseRun,{active:true,course,tracks,index:0,life:course.life,maxLife:course.lifeCap||0,results:[],failed:false,autoplay,prevSelection:courseRun.active?courseRun.prevSelection:{song:state.selectedSongId,chart:state.selectedChartId}});
+ document.body.dataset.courseTier=course.tier;Object.assign(courseRun,{active:true,course,tracks,index:0,life:course.life,maxLife:course.lifeCap||0,results:[],failed:false,autoplay,prevSelection:courseRun.active?courseRun.prevSelection:{song:state.selectedSongId,chart:state.selectedChartId}});
  if(!autoplay)requestAimLock();void unlockGameplayAudio();
  const from=document.getElementById(`${state.view}Screen`);state.transitioning=true;if(from){from.style.pointerEvents='none';from.style.animation=`screen-exit ${GAME_CONFIG.SCREEN_EXIT}s ease both`}
  state.transitionTimer=setTimeout(()=>{if(from){from.style.pointerEvents='';from.style.animation=''}state.transitioning=false;state.transitionTimer=0;startCourseTrack()},GAME_CONFIG.SCREEN_EXIT*1000)}
 function startCourseTrack(){const t=courseRun.tracks[courseRun.index];state.selectedSongId=t.song.id;state.selectedChartId=t.chart.id;state.pendingAutoplay=courseRun.autoplay;const session=prepareGame();if(!session){abortCourse();show('course');return}updateCourseHud();beginPreparedGame(session)}
-function updateCourseHud(){const box=$('#gpCourse');if(!box)return;box.hidden=!courseRun.active;if(courseRun.active)$('#courseTrackNo').textContent=`${courseRun.index+1} / ${courseRun.tracks.length}`}
+function updateCourseHud(){const box=$('#gpCourse');if(!box)return;box.hidden=!courseRun.active;if(courseRun.active){box.querySelector('small').textContent=courseTierLabel(courseRun.course);$('#courseTrackNo').textContent=`${courseRun.index+1} / ${courseRun.tracks.length}`}}
 function applyCourseDamage(result){if(!courseRun.active||courseRun.failed||state.view!=='game')return;const dmg=courseRun.course.damage[result]||0;if(!dmg)return;const now=performance.now();courseRun.hitAmount=now-courseRun.hitAt<450?(courseRun.hitAmount||0)+dmg:dmg;courseRun.hitAt=now;courseRun.life=Math.max(0,courseRun.life-dmg);if(courseRun.life<=0)courseFail()}
 // Drawn in place of MAX ACHIEVABLE: a ring gauge with the life number inside.
 function drawCourseLife(ctx,R){const life=courseRun.life,ratio=Math.max(0,Math.min(1,life/courseStartLife())),color=lifeTone(ratio),now=performance.now(),age=(now-(courseRun.hitAt||-1e9))/1000,hit=age>=0&&age<.45?1-age/.45:0,danger=ratio<=.2&&life>0,r=R*.16,beat=danger?1+Math.max(0,Math.sin(now/170))*.045:1,pop=1+hit*.07,shake=hit?Math.sin(now/16)*R*.014*hit:0;
@@ -940,7 +953,7 @@ function courseTrackFinished(snapshot){if(!courseRun.active)return;const before=
 function courseAdvance(){const info=state.result?.course;if(!info||!courseRun.active||state.transitioning||state.view!=='result')return;if(info.failed||info.last){finishCourse(!info.failed);return}courseRun.index=info.index+1;if(!courseRun.autoplay)requestAimLock();state.transitioning=true;stopBuiltInSfx();fadeOutResultBgm();const screen=$('#resultScreen');screen.classList.add('leaving');state.transitionTimer=setTimeout(()=>{screen.classList.remove('leaving');state.transitioning=false;state.transitionTimer=0;startCourseTrack()},GAME_CONFIG.RESULT_EXIT*1000)}
 function quitCourseFromResult(){if(!courseRun.active||state.transitioning)return;if(!confirm('단위 인정을 포기할까요? 이번 도전은 기록되지 않습니다.'))return;abortCourse();transitionNavigation('course')}
 function syncResultCourse(r){const info=r?.course,box=$('#rsCourse');$('#resultScreen').classList.toggle('is-course',!!info);if(!box)return;box.hidden=!info;if(!info)return;const start=courseStartLife(),ratio=Math.max(0,Math.min(1,info.lifeAfter/start));
- $('#rscTrack').textContent=`단위 인정 · TRACK ${info.index+1} / ${info.total} ${info.failed?'FAILED':'CLEAR'}`;$('#rscRing').style.setProperty('--life',String(ratio));$('#rscRing').style.setProperty('--life-color',lifeTone(ratio));$('#rscLife').textContent=String(info.lifeAfter);
+ $('#rscTrack').textContent=`${courseTierLabel(courseRun.course)} · TRACK ${info.index+1} / ${info.total} ${info.failed?'FAILED':'CLEAR'}`;$('#rscRing').style.setProperty('--life',String(ratio));$('#rscRing').style.setProperty('--life-color',lifeTone(ratio));$('#rscLife').textContent=String(info.lifeAfter);
  $('#rscDelta').textContent=info.failed?'라이프 소진':info.last?`남은 라이프 ${info.lifeAfter}`:`${info.lifeBefore} → ${info.lifeAfter}${info.heal?`  (+${info.heal})`:''}`;
  const next=$('#rscNext');next.hidden=!info.next;if(info.next){next.style.setProperty('--track-diff',difficultyColor(info.next.difficulty));next.querySelector('img').src=info.next.jacket;next.querySelector('small').textContent=`NEXT · TRACK ${info.index+2}`;next.querySelector('b').textContent=info.next.title;next.querySelector('span').textContent=`${info.next.difficulty} ${info.next.level}`}
  $('#rscNextButton span').textContent=info.failed||info.last?'최종 결과 보기':'다음 곡'}
@@ -950,13 +963,13 @@ function restoreCourseSelection(){const p=courseRun.prevSelection;if(p?.song&&st
 function abortCourse(){clearTimeout(courseRun.timer);courseRun.timer=0;courseRun.active=false;hideCourseInterlude();updateCourseHud();restoreCourseSelection()}
 function finishCourse(passed){clearTimeout(courseRun.timer);courseRun.timer=0;const run={...courseRun,results:[...courseRun.results]};courseRun.active=false;hideCourseInterlude();
  const newBest=run.autoplay?false:saveCourseRecord(run,passed);
- state.courseResult={courseId:run.course.id,name:run.course.name,passed,life:passed?run.life:0,startLife:run.course.life,maxLife:run.maxLife||run.course.life,autoplay:run.autoplay,newBest,results:run.results,tracks:run.tracks.map(t=>({title:t.song.title,difficulty:t.chart.difficulty,level:t.chart.level,jacket:jacketSrc(t.song)}))};
+ state.courseResult={courseId:run.course.id,tier:run.course.tier,name:run.course.name,passed,life:passed?run.life:0,startLife:run.course.life,maxLife:run.maxLife||run.course.life,autoplay:run.autoplay,newBest,results:run.results,tracks:run.tracks.map(t=>({title:t.song.title,difficulty:t.chart.difficulty,level:t.chart.level,jacket:jacketSrc(t.song)}))};
  restoreCourseSelection();show('courseResult')}
 
 /* ---- course result ---- */
 function courseTotal(results){return (results||[]).reduce((a,r)=>a+(Number(r.achievement)||0),0)}
 function renderCourseResult(){const r=state.courseResult;if(!r)return;const screen=$('#courseResultScreen');screen.classList.toggle('passed',r.passed);screen.classList.toggle('failed',!r.passed);
- $('#crCourseName').textContent=r.name;$('#crVerdict').textContent=r.autoplay?'AUTO PLAY':r.passed?'PASSED':'FAILED';$('#crSub').textContent=r.autoplay?'시연 결과는 기록되지 않습니다':r.newBest?'NEW RECORD':r.passed?'합격':'불합격';
+ $('#crCourseName').textContent=r.name;$('#crTierLabel').textContent=`${COURSE_TIER_LABEL[r.tier||'normal']} 결과`;document.body.dataset.courseTier=r.tier||'normal';$('#crVerdict').textContent=r.autoplay?'AUTO PLAY':r.passed?'PASSED':'FAILED';$('#crSub').textContent=r.autoplay?'시연 결과는 기록되지 않습니다':r.newBest?'NEW RECORD':r.passed?'합격':'불합격';
  const ratio=Math.max(0,Math.min(1,r.life/(r.startLife||r.maxLife||1)));$('#crLifeFill').style.transform=`scaleX(${ratio})`;$('#crLifeFill').style.background=lifeTone(ratio);$('#crLifeText').textContent=`${r.life} / ${r.startLife||r.maxLife}`;$('#crTotal').textContent=`${courseTotal(r.results).toFixed(4)}%`;$('#crTotalMax').textContent=`/ ${(r.tracks.length*101).toFixed(0)}%`;
  $('#crTracks').innerHTML=r.tracks.map((t,i)=>{const res=r.results[i];return `<li class="${res?res.cleared?'clear':'fail':'none'}" style="--track-diff:${difficultyColor(t.difficulty)}"><span class="cr-no">${i+1}</span><img src="${t.jacket}" alt=""><div class="cr-info"><b title="${attr(t.title)}">${esc(t.title)}</b><span>${esc(t.difficulty)} ${esc(t.level)}</span></div>${res?`<div class="cr-score"><b>${(res.achievement||0).toFixed(4)}%</b><span>${res.cleared?esc(res.rank||''):'FAILED'} · MISS ${res.judgmentCounts?.miss??0}</span></div><div class="cr-lifeafter"><small>LIFE</small><b>${res.lifeAfter}</b></div>`:'<div class="cr-score none"><span>도전하지 못함</span></div>'}</li>`}).join('');
  syncCourseRegistration(r);void loadCourseRanking('result',r.courseId)}
@@ -974,14 +987,20 @@ $('#crRegister').addEventListener('submit',async event=>{event.preventDefault();
 function retryCourse(){const c=state.courses.find(x=>x.id===state.courseResult?.courseId);if(c&&!state.transitioning)startCourse(c,{autoplay:!!state.courseResult?.autoplay})}
 
 /* ---- title mode choice ---- */
-const TITLE_MODES=['select','course'];let titleModeIndex=0;
-function syncTitleModes(){document.querySelectorAll('.title-mode').forEach((b,i)=>{b.classList.toggle('is-active',i===titleModeIndex);b.setAttribute('aria-pressed',String(i===titleModeIndex))})}
-document.querySelectorAll('.title-mode').forEach((b,i)=>{b.addEventListener('pointerenter',()=>{titleModeIndex=i;syncTitleModes()});b.addEventListener('click',()=>{titleModeIndex=i;syncTitleModes();enterFromTitle(TITLE_MODES[i])})});
+const TITLE_MODES=['select','course','trueCourse'];let titleModeIndex=0;
+function syncTitleModes(){const unlocked=isTrueCourseUnlocked();document.querySelectorAll('.title-mode').forEach((b,i)=>{b.classList.toggle('is-active',i===titleModeIndex);b.setAttribute('aria-pressed',String(i===titleModeIndex))});const shin=$('.title-mode[data-mode="trueCourse"]');if(shin){shin.classList.toggle('is-locked',!unlocked);shin.querySelector('span').textContent=unlocked?'더 가혹한 라이프로 도전하는 상위 단위인정':'단위인정 제8단 합격 시 해금'}}
+function flashLocked(el){if(!el)return;el.classList.remove('deny');void el.offsetWidth;el.classList.add('deny')}
+function chooseTitleMode(index){const mode=TITLE_MODES[index];if(mode==='trueCourse'){if(!isTrueCourseUnlocked()){flashLocked($('.title-mode[data-mode="trueCourse"]'));return}setCourseTier('true');enterFromTitle('course');return}if(mode==='course')setCourseTier('normal');enterFromTitle(mode)}
+document.querySelectorAll('.title-mode').forEach((b,i)=>{b.addEventListener('pointerenter',()=>{titleModeIndex=i;syncTitleModes()});b.addEventListener('click',()=>{titleModeIndex=i;syncTitleModes();chooseTitleMode(i)})});
 syncTitleModes();
+/* ---- top bar: 단위 인정 / 진단위인정 share the course screen ---- */
+function syncCourseNav(){const unlocked=isTrueCourseUnlocked();document.querySelectorAll('[data-nav="course"][data-tier]').forEach(b=>{b.classList.toggle('active',state.view==='course'&&b.dataset.tier===state.courseTier);if(b.dataset.tier==='true'){b.classList.toggle('is-locked',!unlocked);b.title=unlocked?'진단위인정':'단위인정 제8단 합격 시 해금'}})}
+function navigateCourseTier(button){const tier=button.dataset.tier;button.blur();if(tier==='true'&&!isTrueCourseUnlocked()){flashLocked(button);return}if(state.transitioning)return;if(state.view==='course'){if(tier===state.courseTier)return;setCourseTier(tier);const screen=$('#courseScreen');screen.classList.remove('tier-switch');void screen.offsetWidth;screen.classList.add('tier-switch');renderCourseScreen();syncCourseNav();startCourseBgm();return}setCourseTier(tier);transitionNavigation('course')}
+document.querySelectorAll('[data-nav="course"][data-tier]').forEach(b=>b.onclick=()=>navigateCourseTier(b));
 
 /* ---- keyboard: title / course / course result ---- */
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||state.transitioning||state.settingsOpen||e.ctrlKey||e.altKey||e.metaKey)return;const field=e.target?.closest?.('input,select,textarea');if(field)return;
- if(state.view==='title'){switch(e.code){case 'ArrowLeft':case 'ArrowUp':case 'KeyA':case 'KeyW':titleModeIndex=0;syncTitleModes();break;case 'ArrowRight':case 'ArrowDown':case 'KeyD':case 'KeyS':titleModeIndex=1;syncTitleModes();break;case 'Digit1':case 'Numpad1':titleModeIndex=0;syncTitleModes();if(!e.repeat)enterFromTitle(TITLE_MODES[0]);break;case 'Digit2':case 'Numpad2':titleModeIndex=1;syncTitleModes();if(!e.repeat)enterFromTitle(TITLE_MODES[1]);break;case 'Enter':case 'NumpadEnter':case 'Space':if(!e.repeat)enterFromTitle(TITLE_MODES[titleModeIndex]);break;default:return}e.preventDefault();return}
+ if(state.view==='title'){const set=i=>{titleModeIndex=i;syncTitleModes()};switch(e.code){case 'ArrowLeft':case 'KeyA':set(0);break;case 'ArrowRight':case 'KeyD':set(titleModeIndex===0?1:titleModeIndex);break;case 'ArrowUp':case 'KeyW':set(titleModeIndex===2?1:titleModeIndex);break;case 'ArrowDown':case 'KeyS':set(titleModeIndex===1?2:titleModeIndex===0?0:titleModeIndex);break;case 'Digit1':case 'Numpad1':set(0);if(!e.repeat)chooseTitleMode(0);break;case 'Digit2':case 'Numpad2':set(1);if(!e.repeat)chooseTitleMode(1);break;case 'Digit3':case 'Numpad3':set(2);if(!e.repeat)chooseTitleMode(2);break;case 'Enter':case 'NumpadEnter':case 'Space':if(!e.repeat)chooseTitleMode(titleModeIndex);break;default:return}e.preventDefault();return}
  if(state.view==='course'){switch(e.code){case 'KeyW':case 'ArrowUp':moveCourseSelection(-1);break;case 'KeyS':case 'ArrowDown':moveCourseSelection(1);break;case 'Enter':case 'NumpadEnter':if(e.target?.closest?.('button:not(.course-card)'))return;if(!e.repeat)startCourse(selectedCourse());break;case 'KeyA':if(!e.repeat)startCourse(selectedCourse(),{autoplay:true});break;default:return}e.preventDefault();return}
  if(state.view==='courseResult'){if(e.repeat)return;if(e.code==='Enter'||e.code==='NumpadEnter'){e.preventDefault();retryCourse()}else if(e.key==='Escape'){e.preventDefault();transitionNavigation('course')}}});
 $('#crRetry').onclick=retryCourse;$('#crBack').onclick=()=>transitionNavigation('course');
@@ -994,6 +1013,7 @@ $('#crRetry').onclick=retryCourse;$('#crBack').onclick=()=>transitionNavigation(
 /* ---- 단위 인정 select BGM: D minor, 84 BPM, 8 bars, synthesized once and looped ----
    Dm – B♭ – Gm – A | Dm – F – Gm – A7 under a brass melody, strings, timpani and a march snare. */
 var courseBgm={buffer:null,ready:null,wanted:false,source:null,gain:null};
+var trueCourseBgm={buffer:null,ready:null,wanted:false,source:null,gain:null};
 async function renderCourseBgm(){
  const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)throw new Error('OfflineAudioContext unsupported');
  const rate=44100,beat=60/84,bar=beat*4,bars=8,loop=bar*bars,tail=4,loopFrames=Math.round(loop*rate),ctx=new Offline(2,Math.ceil((loop+tail)*rate),rate),hz=m=>440*2**((m-69)/12);
@@ -1023,12 +1043,54 @@ async function renderCourseBgm(){
  let peak=0;for(const d of channels)for(let i=0;i<d.length;i++){const v=Math.abs(d[i]);if(v>peak)peak=v}
  const level=measureLoudness(channels,rate).lufs,scale=peak>0?Math.min(.89/peak,Number.isFinite(level)?10**((LOUDNESS_DEFAULT_TARGET-level)/20):1):1,out2=ctx.createBuffer(2,loopFrames,rate);channels.forEach((d,ch)=>{for(let i=0;i<d.length;i++)d[i]*=scale;out2.copyToChannel(d,ch)});
  courseBgm.buffer=out2;return out2}
+
+/* ---- 진단위인정 select BGM: E minor, 160 BPM, 16 bars — driving 16th ostinato, alarm-like lead ----
+   Em – C – Am – B ×4: bars 1–4 build (bass, toms, riser), 5–12 lead + kick (+ snare from 9), 13–16 full. */
+async function renderTrueCourseBgm(){
+ const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)throw new Error('OfflineAudioContext unsupported');
+ const rate=44100,beat=60/160,bar=beat*4,bars=16,loop=bar*bars,tail=3,loopFrames=Math.round(loop*rate),ctx=new Offline(2,Math.ceil((loop+tail)*rate),rate),hz=m=>440*2**((m-69)/12),s16=beat/4;
+ const bus=ctx.createGain();bus.gain.value=.8;const comp=ctx.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=4;comp.attack.value=.003;comp.release.value=.12;bus.connect(comp);comp.connect(ctx.destination);
+ const echo=ctx.createDelay(1),efb=ctx.createGain(),elp=ctx.createBiquadFilter(),ewet=ctx.createGain();echo.delayTime.value=beat*.75;efb.gain.value=.3;elp.type='lowpass';elp.frequency.value=2400;ewet.gain.value=.25;echo.connect(elp);elp.connect(efb);efb.connect(echo);elp.connect(ewet);ewet.connect(bus);
+ const out=(node,pan=0,send=0)=>{let last=node;if(pan&&ctx.createStereoPanner){const p=ctx.createStereoPanner();p.pan.value=pan;node.connect(p);last=p}last.connect(bus);if(send){const g=ctx.createGain();g.gain.value=send;last.connect(g);g.connect(echo)}};
+ const noise=ctx.createBuffer(1,rate,rate),nd=noise.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+ const CH=[[64,67,71],[60,64,67],[57,60,64],[59,63,66]],ROOT=[40,36,33,35];
+ const A=[[[0,.5,71],[.5,.5,76],[1,.5,78],[1.5,1.5,79],[3,1,78]],[[0,.5,76],[.5,.5,79],[1,1,83],[2,.5,81],[2.5,.5,79],[3,1,76]],[[0,.75,81],[.75,.75,79],[1.5,.5,78],[2,1,76],[3,1,72]],[[0,1,75],[1,1,78],[2,1.5,83],[3.5,.5,81]]];
+ const B=[A[0],A[1],A[2],[[0,.5,75],[.5,.5,76],[1,.5,78],[1.5,.5,79],[2,.5,81],[2.5,1.5,83]]];
+ const bassNote=(t,m,len)=>{const o=ctx.createOscillator(),lp=ctx.createBiquadFilter(),g=ctx.createGain();o.type='sawtooth';o.frequency.value=hz(m);lp.type='lowpass';lp.Q.value=4;lp.frequency.setValueAtTime(1400,t);lp.frequency.exponentialRampToValueAtTime(260,t+len);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.2,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+len);o.connect(lp);lp.connect(g);out(g);o.start(t);o.stop(t+len+.02)};
+ const stab=(t,notes,v=1)=>{for(const m of notes){const o=ctx.createOscillator(),lp=ctx.createBiquadFilter(),g=ctx.createGain();o.type='sawtooth';o.frequency.value=hz(m);lp.type='lowpass';lp.frequency.value=2600;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.03*v,t+.005);g.gain.exponentialRampToValueAtTime(.0001,t+.13);o.connect(lp);lp.connect(g);out(g,m%2?.25:-.25,.3);o.start(t);o.stop(t+.15)}};
+ const kick=(t,v=1)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(160,t);o.frequency.exponentialRampToValueAtTime(44,t+.11);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.95*v,t+.002);g.gain.exponentialRampToValueAtTime(.0001,t+.3);o.connect(g);out(g);o.start(t);o.stop(t+.32)};
+ const hat=(t,v=1)=>{const n=ctx.createBufferSource(),hp=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=noise;hp.type='highpass';hp.frequency.value=8500;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.06*v,t+.001);g.gain.exponentialRampToValueAtTime(.0001,t+.035);n.connect(hp);hp.connect(g);out(g,.2);n.start(t,Math.random()*.8,.05)};
+ const snare=(t,v=1)=>{const n=ctx.createBufferSource(),bp=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=noise;bp.type='bandpass';bp.frequency.value=2000;bp.Q.value=.7;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.24*v,t+.002);g.gain.exponentialRampToValueAtTime(.0001,t+.14);n.connect(bp);bp.connect(g);out(g,-.05,.2);n.start(t,Math.random()*.5,.16);const o=ctx.createOscillator(),og=ctx.createGain();o.frequency.setValueAtTime(240,t);o.frequency.exponentialRampToValueAtTime(160,t+.05);og.gain.setValueAtTime(.12*v,t);og.gain.exponentialRampToValueAtTime(.0001,t+.08);o.connect(og);out(og);o.start(t);o.stop(t+.09)};
+ const tom=(t,m,v=1)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(hz(m)*1.8,t);o.frequency.exponentialRampToValueAtTime(hz(m),t+.08);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.45*v,t+.003);g.gain.exponentialRampToValueAtTime(.0001,t+.5);o.connect(g);out(g,0,.15);o.start(t);o.stop(t+.52)};
+ const riser=(t,len)=>{const n=ctx.createBufferSource(),bp=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=noise;n.loop=true;bp.type='bandpass';bp.Q.value=2;bp.frequency.setValueAtTime(400,t);bp.frequency.exponentialRampToValueAtTime(7000,t+len);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+len);n.connect(bp);bp.connect(g);out(g,0,.3);n.start(t);n.stop(t+len+.02)};
+ const crash=t=>{const n=ctx.createBufferSource(),hp=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=noise;n.loop=true;hp.type='highpass';hp.frequency.value=4000;g.gain.setValueAtTime(.14,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.6);n.connect(hp);hp.connect(g);out(g,-.2,.3);n.start(t);n.stop(t+1.65)};
+ const lead=(t,len,m,v=1)=>{const g=ctx.createGain(),lp=ctx.createBiquadFilter(),peak=.07*v,end=t+len;lp.type='lowpass';lp.frequency.setValueAtTime(5000,t);lp.frequency.exponentialRampToValueAtTime(2200,t+Math.min(len,.4));g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(peak,t+.01);g.gain.setValueAtTime(peak*.8,Math.max(t+.02,end-.04));g.gain.linearRampToValueAtTime(.0001,end+.06);lp.connect(g);out(g,.08,.45);
+  const lfo=ctx.createOscillator(),depth=ctx.createGain();lfo.frequency.value=7.5;depth.gain.setValueAtTime(0,t);depth.gain.linearRampToValueAtTime(len>.3?14:0,t+.15);lfo.connect(depth);
+  for(const [type,det] of [['square',-6],['sawtooth',6]]){const o=ctx.createOscillator();o.type=type;o.frequency.value=hz(m);o.detune.value=det;depth.connect(o.detune);o.connect(lp);o.start(t);o.stop(end+.08)}lfo.start(t);lfo.stop(end+.08)};
+ for(let b=0;b<bars;b++){const t=b*bar,c=b%4,build=b<4,full=b>=12;
+  for(let i=0;i<16;i++)bassNote(t+i*s16,ROOT[c]+(i%2?12:0),s16*.9);
+  for(let i=0;i<8;i++)if(i%2===0||!build)stab(t+i*beat/2,CH[c],i%2?.6:1);
+  if(build){tom(t,ROOT[c]+12,.9);tom(t+beat*1.5,ROOT[c]+12,.6);tom(t+beat*2,ROOT[c]+19,.7);tom(t+beat*3,ROOT[c]+15,.7);tom(t+beat*3.5,ROOT[c]+12,.8)}
+  else{for(let k=0;k<4;k++)kick(t+k*beat,k===0?1:.85);for(let i=0;i<16;i++)hat(t+i*s16,i%4===2?1:.55)}
+  if(b>=8){snare(t+beat,1);snare(t+beat*3,1);if(full)snare(t+beat*3.75,.5)}
+  if(b===3)riser(t,bar);if(b===4||b===12)crash(t);if(b===15)for(let i=0;i<8;i++)snare(t+beat*2+i*beat/4,.3+i*.09);
+  const phrase=b<4?null:b<8?A:b<12?B:A;if(phrase)for(const [at,len,m] of phrase[c]){lead(t+at*beat,len*beat*.94,m,full?1.05:1);if(full)lead(t+at*beat,len*beat*.94,m-12,.55)}}
+ const rendered=await new Promise((resolve,reject)=>{ctx.oncomplete=e=>resolve(e.renderedBuffer);const p=ctx.startRendering();if(p?.then)p.then(resolve,reject)});
+ const channels=[0,1].map(ch=>{const src=rendered.getChannelData(ch),data=src.slice(0,loopFrames);for(let i=loopFrames;i<src.length;i++)data[(i-loopFrames)%loopFrames]+=src[i];return data});
+ fitLoudness(channels,rate,LOUDNESS_DEFAULT_TARGET);let peak=0;for(const d of channels)for(let i=0;i<d.length;i++){const v=Math.abs(d[i]);if(v>peak)peak=v}
+ const level=measureLoudness(channels,rate).lufs,scale=peak>0?Math.min(.89/peak,Number.isFinite(level)?10**((LOUDNESS_DEFAULT_TARGET-level)/20):1):1,buf=ctx.createBuffer(2,loopFrames,rate);channels.forEach((d,ch)=>{for(let i=0;i<d.length;i++)d[i]*=scale;buf.copyToChannel(d,ch)});
+ trueCourseBgm.buffer=buf;return buf}
+/* ---- loop players (course / 진단위인정 select screens) ---- */
+const COURSE_BGM_RENDER=new Map([[courseBgm,renderCourseBgm],[trueCourseBgm,renderTrueCourseBgm]]);
 function courseBgmVolume(){return clampVolume(effectiveBgmVolume())}
-function startCourseBgm(){courseBgm.wanted=true;if(!courseBgm.ready)courseBgm.ready=renderCourseBgm().catch(error=>{console.warn('Course BGM synthesis failed.',error);return null});void unlockGameplayAudio();
- courseBgm.ready.then(buffer=>{const ctx=gameplayAudio.ctx;if(!courseBgm.wanted||courseBgm.source||!ctx||!buffer||state.view!=='course')return;if(ctx.state==='suspended')ctx.resume();const source=ctx.createBufferSource(),gain=ctx.createGain(),now=ctx.currentTime;source.buffer=buffer;source.loop=true;gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(courseBgmVolume(),now+1.2);source.connect(gain);gain.connect(ctx.destination);source.start(now);courseBgm.source=source;courseBgm.gain=gain})}
-function stopCourseBgm(fadeSec=.6){courseBgm.wanted=false;const ctx=gameplayAudio.ctx,{source,gain}=courseBgm;if(!ctx||!source)return;courseBgm.source=null;courseBgm.gain=null;const now=ctx.currentTime;gain.gain.cancelScheduledValues(now);gain.gain.setValueAtTime(Math.max(.0001,gain.gain.value),now);gain.gain.linearRampToValueAtTime(.0001,now+fadeSec);try{source.stop(now+fadeSec+.05)}catch{}source.onended=()=>{source.disconnect();gain.disconnect()}}
-// Render ahead of time, after the title OST, so the music is ready when the course screen opens.
-Promise.resolve(titleBgm.ready).then(()=>{if(!courseBgm.ready)courseBgm.ready=renderCourseBgm().catch(error=>{console.warn('Course BGM synthesis failed.',error);return null})});
+function ensureLoopBgm(bgm){if(!bgm.ready)bgm.ready=COURSE_BGM_RENDER.get(bgm)().catch(error=>{console.warn('Course BGM synthesis failed.',error);return null});return bgm.ready}
+function startLoopBgm(bgm,isWanted){bgm.wanted=true;void unlockGameplayAudio();ensureLoopBgm(bgm).then(buffer=>{const ctx=gameplayAudio.ctx;if(!bgm.wanted||bgm.source||!ctx||!buffer||!isWanted())return;if(ctx.state==='suspended')ctx.resume();const source=ctx.createBufferSource(),gain=ctx.createGain(),now=ctx.currentTime;source.buffer=buffer;source.loop=true;gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(courseBgmVolume(),now+1);source.connect(gain);gain.connect(ctx.destination);source.start(now);bgm.source=source;bgm.gain=gain})}
+function stopLoopBgm(bgm,fadeSec=.6){bgm.wanted=false;const ctx=gameplayAudio.ctx,{source,gain}=bgm;if(!ctx||!source)return;bgm.source=null;bgm.gain=null;const now=ctx.currentTime;gain.gain.cancelScheduledValues(now);gain.gain.setValueAtTime(Math.max(.0001,gain.gain.value),now);gain.gain.linearRampToValueAtTime(.0001,now+fadeSec);try{source.stop(now+fadeSec+.05)}catch{}source.onended=()=>{source.disconnect();gain.disconnect()}}
+// The course screen plays the music of its current tier.
+function startCourseBgm(){const tier=state.courseTier==='true'?'true':'normal',current=tier==='true'?trueCourseBgm:courseBgm,other=tier==='true'?courseBgm:trueCourseBgm;stopLoopBgm(other,.5);startLoopBgm(current,()=>state.view==='course'&&state.courseTier===tier)}
+function stopCourseBgm(fadeSec=.6){stopLoopBgm(courseBgm,fadeSec);stopLoopBgm(trueCourseBgm,fadeSec)}
+// Render ahead of time, after the title OST (진단위인정 music only once it is unlocked).
+Promise.resolve(titleBgm.ready).then(()=>ensureLoopBgm(courseBgm)).then(()=>{if(isTrueCourseUnlocked())ensureLoopBgm(trueCourseBgm)});
 $('#playButton').onclick=startGame;$('#backButton').onclick=()=>transitionNavigation('select');$('#retryButton').onclick=()=>transitionFromResult('retry');$('#resultSelectButton').onclick=()=>transitionFromResult('select');document.addEventListener('pointerdown',unlockGameplayAudio,{once:true});document.addEventListener('keydown',unlockGameplayAudio,{once:true});document.addEventListener('click',resumePendingPreview);document.addEventListener('keydown',resumePendingPreview);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.settingsOpen){e.preventDefault();closeSettings();return}if(e.key==='Escape'&&state.view==='result'){if(!state.result?.course)transitionFromResult('select');return}if(e.key==='Escape'&&state.view==='game'&&!state.transitioning){transitionNavigation('select');return}if(e.key==='Escape'&&state.view==='calibration'&&!state.transitioning){transitionNavigation('select');return}if(state.view==='calibration'){const accepted=isHitKeyCode(e.code)&&!e.ctrlKey&&!e.altKey&&!e.metaKey&&!e.repeat;if(accepted){e.preventDefault();registerCalibrationTap()}return}if(state.view!=='game'||gameplayDemo.ending||state.transitioning)return;const accepted=isHitKeyCode(e.code)&&!e.ctrlKey&&!e.altKey&&!e.metaKey;gameplayDemo.lastKeyboardCode=e.code||e.key||'UNKNOWN';gameplayDemo.lastKeyboardAccepted=accepted&&!e.repeat;if(!accepted||e.repeat||gameplayDemo.pressedKeys.has(e.code))return;e.preventDefault();gameplayDemo.pressedKeys.add(e.code);captureNormalInput(e)});document.addEventListener('keyup',e=>gameplayDemo.pressedKeys.delete(e.code));window.addEventListener('blur',()=>{gameplayDemo.pressedKeys.clear();gameplayDemo.mouseHitPressed=false;clearTemporalInput();gameplayDemo.pointerActive=false;if(state.view==='calibration')stopCalibration()});window.addEventListener('beforeunload',()=>{stopSongPreview();stopResultBgmImmediate();stopCalibration();stopBuiltInSfx();state.assets.forEach((_,id)=>releaseSongAssets(id))});init();
 </script><style>
 #gameScreen{isolation:isolate}.movie-bg{z-index:0;opacity:.34;filter:saturate(.82) brightness(.7);transform:scale(1.02)}.game-dim{z-index:1;background:radial-gradient(circle at 50% 50%,rgba(4,8,16,.08) 0 43%,rgba(3,7,14,.46) 69%,rgba(1,3,8,.88) 100%),linear-gradient(90deg,rgba(2,5,10,.7),transparent 25%,transparent 75%,rgba(2,5,10,.7))}.game-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}.game-top{top:18px;left:22px;right:auto;width:250px;z-index:4;display:grid;gap:12px;justify-content:stretch}.game-top:before{content:"";position:absolute;inset:-10px -12px;border-radius:14px;background:rgba(4,9,17,.46);backdrop-filter:blur(8px);z-index:-1}.game-song{min-width:0}.game-song>div{min-width:0}.game-song strong,.game-song span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;text-align:left}.hud .achievement-hud{grid-column:1/-1}.hud b{font-size:18px;font-variant-numeric:tabular-nums}.hud .achievement-hud b{font-size:21px;color:#ffe18a}.judgment-counter{position:absolute;left:18px;top:57%;z-index:5;transform:translateY(-50%);width:164px;padding:12px 13px;border:1px solid rgba(145,215,255,.22);border-radius:10px;background:rgba(4,9,17,.62);backdrop-filter:blur(10px);pointer-events:none}.judgment-counter>b{display:block;margin-bottom:8px;color:#dffaff;font-size:10px;letter-spacing:.14em}.judgment-counter dl{display:grid;grid-template-columns:1fr auto;gap:5px 8px;margin:0}.judgment-counter dt{color:#8fa4c3;font-size:9px;font-weight:800;letter-spacing:.04em}.judgment-counter dd{margin:0;color:#fff;font:700 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}.judgment-counter dt:first-of-type,.judgment-counter dt:first-of-type+dd{color:#ffe18a}.back{z-index:5}.game-mode{position:absolute;right:32px;bottom:28px;z-index:4;text-align:right;color:#8da0bc;font-size:11px;font-weight:800;letter-spacing:.12em}.game-mode b{display:block;color:#dffaff;font-size:13px;margin-bottom:2px}.game-song img{border:1px solid rgba(159,226,255,.42);box-shadow:0 0 20px rgba(52,184,255,.18)}.speed-panel{position:absolute;right:24px;top:58%;z-index:5;transform:translateY(-50%);display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 12px;width:198px;padding:11px 13px;border:1px solid rgba(145,215,255,.24);border-radius:10px;background:rgba(4,9,17,.62);backdrop-filter:blur(10px);color:#91a9c6;font-size:10px;font-weight:900;letter-spacing:.12em}.speed-panel input{grid-column:1/-1;grid-row:2;width:172px;accent-color:#ff55b5;cursor:pointer}.speed-panel output{grid-column:2;grid-row:1;color:#e6faff;font-variant-numeric:tabular-nums;text-align:right}
@@ -1424,6 +1486,9 @@ body[data-view="result"] .screen{height:100vh}
 #resultScreen.is-autoplay .ranking-registration{display:none}
 #resultScreen.is-autoplay .rs-label{color:#fff;letter-spacing:.24em}
 
+/* ===== course accent (단위 인정: amber · 진단위인정: crimson) ===== */
+:root,body[data-course-tier="normal"]{--ca:#ffb547;--ca-ink:#1a1004;--ca-title:#fff4df;--ca-soft:#ffe2b0;--ca-deep:#140e04}
+body[data-course-tier="true"]{--ca:#ff3b5c;--ca-ink:#fff;--ca-title:#ffe3e8;--ca-soft:#ffc2cd;--ca-deep:#1a0408}
 /* ===== Title: mode choice ===== */
 .title-screen .title-orbit{top:39%;width:min(56vh,60vw)}
 .title-screen .title-copy{position:absolute;left:0;right:0;top:39%;margin:0;transform:translateY(-58%)}
@@ -1433,31 +1498,31 @@ body[data-view="result"] .screen{height:100vh}
 .title-mode b{font:700 22px/1.1 var(--display);letter-spacing:.12em;color:#f2f8ff}
 .title-mode span{color:#93a5c8;font-size:13px}
 .title-mode.is-active{--mode:#51e6ff;border-color:var(--mode);box-shadow:0 0 0 1px var(--mode),0 0 34px color-mix(in srgb,var(--mode) 30%,transparent);transform:translateY(-4px)}
-.title-mode[data-mode="course"].is-active{--mode:#ffb547}
+.title-mode[data-mode="course"].is-active{--mode:var(--ca)}
 .title-mode.is-active small{color:var(--mode)}
 .title-screen .title-prompt{bottom:calc(3vh + 28px);font-size:13px;letter-spacing:.2em;color:#9fb3d8}
 .title-screen{cursor:default}
 /* ===== Course select ===== */
-#courseScreen{--diff:#ffb547;background:radial-gradient(circle at 60% 40%,rgba(255,181,71,.1),transparent 45%)}
+#courseScreen{background:radial-gradient(circle at 60% 40%,color-mix(in srgb,var(--ca) 10%,transparent),transparent 45%)}
 #courseScreen.active{display:flex;flex-direction:column}
 .course-layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(230px,280px) minmax(0,1fr) minmax(250px,300px);gap:20px;padding:18px 20px 8px}
 .course-side{display:flex;flex-direction:column;gap:12px;min-height:0;padding:14px;overflow-y:auto}
 .course-side .select-speed-panel{margin:0;border-color:rgba(120,150,210,.18);background:rgba(16,22,40,.6);font-family:var(--display);letter-spacing:.1em}
 .course-side #courseRankingPanel{flex:1 1 200px;min-height:200px;max-height:none;margin:0;border-color:rgba(120,150,210,.18);background:rgba(16,22,40,.55)}
 .course-side .course-settings{flex:none;margin:0;padding:10px;border:1px solid rgba(160,185,235,.24);border-radius:10px;background:transparent;color:#cdd8f0;font:600 13px var(--display);letter-spacing:.14em}
-.course-side .course-settings:hover{border-color:#ffb547;color:#fff}
+.course-side .course-settings:hover{border-color:var(--ca);color:#fff}
 .course-ranking-row .ranking-grade{color:#8ff0b5!important}
 .course-list-panel{display:flex;flex-direction:column;min-height:0}
 .course-list{display:grid;align-content:start;gap:8px;padding:10px;overflow-y:auto}
 .course-card{position:relative;display:grid;gap:3px;padding:14px 16px;border:1px solid rgba(120,150,210,.16);border-radius:12px;background:rgba(16,22,40,.7);color:#e3ecff;text-align:left}
-.course-card.selected{border-color:#ffb547;background:linear-gradient(90deg,rgba(255,181,71,.18),rgba(255,181,71,.04))}
+.course-card.selected{border-color:var(--ca);background:linear-gradient(90deg,color-mix(in srgb,var(--ca) 18%,transparent),color-mix(in srgb,var(--ca) 4%,transparent))}
 .cc-name{font:700 16px var(--display);letter-spacing:.04em}
 .cc-sub{color:#93a5c8;font-size:12px}
 .cc-badge{justify-self:start;margin-top:6px;padding:2px 9px;border:1px solid rgba(160,185,235,.3);border-radius:999px;color:#9fb0cf;font:600 11px var(--display);letter-spacing:.08em}
 .cc-badge.pass{border-color:#6fe0a0;color:#8ff0b5}.cc-badge.tried{border-color:#ffc23d;color:#ffd77a}
 .course-detail{display:flex;flex-direction:column;gap:16px;min-width:0;padding:6px 4px 10px;overflow-y:auto}
-.cd-head small{color:#ffb547;font:600 12px var(--display);letter-spacing:.24em}
-.cd-head h1{margin:6px 0 0;font:700 clamp(28px,3vw,40px)/1.1 var(--display);color:#fff4df}
+.cd-head small{color:var(--ca);font:600 12px var(--display);letter-spacing:.24em}
+.cd-head h1{margin:6px 0 0;font:700 clamp(28px,3vw,40px)/1.1 var(--display);color:var(--ca-title)}
 .cd-head p{margin:6px 0 0;color:#a9b8d4}
 .cd-tracks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
 .cd-tracks li{position:relative;display:grid;gap:6px;padding:14px;border:1px solid rgba(120,150,210,.16);border-radius:14px;background:rgba(10,15,29,.8);min-width:0}
@@ -1482,21 +1547,21 @@ body[data-view="result"] .screen{height:100vh}
 .cd-record>span.pass{border-color:#6fe0a0;color:#8ff0b5}
 .cd-actions{display:flex;gap:12px}
 .cd-start,.cd-auto{display:inline-flex;align-items:center;gap:12px;padding:15px 24px;border-radius:12px;font:700 16px var(--display);letter-spacing:.18em}
-.cd-start{border:1px solid #ffb547;background:#ffb547;color:#1a1004}
-.cd-start kbd{border-color:rgba(26,16,4,.3);background:rgba(26,16,4,.12);color:#1a1004}
-.cd-auto{border:1px solid rgba(255,181,71,.5);background:transparent;color:#ffe2b0;font-size:13px}
+.cd-start{border:1px solid var(--ca);background:var(--ca);color:var(--ca-ink)}
+.cd-start kbd{border-color:color-mix(in srgb,var(--ca-ink) 30%,transparent);background:color-mix(in srgb,var(--ca-ink) 12%,transparent);color:var(--ca-ink)}
+.cd-auto{border:1px solid color-mix(in srgb,var(--ca) 50%,transparent);background:transparent;color:var(--ca-soft);font-size:13px}
 .cd-start:disabled,.cd-auto:disabled{opacity:.4;cursor:not-allowed}
 /* ===== Course HUD + interlude ===== */
-.gp-course{display:flex;align-items:baseline;gap:10px;padding:8px 12px;border:1px solid rgba(255,181,71,.35);border-radius:10px;background:rgba(20,14,4,.5);justify-self:start;align-self:flex-start}
+.gp-course{display:flex;align-items:baseline;gap:10px;padding:8px 12px;border:1px solid color-mix(in srgb,var(--ca) 35%,transparent);border-radius:10px;background:color-mix(in srgb,var(--ca-deep) 50%,transparent);justify-self:start;align-self:flex-start}
 .gp-course[hidden]{display:none}
-.gp-course small{color:#ffb547;font-size:11px;font-weight:600;letter-spacing:.16em}
+.gp-course small{color:var(--ca);font-size:11px;font-weight:600;letter-spacing:.16em}
 .gp-course b{color:#fff;font-size:14px;font-weight:700;letter-spacing:.1em;font-variant-numeric:tabular-nums}
 
 #courseInterlude{position:absolute;inset:0;z-index:1100;display:grid;place-items:center;background:rgba(4,6,12,.9);backdrop-filter:blur(8px);font-family:var(--display);text-align:center;animation:ci-in .3s ease both}
 #courseInterlude[hidden]{display:none}
 @keyframes ci-in{from{opacity:0}}
 .ci-box{display:grid;justify-items:center;gap:10px;padding:0 24px}
-.ci-box>small{color:#ffb547;font-size:13px;font-weight:600;letter-spacing:.3em}
+.ci-box>small{color:var(--ca);font-size:13px;font-weight:600;letter-spacing:.3em}
 .ci-box h2{max-width:80vw;margin:0;overflow:hidden;color:#fff;font-size:clamp(26px,3vw,40px);white-space:nowrap;text-overflow:ellipsis}
 .ci-ach{margin:0;color:#ffe18a;font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}
 .ci-ach span{margin-left:12px;color:#fff;font-size:22px}
@@ -1512,7 +1577,7 @@ body[data-view="result"] .screen{height:100vh}
 body[data-view="courseResult"] .app{grid-template-rows:1fr}
 body[data-view="courseResult"] .topbar{display:none}
 body[data-view="courseResult"] .screen{height:100vh}
-#courseResultScreen{--verdict:#ffb547;background:radial-gradient(circle at 50% 20%,color-mix(in srgb,var(--verdict) 18%,transparent),#05080f 60%);font-family:var(--display)}
+#courseResultScreen{--verdict:var(--ca);background:radial-gradient(circle at 50% 20%,color-mix(in srgb,var(--verdict) 18%,transparent),#05080f 60%);font-family:var(--display)}
 #courseResultScreen.passed{--verdict:#6fe0a0}#courseResultScreen.failed{--verdict:#ff5f7e}
 #courseResultScreen.active{display:grid;place-items:center;overflow-y:auto}
 .cr-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,330px);gap:24px;width:min(1180px,calc(100vw - 48px));margin:32px 0;animation:rs-rise .45s cubic-bezier(.2,.75,.25,1) both}
@@ -1523,20 +1588,20 @@ body[data-view="courseResult"] .screen{height:100vh}
 .cr-total small{color:#7d8db0;font-size:11px;font-weight:600;letter-spacing:.2em}
 .cr-total b{color:#ffe18a;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
 .cr-total span{color:#7d8db0;font-size:12px}
-#courseResultScreen .cr-register{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0;padding:16px;border:1px solid rgba(255,181,71,.3);border-radius:16px;background:rgba(9,14,27,.72)}
+#courseResultScreen .cr-register{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0;padding:16px;border:1px solid color-mix(in srgb,var(--ca) 30%,transparent);border-radius:16px;background:rgba(9,14,27,.72)}
 #courseResultScreen .cr-register[hidden]{display:none}
-#courseResultScreen .cr-register label{grid-column:1/-1;color:#ffb547;font-size:11px;font-weight:600;letter-spacing:.14em}
+#courseResultScreen .cr-register label{grid-column:1/-1;color:var(--ca);font-size:11px;font-weight:600;letter-spacing:.14em}
 #courseResultScreen .cr-register input{width:100%;padding:10px 11px;border:1px solid rgba(140,170,230,.25);border-radius:9px;background:#070c18;color:#f0f5ff;font:14px Inter,system-ui,sans-serif}
-#courseResultScreen .cr-register input:focus{outline:2px solid #ffb547;outline-offset:1px}
-#courseResultScreen .cr-register button{padding:10px 14px;border:1px solid #ffb547;border-radius:9px;background:rgba(255,181,71,.18);color:#fff;font:600 12px var(--display);letter-spacing:.08em}
+#courseResultScreen .cr-register input:focus{outline:2px solid var(--ca);outline-offset:1px}
+#courseResultScreen .cr-register button{padding:10px 14px;border:1px solid var(--ca);border-radius:9px;background:color-mix(in srgb,var(--ca) 18%,transparent);color:#fff;font:600 12px var(--display);letter-spacing:.08em}
 #crRegisterStatus{grid-column:1/-1;margin:0;color:#a9bcd9;font:12px Inter,system-ui,sans-serif}
 #crRegisterStatus:empty{display:none}
 .cr-register-note{margin:0;padding:12px 14px;border:1px dashed rgba(160,185,235,.25);border-radius:12px;color:#93a5c8;font:12px Inter,system-ui,sans-serif}
 .cr-register-note[hidden]{display:none}
 #courseResultRankingPanel{flex:1 1 auto;min-height:260px;max-height:none;margin:0;border-color:rgba(120,150,210,.16);border-radius:16px;background:rgba(9,14,27,.72)}
 .cr-main>header{text-align:center}
-.cr-main>header small{color:#ffb547;font-size:12px;font-weight:600;letter-spacing:.3em}
-.cr-main>header h1{margin:6px 0 0;color:#fff4df;font-size:26px}
+.cr-main>header small{color:var(--ca);font-size:12px;font-weight:600;letter-spacing:.3em}
+.cr-main>header h1{margin:6px 0 0;color:var(--ca-title);font-size:26px}
 .cr-verdict{color:var(--verdict);font-size:clamp(56px,9vw,110px);font-weight:700;line-height:1;text-align:center;letter-spacing:.06em;text-shadow:0 0 40px color-mix(in srgb,var(--verdict) 45%,transparent);animation:rank-enter .55s .25s cubic-bezier(.18,.9,.25,1.25) both}
 #crSub{margin:-8px 0 0;color:#cfdbf2;font-size:14px;letter-spacing:.2em;text-align:center}
 .cr-life{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 18px;border:1px solid rgba(120,150,210,.16);border-radius:14px;background:rgba(10,15,29,.8)}
@@ -1557,8 +1622,8 @@ li.fail .cr-score span{color:#ff9aac}
 .cr-lifeafter{display:grid;justify-items:end;min-width:64px}.cr-lifeafter small{color:#7d8db0;font-size:10px;letter-spacing:.2em}.cr-lifeafter b{color:#fff;font-size:18px;font-variant-numeric:tabular-nums}
 .cr-actions{display:flex;justify-content:center;gap:12px}
 .cr-actions button{display:inline-flex;align-items:center;gap:12px;min-width:200px;justify-content:center;padding:15px 22px;border:1px solid rgba(160,185,235,.28);border-radius:12px;background:rgba(9,14,27,.72);color:#e3ebfb;font:700 15px var(--display);letter-spacing:.12em}
-.cr-actions .cr-primary{border-color:#ffb547;background:#ffb547;color:#1a1004}
-.cr-actions .cr-primary kbd{border-color:rgba(26,16,4,.3);background:rgba(26,16,4,.12);color:#1a1004}
+.cr-actions .cr-primary{border-color:var(--ca);background:var(--ca);color:var(--ca-ink)}
+.cr-actions .cr-primary kbd{border-color:color-mix(in srgb,var(--ca-ink) 30%,transparent);background:color-mix(in srgb,var(--ca-ink) 12%,transparent);color:var(--ca-ink)}
 @media(max-width:1100px){.course-layout{grid-template-columns:220px minmax(0,1fr) 240px}.cr-shell{grid-template-columns:minmax(0,1fr) 280px}}
 @media(max-width:1000px){.cd-tracks{grid-template-columns:repeat(3,minmax(0,1fr))}.cd-rules{grid-template-columns:1fr 1fr}.cd-damage{grid-column:1/-1;border-left:0!important;border-top:1px solid rgba(120,150,210,.16)}}
 @media(prefers-reduced-motion:reduce){#courseInterlude,.ci-verdict,.cr-verdict,.cr-shell{animation:none}}
@@ -1566,15 +1631,15 @@ li.fail .cr-score span{color:#ff9aac}
 /* ===== per-track result inside a course ===== */
 #resultScreen.is-course #retryButton,#resultScreen.is-course #resultSelectButton{display:none}
 #resultScreen.is-course .result-actions{display:block}
-.rs-course{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;padding:14px 16px;border:1px solid rgba(255,181,71,.35);border-radius:16px;background:rgba(20,14,4,.55);backdrop-filter:blur(10px)}
+.rs-course{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;padding:14px 16px;border:1px solid color-mix(in srgb,var(--ca) 35%,transparent);border-radius:16px;background:color-mix(in srgb,var(--ca-deep) 55%,transparent);backdrop-filter:blur(10px)}
 .rs-course[hidden]{display:none}
 .rsc-life{display:flex;align-items:center;gap:14px}
 .rsc-ring{--life:1;--life-color:#6fe0a0;position:relative;display:grid;flex:none;place-items:center;width:68px;height:68px;border-radius:50%;background:conic-gradient(var(--life-color) calc(var(--life)*360deg),rgba(255,255,255,.1) 0)}
 .rsc-ring:before{content:"";position:absolute;inset:6px;border-radius:50%;background:#0a0f1c}
 .rsc-ring b{position:relative;color:#fff;font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
-.rsc-life small{color:#ffb547;font-size:11px;font-weight:600;letter-spacing:.14em}
+.rsc-life small{color:var(--ca);font-size:11px;font-weight:600;letter-spacing:.14em}
 .rsc-life p{margin:4px 0 0;color:#e8eefc;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
-.rsc-next{display:flex;align-items:center;gap:12px;min-width:0;padding-left:18px;border-left:1px solid rgba(255,181,71,.2)}
+.rsc-next{display:flex;align-items:center;gap:12px;min-width:0;padding-left:18px;border-left:1px solid color-mix(in srgb,var(--ca) 20%,transparent)}
 .rsc-next[hidden]{display:none}
 .rsc-next img{flex:none;width:52px;height:52px;border-radius:8px;object-fit:cover}
 .rsc-next div{display:grid;min-width:0}
@@ -1583,9 +1648,48 @@ li.fail .cr-score span{color:#ff9aac}
 .rsc-next span{color:var(--track-diff);font-size:12px;font-weight:700;letter-spacing:.08em}
 .rsc-buttons{display:flex;gap:8px;grid-column:3}
 #resultScreen .result-actions .rsc-buttons button{min-width:0}
-#resultScreen .result-actions #rscNextButton{border-color:#ffb547;background:#ffb547;color:#1a1004}
-#resultScreen .result-actions #rscNextButton kbd{border-color:rgba(26,16,4,.3);background:rgba(26,16,4,.12);color:#1a1004}
+#resultScreen .result-actions #rscNextButton{border-color:var(--ca);background:var(--ca);color:var(--ca-ink)}
+#resultScreen .result-actions #rscNextButton kbd{border-color:color-mix(in srgb,var(--ca-ink) 30%,transparent);background:color-mix(in srgb,var(--ca-ink) 12%,transparent);color:var(--ca-ink)}
 #resultScreen .result-actions .rsc-quit{padding:15px 16px;font-size:13px;letter-spacing:.08em}
+
+/* ===== 진단위인정 ===== */
+#courseScreen{--diff:var(--ca)}
+#courseScreen.is-true{background:radial-gradient(circle at 62% 38%,rgba(255,40,80,.16),transparent 46%),radial-gradient(circle at 10% 100%,rgba(120,0,30,.35),transparent 50%),#06030a}
+#courseScreen.is-true .panel{background:rgba(20,6,12,.82);border-color:rgba(255,80,110,.2)}
+#courseScreen.is-true .cd-tracks li,#courseScreen.is-true .cd-rules{background:rgba(22,6,12,.85);border-color:rgba(255,80,110,.2)}
+#courseScreen.is-true .cd-head h1{text-shadow:0 0 28px rgba(255,59,92,.45);letter-spacing:.02em}
+#courseScreen.is-true .cd-head small{animation:shin-pulse 1.4s ease-in-out infinite}
+#courseScreen.is-true .course-card{background:rgba(26,8,14,.7);border-color:rgba(255,80,110,.18)}
+#courseScreen.is-true .key-hints{color:#b98a94}
+#courseScreen.tier-switch .course-layout{animation:tier-in .35s ease both}
+@keyframes tier-in{from{opacity:0;transform:translateY(8px)}}
+@keyframes shin-pulse{50%{opacity:.45}}
+/* top bar tier buttons */
+.nav button[data-tier="true"]{display:inline-flex;align-items:center;gap:6px}
+.nav button[data-tier="true"].active{color:#ffd3db;border-color:#ff3b5c}
+.nav button.is-locked{color:#55617e;cursor:not-allowed}
+.nav button .lock{display:none;width:12px;height:12px}
+.nav button.is-locked .lock{display:inline-block}
+.deny{animation:deny .38s ease}
+@keyframes deny{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+/* title: three cards — free play left, 단위 인정 / 진단위인정 stacked right */
+.title-screen .title-orbit{top:35%;width:min(48vh,56vw)}
+.title-screen .title-copy{top:35%}
+.title-modes{display:grid;grid-template-columns:repeat(2,min(300px,40vw));grid-template-rows:auto auto;justify-content:center;gap:12px 18px;bottom:calc(3vh + 72px)}
+.title-mode[data-mode="select"]{grid-row:1/3;align-content:center}
+.title-mode{padding:14px 20px 15px}
+.title-mode b{font-size:20px}
+.title-mode[data-mode="trueCourse"].is-active{--mode:#ff3b5c}
+.title-mode.is-locked{background:rgba(7,10,20,.6);border-style:dashed;color:#6c7896;cursor:not-allowed}
+.title-mode.is-locked b{color:#76829e}
+.title-mode.is-locked span{color:#8090ae}
+.title-mode.is-locked.is-active{--mode:#6c7896;box-shadow:0 0 0 1px #6c7896;transform:none}
+.title-mode .lock{display:none;width:14px;height:14px;margin-right:6px;vertical-align:-1px}
+.title-mode.is-locked .lock{display:inline-block}
+.title-screen .title-prompt{bottom:calc(1vh + 40px)}
+.title-screen .title-status{bottom:14px}
+#courseScreen .eyebrow{color:var(--ca)}
+@media(prefers-reduced-motion:reduce){#courseScreen.is-true .cd-head small,.deny,#courseScreen.tier-switch .course-layout{animation:none}}
 </style><script>
 // Cancel only browser defaults; retain pointer, click, keyboard and slider events.
 for(const eventName of ['selectstart','dragstart','contextmenu']){
