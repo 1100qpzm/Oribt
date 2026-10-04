@@ -1045,7 +1045,7 @@ async function renderCourseBgm(){
  courseBgm.buffer=out2;return out2}
 
 /* ---- 진단위인정 select BGM: E minor, 160 BPM, 16 bars — driving 16th ostinato, alarm-like lead ----
-   Em – C – Am – B ×4: bars 1–4 build (bass, toms, riser), 5–12 lead + kick (+ snare from 9), 13–16 full. */
+   Em – C – Am – B ×4: bars 1–4 build (bass + chord stabs only), 5–12 lead + kick (+ snare from 9), 13–16 full. */
 async function renderTrueCourseBgm(){
  const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)throw new Error('OfflineAudioContext unsupported');
  const rate=44100,beat=60/160,bar=beat*4,bars=16,loop=bar*bars,tail=3,loopFrames=Math.round(loop*rate),ctx=new Offline(2,Math.ceil((loop+tail)*rate),rate),hz=m=>440*2**((m-69)/12),s16=beat/4;
@@ -1070,10 +1070,9 @@ async function renderTrueCourseBgm(){
  for(let b=0;b<bars;b++){const t=b*bar,c=b%4,build=b<4,full=b>=12;
   for(let i=0;i<16;i++)bassNote(t+i*s16,ROOT[c]+(i%2?12:0),s16*.9);
   for(let i=0;i<8;i++)if(i%2===0||!build)stab(t+i*beat/2,CH[c],i%2?.6:1);
-  if(build){tom(t,40,1);tom(t+beat*1.5,40,.65);tom(t+beat*2,47,.75);tom(t+beat*3,47,.7);tom(t+beat*3.5,40,.85)}
-  else{for(let k=0;k<4;k++)kick(t+k*beat,k===0?1:.85);for(let i=0;i<16;i++)hat(t+i*s16,i%4===2?1:.55)}
+  if(!build){for(let k=0;k<4;k++)kick(t+k*beat,k===0?1:.85);for(let i=0;i<16;i++)hat(t+i*s16,i%4===2?1:.55)}
   if(b>=8){snare(t+beat,1);snare(t+beat*3,1);if(full)snare(t+beat*3.75,.5)}
-  if(b===3)riser(t,bar);if(b===4||b===12)crash(t);if(b===15)for(let i=0;i<8;i++)snare(t+beat*2+i*beat/4,.3+i*.09);
+  if(b===4||b===12)crash(t);if(b===15)for(let i=0;i<8;i++)snare(t+beat*2+i*beat/4,.3+i*.09);
   const phrase=b<4?null:b<8?A:b<12?B:A;if(phrase)for(const [at,len,m] of phrase[c]){lead(t+at*beat,len*beat*.94,m,full?1.05:1);if(full)lead(t+at*beat,len*beat*.94,m-12,.55)}}
  const rendered=await new Promise((resolve,reject)=>{ctx.oncomplete=e=>resolve(e.renderedBuffer);const p=ctx.startRendering();if(p?.then)p.then(resolve,reject)});
  const channels=[0,1].map(ch=>{const src=rendered.getChannelData(ch),data=src.slice(0,loopFrames);for(let i=loopFrames;i<src.length;i++)data[(i-loopFrames)%loopFrames]+=src[i];return data});
