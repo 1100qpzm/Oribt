@@ -880,10 +880,45 @@ const DEFAULT_COURSES=Object.freeze([{
  tracks:[{song:'Execution Clap',slot:5},{song:'THE WORLD REVOLVING',slot:5},{song:'Evans',slot:5}]
 },{
  /* ---- 진단위인정 (tier:'true'): unlocked by passing 제8단 · NEPTUNE ---- */
- id:'orbit-shin-1',tier:'true',name:'진1단 · HERMES',subtitle:'3곡 연속 · 라이프 50',
- life:50,lifeCap:50,heal:10,
+ id:'orbit-shin-1',tier:'true',name:'진1단 · HERMES',subtitle:'3곡 연속 · 라이프 100',
+ life:100,lifeCap:100,heal:10,
  damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
  tracks:[{song:'Engraved in Myth',slot:4},{song:'Compass',slot:5},{song:'balsamina',slot:5}]
+},{
+ id:'orbit-shin-2',tier:'true',name:'진2단 · APHRODITE',subtitle:'3곡 연속 · 라이프 100',
+ life:100,lifeCap:100,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'Evans',slot:4},{song:'Meru',slot:5},{song:'meltdown',slot:5}]
+},{
+ id:'orbit-shin-3',tier:'true',name:'진3단 · GAIA',subtitle:'3곡 연속 · 라이프 100',
+ life:100,lifeCap:100,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'Transparent Elegy',slot:5},{song:'meltdown',slot:5},{song:'The Peach Key',slot:5}]
+},{
+ id:'orbit-shin-4',tier:'true',name:'진4단 · ARES',subtitle:'3곡 연속 · 라이프 100',
+ life:100,lifeCap:100,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'The Peach Key',slot:5},{song:'YARARARA',slot:5},{song:'THE WORLD REVOLVING',slot:5}]
+},{
+ id:'orbit-shin-5',tier:'true',name:'진5단 · ZEUS',subtitle:'3곡 연속 · 라이프 100',
+ life:100,lifeCap:100,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'Execution Clap',slot:5},{song:'THE WORLD REVOLVING',slot:5},{song:'One Room Sugar Life',slot:5}]
+},{
+ id:'orbit-shin-6',tier:'true',name:'진6단 · KRONOS',subtitle:'3곡 연속 · 라이프 100',
+ life:100,lifeCap:100,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'YARARARA',slot:5},{song:'One Room Sugar Life',slot:5},{song:'Evans',slot:5}]
+},{
+ id:'orbit-shin-7',tier:'true',name:'진7단 · OURANOS',subtitle:'3곡 연속 · 라이프 50',
+ life:50,lifeCap:50,heal:5,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'Evans',slot:5},{song:'Daredevile Glaive',slot:5},{song:'Melodiniq',slot:5}]
+},{
+ id:'orbit-shin-8',tier:'true',name:'진8단 · POSEIDON',subtitle:'3곡 연속 · 라이프 10',
+ life:10,lifeCap:10,heal:0,
+ damage:{critical_perfect:0,perfect:0,great:1,good:3,miss:10},
+ tracks:[{song:'Daredevile Glaive',slot:5},{song:'Melodiniq',slot:5},{song:'PANDORA PARADOXXX',slot:6}]
 }]);
 const TRUE_COURSE_UNLOCK_ID='orbit-neptune';
 const COURSE_TIER_LABEL=Object.freeze({normal:'단위 인정',true:'진단위인정'});
@@ -1045,10 +1080,11 @@ async function renderCourseBgm(){
  courseBgm.buffer=out2;return out2}
 
 /* ---- 진단위인정 select BGM: E minor, 160 BPM, 16 bars — driving 16th ostinato, alarm-like lead ----
-   Em – C – Am – B ×4: bars 1–4 build (bass + chord stabs only), 5–12 lead + kick (+ snare from 9), 13–16 full. */
+   Em – C – Am – B ×4: bars 1–4 intro (bass + chord stabs, played once), 5–12 lead + kick (+ snare from 9),
+   13–16 full with a snare fill; playback loops bars 5–16 so the fill lands on the bar-5 crash. */
 async function renderTrueCourseBgm(){
  const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)throw new Error('OfflineAudioContext unsupported');
- const rate=44100,beat=60/160,bar=beat*4,bars=16,loop=bar*bars,tail=3,loopFrames=Math.round(loop*rate),ctx=new Offline(2,Math.ceil((loop+tail)*rate),rate),hz=m=>440*2**((m-69)/12),s16=beat/4;
+ const rate=44100,beat=60/160,bar=beat*4,bars=16,loop=bar*bars,tail=3,loopFrames=Math.round(loop*rate),introFrames=Math.round(bar*4*rate),ctx=new Offline(2,Math.ceil((loop+tail)*rate),rate),hz=m=>440*2**((m-69)/12),s16=beat/4;
  const bus=ctx.createGain();bus.gain.value=.8;const comp=ctx.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=4;comp.attack.value=.003;comp.release.value=.12;bus.connect(comp);comp.connect(ctx.destination);
  const echo=ctx.createDelay(1),efb=ctx.createGain(),elp=ctx.createBiquadFilter(),ewet=ctx.createGain();echo.delayTime.value=beat*.75;efb.gain.value=.3;elp.type='lowpass';elp.frequency.value=2400;ewet.gain.value=.25;echo.connect(elp);elp.connect(efb);efb.connect(echo);elp.connect(ewet);ewet.connect(bus);
  const out=(node,pan=0,send=0)=>{let last=node;if(pan&&ctx.createStereoPanner){const p=ctx.createStereoPanner();p.pan.value=pan;node.connect(p);last=p}last.connect(bus);if(send){const g=ctx.createGain();g.gain.value=send;last.connect(g);g.connect(echo)}};
@@ -1075,15 +1111,16 @@ async function renderTrueCourseBgm(){
   if(b===4||b===12)crash(t);if(b===15)for(let i=0;i<8;i++)snare(t+beat*2+i*beat/4,.3+i*.09);
   const phrase=b<4?null:b<8?A:b<12?B:A;if(phrase)for(const [at,len,m] of phrase[c]){lead(t+at*beat,len*beat*.94,m,full?1.05:1);if(full)lead(t+at*beat,len*beat*.94,m-12,.55)}}
  const rendered=await new Promise((resolve,reject)=>{ctx.oncomplete=e=>resolve(e.renderedBuffer);const p=ctx.startRendering();if(p?.then)p.then(resolve,reject)});
- const channels=[0,1].map(ch=>{const src=rendered.getChannelData(ch),data=src.slice(0,loopFrames);for(let i=loopFrames;i<src.length;i++)data[(i-loopFrames)%loopFrames]+=src[i];return data});
+ // Tail after the last bar (echo, crash) continues into the loop start (bar 5), not into the intro.
+ const loopLen=loopFrames-introFrames,channels=[0,1].map(ch=>{const src=rendered.getChannelData(ch),data=src.slice(0,loopFrames);for(let i=loopFrames;i<src.length;i++)data[introFrames+(i-loopFrames)%loopLen]+=src[i];return data});
  fitLoudness(channels,rate,LOUDNESS_DEFAULT_TARGET);let peak=0;for(const d of channels)for(let i=0;i<d.length;i++){const v=Math.abs(d[i]);if(v>peak)peak=v}
  const level=measureLoudness(channels,rate).lufs,scale=peak>0?Math.min(.89/peak,Number.isFinite(level)?10**((LOUDNESS_DEFAULT_TARGET-level)/20):1):1,buf=ctx.createBuffer(2,loopFrames,rate);channels.forEach((d,ch)=>{for(let i=0;i<d.length;i++)d[i]*=scale;buf.copyToChannel(d,ch)});
- trueCourseBgm.buffer=buf;return buf}
+ trueCourseBgm.buffer=buf;trueCourseBgm.loopStart=introFrames/rate;return buf}
 /* ---- loop players (course / 진단위인정 select screens) ---- */
 const COURSE_BGM_RENDER=new Map([[courseBgm,renderCourseBgm],[trueCourseBgm,renderTrueCourseBgm]]);
 function courseBgmVolume(){return clampVolume(effectiveBgmVolume())}
 function ensureLoopBgm(bgm){if(!bgm.ready)bgm.ready=COURSE_BGM_RENDER.get(bgm)().catch(error=>{console.warn('Course BGM synthesis failed.',error);return null});return bgm.ready}
-function startLoopBgm(bgm,isWanted){bgm.wanted=true;void unlockGameplayAudio();ensureLoopBgm(bgm).then(buffer=>{const ctx=gameplayAudio.ctx;if(!bgm.wanted||bgm.source||!ctx||!buffer||!isWanted())return;if(ctx.state==='suspended')ctx.resume();const source=ctx.createBufferSource(),gain=ctx.createGain(),now=ctx.currentTime;source.buffer=buffer;source.loop=true;gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(courseBgmVolume(),now+1);source.connect(gain);gain.connect(ctx.destination);source.start(now);bgm.source=source;bgm.gain=gain})}
+function startLoopBgm(bgm,isWanted){bgm.wanted=true;void unlockGameplayAudio();ensureLoopBgm(bgm).then(buffer=>{const ctx=gameplayAudio.ctx;if(!bgm.wanted||bgm.source||!ctx||!buffer||!isWanted())return;if(ctx.state==='suspended')ctx.resume();const source=ctx.createBufferSource(),gain=ctx.createGain(),now=ctx.currentTime;source.buffer=buffer;source.loop=true;if(bgm.loopStart){source.loopStart=bgm.loopStart;source.loopEnd=buffer.duration}gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(courseBgmVolume(),now+1);source.connect(gain);gain.connect(ctx.destination);source.start(now);bgm.source=source;bgm.gain=gain})}
 function stopLoopBgm(bgm,fadeSec=.6){bgm.wanted=false;const ctx=gameplayAudio.ctx,{source,gain}=bgm;if(!ctx||!source)return;bgm.source=null;bgm.gain=null;const now=ctx.currentTime;gain.gain.cancelScheduledValues(now);gain.gain.setValueAtTime(Math.max(.0001,gain.gain.value),now);gain.gain.linearRampToValueAtTime(.0001,now+fadeSec);try{source.stop(now+fadeSec+.05)}catch{}source.onended=()=>{source.disconnect();gain.disconnect()}}
 // The course screen plays the music of its current tier.
 function startCourseBgm(){const tier=state.courseTier==='true'?'true':'normal',current=tier==='true'?trueCourseBgm:courseBgm,other=tier==='true'?courseBgm:trueCourseBgm;stopLoopBgm(other,.5);startLoopBgm(current,()=>state.view==='course'&&state.courseTier===tier)}
