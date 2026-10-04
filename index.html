@@ -636,27 +636,6 @@ const TUTORIAL_MAIDATA=`&title=First Orbit
 1h[2:1],,3x,4x,
 5h[2:1],,7x,8x,
 1h[1:1],,,,
-E
-&lv_4=10
-&inote_4=(120){8}
-,,,,,,,,
-1,,2,,3,,4,3,
-2,,1,,8,,7,8,
-1,2,3,4,5,6,7,8,
-1,8,7,6,5,4,3,2,
-1x,2x,3x,4x,5x,6x,7x,8x,
-1x,,3x,,5x,,7x,1,
-1,2x,3x,4,5,6x,7x,8,
-8,7x,6x,5,4,3x,2x,1,
-1h[4:1],,3,4,5h[4:1],,7,8,
-1xh[2:1],,,,5xh[2:1],,,,
-3h[2:1],,,,7h[2:1],,,,
-1,3,5,7,2,4,6,8,
-1,2x,3x,4,5,6x,7x,8,
-1x,2x,3x,4x,5,4,3,2,
-1h[4:1],,3x,4x,5h[4:1],,7x,8x,
-1,2,1,2,3,4,3,4,
-1h[1:1],,,,,,,,
 E`;
 function tutorialJacket(){const dots=Array.from({length:8},(_,i)=>{const a=(-67.5+45*i)*Math.PI/180;return `<circle cx="${(150+96*Math.cos(a)).toFixed(1)}" cy="${(150+96*Math.sin(a)).toFixed(1)}" r="7" fill="${i%2?'#5fe08a':'#e9ffef'}" fill-opacity=".7"/>`}).join('');return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><defs><radialGradient id="b" cx=".5" cy=".42" r=".75"><stop offset="0" stop-color="#1f5a43"/><stop offset=".55" stop-color="#0b2a22"/><stop offset="1" stop-color="#050e0c"/></radialGradient></defs><rect width="300" height="300" fill="url(#b)"/><circle cx="150" cy="150" r="96" fill="none" stroke="#5fe08a" stroke-opacity=".6" stroke-width="3"/><circle cx="150" cy="150" r="58" fill="none" stroke="#5fe08a" stroke-opacity=".3" stroke-width="2" stroke-dasharray="3 9"/>${dots}<circle cx="150" cy="150" r="8" fill="#c9ffd8"/><text x="150" y="284" text-anchor="middle" fill="#e9ffef" fill-opacity=".85" font-family="Arial" font-weight="800" font-size="17" letter-spacing="5">FIRST ORBIT</text></svg>`)}`}
 function createBuiltinTutorial(){const s=createSongPackage('first-orbit',TUTORIAL_MAIDATA,'builtin');s.builtin=true;s.maidataFile={name:'maidata.txt (내장)'};s.chartFile=s.maidataFile;s.jacketFile={name:'jacket.svg (내장)'};s.assetNames={chart:'maidata.txt (내장)',audio:'',jacket:'jacket.svg (내장)',movie:'',background:'jacket.svg (내장)'};setRemoteAsset(s.id,'jacket',tutorialJacket(),{kind:'image'});s.validation={errors:['내장 음원 준비 중'],warnings:[],ready:!1};return s}
@@ -864,15 +843,20 @@ const DEFAULT_COURSES=Object.freeze([{
  life:500,lifeCap:500,heal:50,
  damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
  tracks:[{song:'Tutorial',slot:4},{song:'balsamina',slot:4},{song:'umiyuri kaiten',slot:4}]
+},{
+ id:'orbit-venus',name:'제2단 · VENUS',subtitle:'3곡 연속 · 라이프 500',
+ life:500,lifeCap:500,heal:50,
+ damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
+ tracks:[{song:'cutlery',slot:4},{song:'Cloudless',slot:4},{song:'Kuneru Engazer',slot:4}]
 }]);
-// Friendly names for built-in songs. An R2 folder with the same name takes priority.
-const COURSE_SONG_ALIASES=Object.freeze({'tutorial':'builtin:first-orbit','first orbit':'builtin:first-orbit'});
+// Friendly names for built-in songs (used only when no R2 song matches).
+const COURSE_SONG_ALIASES=Object.freeze({'first orbit':'builtin:first-orbit'});
 const COURSE_RECORD_KEY='orbit.courseRecords.v1',COURSE_ACCENT='#ffb547',COURSE_INTERLUDE_MS=2800,COURSE_FAIL_MS=2600;
 const courseRun={active:false,course:null,tracks:[],index:0,life:0,maxLife:0,results:[],failed:false,autoplay:false,timer:0,prevSelection:null};
 function normalizeCourse(c,i){if(!c||typeof c!=='object'||!Array.isArray(c.tracks)||!c.tracks.length)return null;const life=Math.max(1,Math.round(Number(c.life)||500)),cap=c.lifeCap===null?null:Math.max(1,Math.round(Number(c.lifeCap)||life)),damage={};for(const k of ['critical_perfect','perfect','great','good','miss'])damage[k]=Math.max(0,Number(c.damage?.[k])||0);return {id:String(c.id||`course-${i+1}`),name:String(c.name||`단위인정 ${i+1}`),subtitle:String(c.subtitle||''),life,lifeCap:cap,heal:Math.max(0,Number(c.heal)||0),damage,tracks:c.tracks.map(t=>({song:String(t.song||''),slot:Number(t.slot)}))}}
 function applyCourseTable(table){const list=Array.isArray(table)?table:Array.isArray(table?.courses)?table.courses:null,courses=(list||[]).map(normalizeCourse).filter(Boolean);state.courses=courses.length?courses:DEFAULT_COURSES.map(normalizeCourse);if(!state.courses.some(c=>c.id===state.selectedCourseId))state.selectedCourseId=state.courses[0]?.id||null}
 applyCourseTable(null);
-function findCourseSong(ref){const direct=state.songs.find(s=>s.id===ref||s.directory===ref||s.id===`r2:${encodeURIComponent(ref)}`);if(direct)return direct;const alias=COURSE_SONG_ALIASES[String(ref).trim().toLowerCase()];return alias?state.songs.find(s=>s.id===alias)||null:null}
+function findCourseSong(ref){const direct=state.songs.find(s=>s.id===ref||s.directory===ref||s.id===`r2:${encodeURIComponent(ref)}`);if(direct)return direct;const key=normalizeSearch(ref),online=[...state.songs].sort((a,b)=>(a.source==='r2'?0:1)-(b.source==='r2'?0:1)),loose=online.find(s=>normalizeSearch(s.directory)===key)||online.find(s=>normalizeSearch(s.title)===key);if(loose)return loose;const alias=COURSE_SONG_ALIASES[String(ref).trim().toLowerCase()];return alias?state.songs.find(s=>s.id===alias)||null:null}
 function resolveCourseTracks(course){return course.tracks.map(ref=>{const s=findCourseSong(ref.song),c=s?.charts.find(x=>x.index===ref.slot)||null,ready=!!(s&&c&&s.validation.ready);return {ref,song:s,chart:c,ready,reason:!s?(state.r2Loading?'곡 불러오는 중':'곡을 찾을 수 없음'):!c?'해당 난이도 채보 없음':!s.validation.ready?(s.validation.errors[0]||'준비 중'):''}})}
 function selectedCourse(){return state.courses.find(c=>c.id===state.selectedCourseId)||state.courses[0]||null}
 function readCourseRecords(){try{const v=JSON.parse(localStorage.getItem(COURSE_RECORD_KEY));return v&&typeof v==='object'?v:{}}catch{return {}}}
