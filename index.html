@@ -26,7 +26,7 @@ img{-webkit-user-drag:none}
 #settingsButton{margin:0 8px 8px;flex-shrink:0}
 </style></head><body><div class="app"><header class="topbar"><div class="brand">ORBIT <small>PROTOTYPE</small></div><nav class="nav"><button data-nav="select">SONG SELECT</button><button data-nav="course" data-tier="normal">단위 인정</button><button data-nav="course" data-tier="true"><svg class="lock" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v5A1.5 1.5 0 0 1 12.5 15h-9A1.5 1.5 0 0 1 2 13.5v-5A1.5 1.5 0 0 1 3.5 7H4Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>진단위인정</button><button data-nav="library">LIBRARY</button></nav></header>
 <main id="gateScreen" class="screen gate-screen active"><div class="gate-box"><span class="gate-mark" aria-hidden="true"></span><p class="gate-main">클릭하거나 아무 키나 누르세요</p><p class="gate-sub">소리가 재생됩니다 · 볼륨을 확인해 주세요</p></div></main>
-<main id="titleScreen" class="screen title-screen"><div class="title-orbit" aria-hidden="true"><svg viewBox="0 0 600 600"><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="59.8"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="59.8"/><circle class="t-ring2" cx="300" cy="300" r="214"/><circle class="t-ring" cx="300" cy="300" r="260"/><circle class="t-lane" cx="399.5" cy="59.8" r="11"/><circle class="t-lane" cx="540.2" cy="200.5" r="11"/><circle class="t-lane" cx="540.2" cy="399.5" r="11"/><circle class="t-lane" cx="399.5" cy="540.2" r="11"/><circle class="t-lane" cx="200.5" cy="540.2" r="11"/><circle class="t-lane" cx="59.8" cy="399.5" r="11"/><circle class="t-lane" cx="59.8" cy="200.5" r="11"/><circle class="t-lane" cx="200.5" cy="59.8" r="11"/><g class="t-sat"><circle cx="300" cy="40" r="7"/></g></svg></div><div class="title-copy"><h1 class="title-logo">ORBIT</h1><p class="title-tag">8레인 원형 리듬게임</p></div><div class="title-modes" role="group" aria-label="모드 선택"><button class="title-mode" data-mode="select" type="button"><small>1 · FREE PLAY</small><b>프리 플레이</b><span>원하는 곡과 난이도를 골라 플레이</span></button><button class="title-mode" data-mode="course" type="button"><small>2 · COURSE</small><b>단위 인정</b><span>여러 곡을 하나의 라이프로 연속 도전</span></button><button class="title-mode" data-mode="trueCourse" type="button"><small><svg class="lock" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v5A1.5 1.5 0 0 1 12.5 15h-9A1.5 1.5 0 0 1 2 13.5v-5A1.5 1.5 0 0 1 3.5 7H4Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>3 · TRUE COURSE</small><b>진단위인정</b><span>단위인정 제9단 합격 시 해금</span></button></div><p class="title-prompt">방향키로 선택 · Enter로 시작</p><p class="title-status" id="titleStatus"></p></main>
+<main id="titleScreen" class="screen title-screen"><div class="title-orbit" aria-hidden="true"><svg viewBox="0 0 600 600"><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="59.8"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="540.2" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="399.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="540.2"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="399.5"/><line class="t-spoke" x1="300" y1="300" x2="59.8" y2="200.5"/><line class="t-spoke" x1="300" y1="300" x2="200.5" y2="59.8"/><circle class="t-ring2" cx="300" cy="300" r="214"/><circle class="t-ring" cx="300" cy="300" r="260"/><circle class="t-lane" cx="399.5" cy="59.8" r="11"/><circle class="t-lane" cx="540.2" cy="200.5" r="11"/><circle class="t-lane" cx="540.2" cy="399.5" r="11"/><circle class="t-lane" cx="399.5" cy="540.2" r="11"/><circle class="t-lane" cx="200.5" cy="540.2" r="11"/><circle class="t-lane" cx="59.8" cy="399.5" r="11"/><circle class="t-lane" cx="59.8" cy="200.5" r="11"/><circle class="t-lane" cx="200.5" cy="59.8" r="11"/><g class="t-sat"><circle cx="300" cy="40" r="7"/></g></svg></div><div class="title-copy"><h1 class="title-logo">ORBIT</h1><p class="title-tag">8레인 원형 리듬게임</p></div><div class="title-modes" role="group" aria-label="모드 선택"><button class="title-mode" data-mode="select" type="button"><small>1 · FREE PLAY</small><b>프리 플레이</b><span>원하는 곡과 난이도를 골라 플레이</span></button><button class="title-mode" data-mode="course" type="button"><small>2 · COURSE</small><b>단위 인정</b><span>여러 곡을 하나의 라이프로 연속 도전</span></button><button class="title-mode" data-mode="trueCourse" type="button"><small><svg class="lock" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v5A1.5 1.5 0 0 1 12.5 15h-9A1.5 1.5 0 0 1 2 13.5v-5A1.5 1.5 0 0 1 3.5 7H4Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>3 · TRUE COURSE</small><b>진단위인정</b><span>단위인정 개전 합격 시 해금</span></button></div><p class="title-prompt">방향키로 선택 · Enter로 시작</p><p class="title-status" id="titleStatus"></p></main>
 <div id="libraryLoading" class="library-loading" hidden role="dialog" aria-modal="true" aria-labelledby="libraryLoadingTitle"><section><h2 id="libraryLoadingTitle">온라인 곡 불러오는 중</h2><div class="ll-count"><span id="libraryLoadingCount">— / —</span><small>곡</small></div><div class="ll-bar" role="progressbar" aria-label="곡 불러오기 진행률"><i id="libraryLoadingBar"></i></div><p class="ll-note" id="libraryLoadingNote" aria-live="polite"></p><button id="libraryLoadingSkip" type="button" hidden>기다리지 않고 들어가기</button></section></div>
 <main id="courseScreen" class="screen course-screen"><div class="course-layout"><section class="panel course-list-panel"><div class="panel-head"><span class="eyebrow" id="courseTierLabel">단위 인정</span><span class="count" id="courseCount"></span></div><div id="courseList" class="course-list"></div></section><section class="course-detail" id="courseDetail"></section><section class="panel course-side" id="courseSide"><button id="courseSettingsButton" class="settings-button course-settings" type="button">설정</button></section></div><footer class="key-hints" aria-label="키보드 조작"><span><kbd>W</kbd><kbd>S</kbd>단위인정 선택</span><span><kbd>Enter</kbd>도전 시작</span><span><kbd>Backspace</kbd>길게 · 도전 중 나가기</span></footer></main>
 <main id="courseResultScreen" class="screen course-result-screen"><div class="cr-shell"><div class="cr-main"><header><small id="crTierLabel">단위 인정 결과</small><h1 id="crCourseName"></h1></header><div class="cr-verdict" id="crVerdict"></div><p id="crSub"></p><div class="cr-summary"><div class="cr-life"><small>LIFE</small><div class="cr-life-bar"><i id="crLifeFill"></i></div><span id="crLifeText"></span></div><div class="cr-total"><small>달성률 합산</small><b id="crTotal">0.0000%</b><span id="crTotalMax"></span></div></div><ol class="cr-tracks" id="crTracks"></ol><footer class="cr-actions"><button id="crRetry" class="cr-primary" type="button"><span>다시 도전</span><kbd>Enter</kbd></button><button id="crBack" type="button"><span>단위 인정 목록</span><kbd>Esc</kbd></button></footer></div><aside class="cr-side" id="crSide"><form id="crRegister" class="ranking-registration cr-register"><label for="crNickname">단위인정 랭킹 등록 · 닉네임 <small>1–12자</small></label><input id="crNickname" type="text" autocomplete="nickname" placeholder="닉네임"><button id="crRegisterButton" type="submit">등록</button><p id="crRegisterStatus" role="status" aria-live="polite"></p></form><p id="crRegisterNote" class="cr-register-note" hidden></p></aside></div></main>
@@ -878,8 +878,8 @@ const DEFAULT_COURSES=Object.freeze([{
  damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
  tracks:[{song:'Transparent Elegy',slot:5},{song:'THE WORLD REVOLVING',slot:5},{song:'heat abnormal',slot:5}]
 },{
- /* 제9단 · PLUTO — four tracks; passing it unlocks 진단위인정 */
- id:'orbit-pluto',name:'제9단 · PLUTO',
+ /* 개전 · PLUTO — final gate of 단위 인정 (four tracks); passing it unlocks 진단위인정 */
+ id:'orbit-pluto',special:true,name:'개전 · PLUTO',
  life:900,lifeCap:900,heal:20,
  damage:{critical_perfect:0,perfect:0,great:2,good:2,miss:5},
  tracks:[{song:'Execution Clap',slot:5},{song:'One Room Sugar Life',slot:5},{song:'Evans',slot:5},{song:'Daredevile Glaive',slot:5}]
@@ -915,15 +915,21 @@ const DEFAULT_COURSES=Object.freeze([{
  damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
  tracks:[{song:'YARARARA',slot:5},{song:'One Room Sugar Life',slot:5},{song:'Evans',slot:5}]
 },{
- id:'orbit-shin-7',tier:'true',name:'진7단 · OURANOS',subtitle:'3곡 연속 · 라이프 50',
- life:50,lifeCap:50,heal:5,
+ id:'orbit-shin-7',tier:'true',name:'진7단 · OURANOS',
+ life:100,lifeCap:100,heal:10,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'THE WORLD REVOLVING',slot:5},{song:'heat abnormal',slot:5},{song:'Daredevile Glaive',slot:5}]
+},{
+ id:'orbit-shin-8',tier:'true',name:'진8단 · POSEIDON',
+ life:100,lifeCap:100,heal:10,
  damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
  tracks:[{song:'Evans',slot:5},{song:'Daredevile Glaive',slot:5},{song:'Melodiniq',slot:5}]
 },{
- id:'orbit-shin-8',tier:'true',name:'진8단 · POSEIDON',subtitle:'3곡 연속 · 라이프 10',
- life:10,lifeCap:10,heal:0,
- damage:{critical_perfect:0,perfect:0,great:1,good:3,miss:10},
- tracks:[{song:'Daredevile Glaive',slot:5},{song:'Melodiniq',slot:5},{song:'PANDORA PARADOXXX',slot:6}]
+ /* 진개전 · HADES — final gate of 진단위인정 (HADES is PLUTO's Greek name) */
+ id:'orbit-shin-kaiden',tier:'true',special:true,name:'진개전 · HADES',
+ life:50,lifeCap:50,heal:5,
+ damage:{critical_perfect:0,perfect:0,great:2,good:3,miss:5},
+ tracks:[{song:'heat abnormal',slot:5},{song:'Daredevile Glaive',slot:5},{song:'Melodiniq',slot:5},{song:'PANDORA PARADOXXX',slot:6}]
 }]);
 const TRUE_COURSE_UNLOCK_ID='orbit-pluto';
 const COURSE_TIER_LABEL=Object.freeze({normal:'단위 인정',true:'진단위인정'});
@@ -931,7 +937,7 @@ const COURSE_TIER_LABEL=Object.freeze({normal:'단위 인정',true:'진단위인
 const COURSE_SONG_ALIASES=Object.freeze({'first orbit':'builtin:first-orbit'});
 const COURSE_RECORD_KEY='orbit.courseRecords.v1',COURSE_ACCENT='#ffb547',COURSE_INTERLUDE_MS=2800,COURSE_FAIL_MS=2600;
 const courseRun={active:false,course:null,tracks:[],index:0,life:0,maxLife:0,results:[],failed:false,autoplay:false,timer:0,prevSelection:null};
-function normalizeCourse(c,i){if(!c||typeof c!=='object'||!Array.isArray(c.tracks)||!c.tracks.length)return null;const life=Math.max(1,Math.round(Number(c.life)||500)),cap=c.lifeCap===null?null:Math.max(1,Math.round(Number(c.lifeCap)||life)),damage={};for(const k of ['critical_perfect','perfect','great','good','miss'])damage[k]=Math.max(0,Number(c.damage?.[k])||0);return {id:String(c.id||`course-${i+1}`),tier:c.tier==='true'?'true':'normal',name:String(c.name||`단위인정 ${i+1}`),subtitle:String(c.subtitle||''),life,lifeCap:cap,heal:Math.max(0,Number(c.heal)||0),damage,tracks:c.tracks.map(t=>({song:String(t.song||''),slot:Number(t.slot)}))}}
+function normalizeCourse(c,i){if(!c||typeof c!=='object'||!Array.isArray(c.tracks)||!c.tracks.length)return null;const life=Math.max(1,Math.round(Number(c.life)||500)),cap=c.lifeCap===null?null:Math.max(1,Math.round(Number(c.lifeCap)||life)),damage={};for(const k of ['critical_perfect','perfect','great','good','miss'])damage[k]=Math.max(0,Number(c.damage?.[k])||0);return {id:String(c.id||`course-${i+1}`),tier:c.tier==='true'?'true':'normal',special:!!c.special,name:String(c.name||`단위인정 ${i+1}`),subtitle:String(c.subtitle||''),life,lifeCap:cap,heal:Math.max(0,Number(c.heal)||0),damage,tracks:c.tracks.map(t=>({song:String(t.song||''),slot:Number(t.slot)}))}}
 function applyCourseTable(table){const list=Array.isArray(table)?table:Array.isArray(table?.courses)?table.courses:null,courses=(list||[]).map(normalizeCourse).filter(Boolean);state.courses=courses.length?courses:DEFAULT_COURSES.map(normalizeCourse);state.courseTier=state.courseTier||'normal';state.courseSelectionByTier=state.courseSelectionByTier||{};if(!coursesForTier().some(c=>c.id===state.selectedCourseId))state.selectedCourseId=coursesForTier()[0]?.id||null}
 function coursesForTier(tier=state.courseTier){return state.courses.filter(c=>c.tier===tier)}
 function isTrueCourseUnlocked(){return !!readCourseRecords()[TRUE_COURSE_UNLOCK_ID]?.passed}
@@ -950,12 +956,12 @@ function lifeTone(r){return r>.5?'#6fe0a0':r>.2?'#ffc23d':'#ff5f7e'}
 const courseStartLife=()=>courseRun.course?.life||1;
 
 /* ---- course select screen ---- */
-function renderCourseScreen(){const list=$('#courseList'),detail=$('#courseDetail');if(!list||!detail)return;if(state.courseTier==='true'&&!isTrueCourseUnlocked())setCourseTier('normal');const records=readCourseRecords(),course=selectedCourse(),tierCourses=coursesForTier(),label=COURSE_TIER_LABEL[state.courseTier];document.body.dataset.courseTier=state.courseTier;$('#courseScreen').classList.toggle('is-true',state.courseTier==='true');$('#courseTierLabel').textContent=label;$('#courseCount').textContent=`${tierCourses.length}개`;
- list.innerHTML=tierCourses.map(c=>{const r=records[c.id];return `<button class="course-card ${c.id===course?.id?'selected':''}" data-course="${attr(c.id)}" type="button"><span class="cc-name">${esc(c.name)}</span><span class="cc-badge ${r?.passed?'pass':r?.plays?'tried':''}">${r?.passed?'합격':r?.plays?'도전 중':'미도전'}</span></button>`}).join('');
+function renderCourseScreen(){const list=$('#courseList'),detail=$('#courseDetail');if(!list||!detail)return;if(state.courseTier==='true'&&!isTrueCourseUnlocked())setCourseTier('normal');const records=readCourseRecords(),course=selectedCourse(),tierCourses=coursesForTier(),label=COURSE_TIER_LABEL[state.courseTier];document.body.dataset.courseTier=state.courseTier;document.body.dataset.courseSpecial=String(!!course?.special);$('#courseScreen').classList.toggle('is-true',state.courseTier==='true');$('#courseScreen').classList.toggle('is-special',!!course?.special);$('#courseTierLabel').textContent=label;$('#courseCount').textContent=`${tierCourses.length}개`;
+ list.innerHTML=tierCourses.map(c=>{const r=records[c.id];return `<button class="course-card ${c.id===course?.id?'selected':''} ${c.special?'is-special':''}" data-course="${attr(c.id)}" type="button">${c.special?'<span class="cc-gate">FINAL GATE · 皆傳</span>':''}<span class="cc-name">${esc(c.name)}</span><span class="cc-badge ${r?.passed?'pass':r?.plays?'tried':''}">${r?.passed?'합격':r?.plays?'도전 중':'미도전'}</span></button>`}).join('');
  list.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{if(state.transitioning)return;state.selectedCourseId=b.dataset.course;renderCourseScreen()});
  if(!course){detail.innerHTML='<div class="empty">단위인정이 없습니다.</div>';return}
  const tracks=resolveCourseTracks(course),ready=tracks.every(t=>t.ready),r=records[course.id],d=course.damage,dmgText=[['great','GREAT'],['good','GOOD'],['miss','MISS'],['perfect','PERFECT'],['critical_perfect','CRITICAL PERFECT']].filter(([k])=>d[k]>0).map(([k,l])=>`<span><b>${l}</b> −${d[k]}</span>`).join('');
- detail.innerHTML=`<header class="cd-head"><small>${esc(label)}</small><h1>${esc(course.name)}</h1></header>
+ detail.innerHTML=`<header class="cd-head">${course.special?'<span class="cd-kaiden" aria-hidden="true">皆傳</span>':''}<small>${esc(label)}${course.special?' · 최종 관문':''}</small><h1>${esc(course.name)}</h1></header>
  <ol class="cd-tracks" style="--tracks:${tracks.length}">${tracks.map((t,i)=>`<li class="${t.ready?'':'missing'}" style="--track-diff:${difficultyColor(t.chart?.difficulty)}"><span class="cd-no">TRACK ${i+1}</span><img src="${t.song?jacketSrc(t.song):''}" alt=""><b title="${attr(t.song?.title||t.ref.song)}">${esc(t.song?.title||t.ref.song)}</b><span class="cd-diff">${esc(t.chart?.difficulty||'—')} <em>${esc(t.chart?.level||'—')}</em></span>${t.reason?`<span class="cd-warn">${esc(t.reason)}</span>`:''}</li>`).join('')}</ol>
  <section class="cd-rules"><div><small>시작 라이프</small><b>${course.life}</b></div><div><small>곡 클리어 회복</small><b>+${course.heal}</b>${course.lifeCap?`<em>최대 ${course.lifeCap}</em>`:''}</div><div class="cd-damage"><small>판정별 감소</small><p>${dmgText||'<span>감소 없음</span>'}</p></div></section>
  <section class="cd-record">${r?.plays?`<span class="${r.passed?'pass':''}">${r.passed?'합격':'불합격'}</span><p>${r.passed?`최고 남은 라이프 <b>${r.bestLife}</b>`:`최고 ${r.bestCleared||0}곡 클리어`} · 도전 ${r.plays}회</p>`:'<p>아직 도전 기록이 없습니다. 라이프가 0이 되면 그 자리에서 실패합니다.</p>'}</section>
@@ -965,7 +971,7 @@ function moveCourseSelection(step){const list=coursesForTier();if(!list.length)r
 
 /* ---- running a course ---- */
 function startCourse(course,{autoplay=false}={}){if(!course||state.transitioning)return;const tracks=resolveCourseTracks(course);if(!tracks.every(t=>t.ready))return;stopCourseBgm(.4);
- document.body.dataset.courseTier=course.tier;Object.assign(courseRun,{active:true,course,tracks,index:0,life:course.life,maxLife:course.lifeCap||0,results:[],failed:false,autoplay,prevSelection:courseRun.active?courseRun.prevSelection:{song:state.selectedSongId,chart:state.selectedChartId}});
+ document.body.dataset.courseTier=course.tier;document.body.dataset.courseSpecial=String(!!course.special);Object.assign(courseRun,{active:true,course,tracks,index:0,life:course.life,maxLife:course.lifeCap||0,results:[],failed:false,autoplay,prevSelection:courseRun.active?courseRun.prevSelection:{song:state.selectedSongId,chart:state.selectedChartId}});
  if(!autoplay)requestAimLock();void unlockGameplayAudio();
  const from=document.getElementById(`${state.view}Screen`);state.transitioning=true;if(from){from.style.pointerEvents='none';from.style.animation=`screen-exit ${GAME_CONFIG.SCREEN_EXIT}s ease both`}
  state.transitionTimer=setTimeout(()=>{if(from){from.style.pointerEvents='';from.style.animation=''}state.transitioning=false;state.transitionTimer=0;startCourseTrack()},GAME_CONFIG.SCREEN_EXIT*1000)}
@@ -1003,13 +1009,13 @@ function restoreCourseSelection(){const p=courseRun.prevSelection;if(p?.song&&st
 function abortCourse(){clearTimeout(courseRun.timer);courseRun.timer=0;courseRun.active=false;hideCourseInterlude();updateCourseHud();restoreCourseSelection()}
 function finishCourse(passed){clearTimeout(courseRun.timer);courseRun.timer=0;const run={...courseRun,results:[...courseRun.results]};courseRun.active=false;hideCourseInterlude();
  const newBest=run.autoplay?false:saveCourseRecord(run,passed);
- state.courseResult={courseId:run.course.id,tier:run.course.tier,name:run.course.name,passed,life:passed?run.life:0,startLife:run.course.life,maxLife:run.maxLife||run.course.life,autoplay:run.autoplay,newBest,results:run.results,tracks:run.tracks.map(t=>({title:t.song.title,difficulty:t.chart.difficulty,level:t.chart.level,jacket:jacketSrc(t.song)}))};
+ state.courseResult={courseId:run.course.id,tier:run.course.tier,special:!!run.course.special,name:run.course.name,passed,life:passed?run.life:0,startLife:run.course.life,maxLife:run.maxLife||run.course.life,autoplay:run.autoplay,newBest,results:run.results,tracks:run.tracks.map(t=>({title:t.song.title,difficulty:t.chart.difficulty,level:t.chart.level,jacket:jacketSrc(t.song)}))};
  restoreCourseSelection();show('courseResult')}
 
 /* ---- course result ---- */
 function courseTotal(results){return (results||[]).reduce((a,r)=>a+(Number(r.achievement)||0),0)}
 function renderCourseResult(){const r=state.courseResult;if(!r)return;const screen=$('#courseResultScreen');screen.classList.toggle('passed',r.passed);screen.classList.toggle('failed',!r.passed);
- $('#crCourseName').textContent=r.name;$('#crTierLabel').textContent=`${COURSE_TIER_LABEL[r.tier||'normal']} 결과`;document.body.dataset.courseTier=r.tier||'normal';$('#crVerdict').textContent=r.autoplay?'AUTO PLAY':r.passed?'PASSED':'FAILED';$('#crSub').textContent=r.autoplay?'시연 결과는 기록되지 않습니다':r.newBest?'NEW RECORD':r.passed?'합격':'불합격';
+ $('#crCourseName').textContent=r.name;$('#crTierLabel').textContent=`${COURSE_TIER_LABEL[r.tier||'normal']} 결과`;document.body.dataset.courseTier=r.tier||'normal';document.body.dataset.courseSpecial=String(!!r.special);$('#crVerdict').textContent=r.autoplay?'AUTO PLAY':r.passed?'PASSED':'FAILED';$('#crSub').textContent=r.autoplay?'시연 결과는 기록되지 않습니다':r.newBest?'NEW RECORD':r.passed?'합격':'불합격';
  const ratio=Math.max(0,Math.min(1,r.life/(r.startLife||r.maxLife||1)));$('#crLifeFill').style.transform=`scaleX(${ratio})`;$('#crLifeFill').style.background=lifeTone(ratio);$('#crLifeText').textContent=`${r.life} / ${r.startLife||r.maxLife}`;$('#crTotal').textContent=`${courseTotal(r.results).toFixed(4)}%`;$('#crTotalMax').textContent=`/ ${(r.tracks.length*101).toFixed(0)}%`;
  $('#crTracks').innerHTML=r.tracks.map((t,i)=>{const res=r.results[i];return `<li class="${res?res.cleared?'clear':'fail':'none'}" style="--track-diff:${difficultyColor(t.difficulty)}"><span class="cr-no">${i+1}</span><img src="${t.jacket}" alt=""><div class="cr-info"><b title="${attr(t.title)}">${esc(t.title)}</b><span>${esc(t.difficulty)} ${esc(t.level)}</span></div>${res?`<div class="cr-score"><b>${(res.achievement||0).toFixed(4)}%</b><span>${res.cleared?esc(res.rank||''):'FAILED'} · MISS ${res.judgmentCounts?.miss??0}</span></div><div class="cr-lifeafter"><small>LIFE</small><b>${res.lifeAfter}</b></div>`:'<div class="cr-score none"><span>도전하지 못함</span></div>'}</li>`}).join('');
  syncCourseRegistration(r);void loadCourseRanking('result',r.courseId)}
@@ -1028,13 +1034,13 @@ function retryCourse(){const c=state.courses.find(x=>x.id===state.courseResult?.
 
 /* ---- title mode choice ---- */
 const TITLE_MODES=['select','course','trueCourse'];let titleModeIndex=0;
-function syncTitleModes(){const unlocked=isTrueCourseUnlocked();document.querySelectorAll('.title-mode').forEach((b,i)=>{b.classList.toggle('is-active',i===titleModeIndex);b.setAttribute('aria-pressed',String(i===titleModeIndex))});const shin=$('.title-mode[data-mode="trueCourse"]');if(shin){shin.classList.toggle('is-locked',!unlocked);shin.querySelector('span').textContent=unlocked?'더 가혹한 라이프로 도전하는 상위 단위인정':'단위인정 제9단 합격 시 해금'}}
+function syncTitleModes(){const unlocked=isTrueCourseUnlocked();document.querySelectorAll('.title-mode').forEach((b,i)=>{b.classList.toggle('is-active',i===titleModeIndex);b.setAttribute('aria-pressed',String(i===titleModeIndex))});const shin=$('.title-mode[data-mode="trueCourse"]');if(shin){shin.classList.toggle('is-locked',!unlocked);shin.querySelector('span').textContent=unlocked?'더 가혹한 라이프로 도전하는 상위 단위인정':'단위인정 개전 합격 시 해금'}}
 function flashLocked(el){if(!el)return;el.classList.remove('deny');void el.offsetWidth;el.classList.add('deny')}
 function chooseTitleMode(index){const mode=TITLE_MODES[index];if(mode==='trueCourse'){if(!isTrueCourseUnlocked()){flashLocked($('.title-mode[data-mode="trueCourse"]'));return}setCourseTier('true');enterFromTitle('course');return}if(mode==='course')setCourseTier('normal');enterFromTitle(mode)}
 document.querySelectorAll('.title-mode').forEach((b,i)=>{b.addEventListener('pointerenter',()=>{titleModeIndex=i;syncTitleModes()});b.addEventListener('click',()=>{titleModeIndex=i;syncTitleModes();chooseTitleMode(i)})});
 syncTitleModes();
 /* ---- top bar: 단위 인정 / 진단위인정 share the course screen ---- */
-function syncCourseNav(){const unlocked=isTrueCourseUnlocked();document.querySelectorAll('[data-nav="course"][data-tier]').forEach(b=>{b.classList.toggle('active',state.view==='course'&&b.dataset.tier===state.courseTier);if(b.dataset.tier==='true'){b.classList.toggle('is-locked',!unlocked);b.title=unlocked?'진단위인정':'단위인정 제9단 합격 시 해금'}})}
+function syncCourseNav(){const unlocked=isTrueCourseUnlocked();document.querySelectorAll('[data-nav="course"][data-tier]').forEach(b=>{b.classList.toggle('active',state.view==='course'&&b.dataset.tier===state.courseTier);if(b.dataset.tier==='true'){b.classList.toggle('is-locked',!unlocked);b.title=unlocked?'진단위인정':'단위인정 개전 합격 시 해금'}})}
 function navigateCourseTier(button){const tier=button.dataset.tier;button.blur();if(tier==='true'&&!isTrueCourseUnlocked()){flashLocked(button);return}if(state.transitioning)return;if(state.view==='course'){if(tier===state.courseTier)return;setCourseTier(tier);const screen=$('#courseScreen');screen.classList.remove('tier-switch');void screen.offsetWidth;screen.classList.add('tier-switch');renderCourseScreen();syncCourseNav();startCourseBgm();return}setCourseTier(tier);transitionNavigation('course')}
 document.querySelectorAll('[data-nav="course"][data-tier]').forEach(b=>b.onclick=()=>navigateCourseTier(b));
 
@@ -1733,6 +1739,24 @@ li.fail .cr-score span{color:#ff9aac}
 @media(prefers-reduced-motion:reduce){#courseScreen.is-true .cd-head small,.deny,#courseScreen.tier-switch .course-layout{animation:none}}
 
 #courseScreen.is-true .course-card.selected{border-color:var(--ca);background:linear-gradient(90deg,color-mix(in srgb,var(--ca) 22%,transparent),color-mix(in srgb,var(--ca) 5%,transparent));box-shadow:0 0 18px color-mix(in srgb,var(--ca) 22%,transparent)}
+
+/* ===== 개전 (final gate) — gold, applies inside both tiers ===== */
+body[data-course-special="true"]{--ca:#ffd56b;--ca-ink:#1a1204;--ca-title:#fff6da;--ca-soft:#ffe9b3;--ca-deep:#171004}
+.course-card.is-special{border-color:rgba(255,213,107,.45);background:linear-gradient(135deg,rgba(255,213,107,.14),rgba(150,110,255,.08) 60%,rgba(16,22,40,.7))}
+#courseScreen.is-true .course-card.is-special{background:linear-gradient(135deg,rgba(255,213,107,.14),rgba(255,59,92,.1) 60%,rgba(26,8,14,.7));border-color:rgba(255,213,107,.45)}
+.course-card.is-special .cc-name{background:linear-gradient(90deg,#fff3c4,#ffd56b 45%,#ffb36b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.course-card.is-special.selected,#courseScreen.is-true .course-card.is-special.selected{border-color:#ffd56b;box-shadow:0 0 0 1px #ffd56b,0 0 22px rgba(255,213,107,.35)}
+.cc-gate{color:#ffd56b;font:700 10px var(--display);letter-spacing:.24em}
+#courseScreen.is-special{background:radial-gradient(circle at 62% 34%,rgba(255,213,107,.16),transparent 44%),radial-gradient(circle at 85% 90%,rgba(140,100,255,.16),transparent 45%),#07060c}
+#courseScreen.is-true.is-special{background:radial-gradient(circle at 62% 34%,rgba(255,213,107,.15),transparent 44%),radial-gradient(circle at 10% 100%,rgba(140,0,40,.35),transparent 50%),#07030a}
+#courseScreen.is-special .cd-head{position:relative}
+#courseScreen.is-special .cd-head h1{background:linear-gradient(90deg,#fff6da,#ffd56b 40%,#ffae5c 75%,#fff1c2);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 18px rgba(255,213,107,.35));animation:gold-sheen 6s linear infinite}
+.cd-kaiden{position:absolute;right:0;top:-18px;color:rgba(255,213,107,.09);font:900 clamp(70px,9vw,120px)/1 "Noto Serif CJK KR","Noto Serif KR","Batang",serif;letter-spacing:.06em;pointer-events:none;user-select:none}
+#courseScreen.is-special .cd-tracks li{border-color:rgba(255,213,107,.28);background:linear-gradient(180deg,rgba(255,213,107,.06),rgba(10,15,29,.85) 40%)}
+#courseScreen.is-special .cd-rules{border-color:rgba(255,213,107,.28)}
+#courseScreen.is-special .cd-start{box-shadow:0 0 26px rgba(255,213,107,.35)}
+@keyframes gold-sheen{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){#courseScreen.is-special .cd-head h1{animation:none}}
 </style><script>
 // Cancel only browser defaults; retain pointer, click, keyboard and slider events.
 for(const eventName of ['selectstart','dragstart','contextmenu']){
