@@ -782,7 +782,7 @@ const LOADING_TIPS=Object.freeze(['light 노트(연한 색)는 마우스로 조�
 function ensureGameLoadingLayer(){let layer=$('#gameLoading');if(layer)return layer;layer=document.createElement('div');layer.id='gameLoading';layer.innerHTML='<div class="gl-bg" aria-hidden="true"></div><div class="gl-center"><div class="gl-orbit"><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="gl-track" cx="100" cy="100" r="94"/><circle class="gl-arc" cx="100" cy="100" r="94" pathLength="100"/></svg><span class="gl-sat" aria-hidden="true"></span><img class="gl-jacket" alt=""></div><div class="gl-meta"><span class="gl-diff"></span><h2 class="gl-title"></h2><p class="gl-artist"></p></div><div class="gl-state"><strong>LOADING</strong><span class="gl-count"></span></div><p class="gl-message" role="status" aria-live="polite"></p><ul class="loading-resources"></ul><button type="button" class="gl-back"><kbd>Backspace</kbd>곡 선택으로 돌아가기</button></div><p class="gl-tip"><b>TIP</b><span></span></p>';layer.querySelector('.gl-back').onclick=()=>transitionNavigation('select');$('#gameScreen').append(layer);return layer}
 // Overall progress: finished resources count 1, downloads in flight count by their byte progress.
 function updateLoadingProgress(layer,ready){const resources=gameMediaLoad.resources||[],done=resources.filter(r=>r.done).length,fraction=ready?1:resources.length?resources.reduce((sum,r)=>sum+(r.done?1:Number.isFinite(r.progress)?Math.min(.95,r.progress):0),0)/resources.length:0;layer.querySelector('.gl-arc').style.strokeDashoffset=String(100-fraction*100);layer.querySelector('.gl-count').textContent=resources.length?`${done} / ${resources.length}`:''}
-function showGameplayLoading(message,progress=null,mode){const layer=ensureGameLoadingLayer(),s=song(),c=chart(),ready=message==='준비 완료',error=mode==='error'||(gameMediaLoad.resources||[]).some(r=>r.failed),jacket=s?jacketSrc(s):'';layer.hidden=false;layer.dataset.state=error?'error':ready?'ready':'loading';layer.style.setProperty('--diff',error?'#ff6b86':difficultyColor(c?.difficulty));if(layer.dataset.jacket!==jacket){layer.dataset.jacket=jacket;layer.querySelector('.gl-jacket').src=jacket;layer.querySelector('.gl-bg').style.backgroundImage=jacket?`url("${jacket.replace(/"/g,'%22')}")`:''}layer.querySelector('.gl-diff').textContent=`${c?.difficulty||'CHART'} ${c?.level||'—'}`;layer.querySelector('.gl-title').textContent=s?.title||'Untitled';layer.querySelector('.gl-artist').textContent=s?.artist||'';layer.querySelector('strong').textContent=error?'ERROR':ready?'READY':'LOADING';layer.querySelector('.gl-message').textContent=/^플레이 준비 중 · /.test(message)?'곡 데이터와 리소스를 불러오고 있습니다…':message;if(layer.dataset.loadId!==String(gameMediaLoad.id)){layer.dataset.loadId=String(gameMediaLoad.id);layer.dataset.cue='';layer.classList.remove('gl-outro','gl-intro');void layer.offsetWidth;layer.classList.add('gl-intro');playUiSfx('loadIn','seq');layer.querySelector('.gl-tip span').textContent=LOADING_TIPS[Math.floor(Math.random()*LOADING_TIPS.length)]}updateLoadingProgress(layer,ready);if(error)releaseAimLock();const cue=error?'error':ready?'ready':'';if(cue&&layer.dataset.cue!==cue){layer.dataset.cue=cue;playUiSfx(cue,'seq')}}
+function showGameplayLoading(message,progress=null,mode){const layer=ensureGameLoadingLayer(),s=song(),c=chart(),ready=message==='준비 완료',error=mode==='error'||(gameMediaLoad.resources||[]).some(r=>r.failed),jacket=s?jacketSrc(s):'';layer.hidden=false;layer.dataset.state=error?'error':ready?'ready':'loading';layer.style.setProperty('--diff',error?'#ff6b86':difficultyColor(c?.difficulty));if(layer.dataset.jacket!==jacket){layer.dataset.jacket=jacket;layer.querySelector('.gl-jacket').src=jacket;layer.querySelector('.gl-bg').style.backgroundImage=jacket?`url("${jacket.replace(/"/g,'%22')}")`:''}layer.querySelector('.gl-diff').textContent=`${c?.difficulty||'CHART'} ${c?.level||'—'}`;layer.querySelector('.gl-title').textContent=s?.title||'Untitled';layer.querySelector('.gl-artist').textContent=s?.artist||'';layer.querySelector('strong').textContent=error?'ERROR':ready?'READY':'LOADING';layer.querySelector('.gl-message').textContent=/^플레이 준비 중 · /.test(message)?'곡 데이터와 리소스를 불러오고 있습니다…':message;if(layer.dataset.loadId!==String(gameMediaLoad.id)){layer.dataset.loadId=String(gameMediaLoad.id);layer.dataset.cue='';layer.classList.remove('gl-outro','gl-intro');void layer.offsetWidth;layer.classList.add('gl-intro');playUiSfx('loadIn','seq');syncCourseLoading(layer,true);layer.querySelector('.gl-tip span').textContent=LOADING_TIPS[Math.floor(Math.random()*LOADING_TIPS.length)]}updateLoadingProgress(layer,ready);if(error)releaseAimLock();const cue=error?'error':ready?'ready':'';if(cue&&layer.dataset.cue!==cue){layer.dataset.cue=cue;playUiSfx(cue,'seq')}}
 function renderGameplayLoadResources(){const layer=$('#gameLoading');if(!layer)return;const list=layer.querySelector('.loading-resources');list.replaceChildren();for(const item of gameMediaLoad.resources||[]){const row=document.createElement('li'),dot=document.createElement('i'),name=document.createElement('span'),status=document.createElement('span');name.textContent=item.label;status.textContent=item.status;row.dataset.state=item.done?'ready':item.failed?'error':'loading';row.append(dot,name,status);list.append(row)}updateLoadingProgress(layer,layer.dataset.state==='ready')}
 /* ---- result screen visuals: judgment distribution, rank meter, count-up ---- */
 const RESULT_METER_MIN=85,RESULT_METER_MAX=101;
@@ -971,7 +971,7 @@ function moveCourseSelection(step){const list=coursesForTier();if(!list.length)r
 
 /* ---- running a course ---- */
 function startCourse(course,{autoplay=false}={}){if(!course||state.transitioning)return;const tracks=resolveCourseTracks(course);if(!tracks.every(t=>t.ready))return;stopCourseBgm(.4);
- document.body.dataset.courseTier=course.tier;document.body.dataset.courseSpecial=String(!!course.special);Object.assign(courseRun,{active:true,course,tracks,index:0,life:course.life,maxLife:course.lifeCap||0,results:[],failed:false,autoplay,prevSelection:courseRun.active?courseRun.prevSelection:{song:state.selectedSongId,chart:state.selectedChartId}});
+ document.body.dataset.courseTier=course.tier;document.body.dataset.courseSpecial=String(!!course.special);courseRun.pendingHeal=null;Object.assign(courseRun,{active:true,course,tracks,index:0,life:course.life,maxLife:course.lifeCap||0,results:[],failed:false,autoplay,prevSelection:courseRun.active?courseRun.prevSelection:{song:state.selectedSongId,chart:state.selectedChartId}});
  if(!autoplay)requestAimLock();void unlockGameplayAudio();
  const from=document.getElementById(`${state.view}Screen`);state.transitioning=true;if(from){from.style.pointerEvents='none';from.style.animation=`screen-exit ${GAME_CONFIG.SCREEN_EXIT}s ease both`}
  state.transitionTimer=setTimeout(()=>{if(from){from.style.pointerEvents='';from.style.animation=''}state.transitioning=false;state.transitionTimer=0;startCourseTrack()},GAME_CONFIG.SCREEN_EXIT*1000)}
@@ -993,6 +993,7 @@ function courseFail(){if(courseRun.failed)return;courseRun.failed=true;gameplayD
  courseRun.timer=setTimeout(()=>{hideCourseInterlude();if(!courseRun.active)return;state.result={...snapshot,course:{index:courseRun.index,total:courseRun.tracks.length,lifeBefore:0,lifeAfter:0,heal:0,next:null,failed:true,last:true}};show('result')},COURSE_FAIL_MS)}
 function courseTrackFinished(snapshot){if(!courseRun.active)return;const before=courseRun.life,index=courseRun.index,total=courseRun.tracks.length,last=index>=total-1;courseRun.results.push({...snapshot,lifeAfter:before,cleared:true});
  if(!last)courseRun.life=courseRun.maxLife?Math.min(courseRun.maxLife,before+courseRun.course.heal):before+courseRun.course.heal;
+ courseRun.pendingHeal=!last&&courseRun.life>before?{from:before,to:courseRun.life}:null;
  const next=last?null:courseRun.tracks[index+1];
  state.result={...snapshot,course:{index,total,lifeBefore:before,lifeAfter:courseRun.life,heal:courseRun.life-before,failed:false,last,next:next?{title:next.song.title,difficulty:next.chart.difficulty,level:next.chart.level,jacket:jacketSrc(next.song)}:null}};show('result')}
 // Result screen → next track (or the course result after the last / failed track).
@@ -1138,15 +1139,34 @@ function startCourseBgm(){const tier=state.courseTier==='true'?'true':'normal',c
 function stopCourseBgm(fadeSec=.6){stopLoopBgm(courseBgm,fadeSec);stopLoopBgm(trueCourseBgm,fadeSec)}
 // Render ahead of time, after the title OST (진단위인정 music only once it is unlocked).
 Promise.resolve(titleBgm.ready).then(()=>ensureLoopBgm(courseBgm)).then(()=>{if(isTrueCourseUnlocked())ensureLoopBgm(trueCourseBgm)});
+
+/* ---- course loading screen: track, pips and life (with the heal from the last track) ---- */
+let courseHealAnim=0;
+function syncCourseLoading(layer,fresh){let box=layer.querySelector('.gl-course');layer.classList.toggle('is-course',courseRun.active);if(!courseRun.active){if(box)box.hidden=true;return}
+ if(!box){box=document.createElement('div');box.className='gl-course';box.innerHTML='<div class="glc-head"><span class="glc-tier"></span><b class="glc-name"></b></div><div class="glc-track"><span>TRACK</span><b class="glc-no"></b><i>/</i><span class="glc-total"></span></div><ol class="glc-pips"></ol><div class="glc-life"><span class="glc-heart" aria-hidden="true">♥</span><b class="glc-num"></b><span class="glc-max"></span><em class="glc-heal"></em></div><div class="glc-bar"><i class="glc-gain"></i><i class="glc-fill"></i></div>';layer.querySelector('.gl-meta').after(box)}
+ box.hidden=false;const course=courseRun.course,n=courseRun.tracks.length,i=courseRun.index,start=course.life;
+ box.querySelector('.glc-tier').textContent=courseTierLabel(course);box.querySelector('.glc-name').textContent=course.name;box.querySelector('.glc-no').textContent=String(i+1);box.querySelector('.glc-total').textContent=String(n);
+ box.querySelector('.glc-pips').innerHTML=Array.from({length:n},(_,k)=>`<li class="${k<i?'done':k===i?'current':''}"></li>`).join('');
+ if(!fresh)return;cancelAnimationFrame(courseHealAnim);const heal=courseRun.pendingHeal;courseRun.pendingHeal=null;
+ const num=box.querySelector('.glc-num'),fill=box.querySelector('.glc-fill'),gain=box.querySelector('.glc-gain'),plus=box.querySelector('.glc-heal'),set=v=>{const r=Math.max(0,Math.min(1,v/start));num.textContent=String(Math.round(v));fill.style.transform=`scaleX(${r})`;fill.style.background=lifeTone(r);box.style.setProperty('--life-tone',lifeTone(r))};
+ box.querySelector('.glc-max').textContent=`/ ${start}`;box.classList.remove('healing','healed');plus.textContent='';
+ if(!heal){set(courseRun.life);gain.style.transform=`scaleX(${Math.min(1,courseRun.life/start)})`;return}
+ // Show the life before the heal, then count up while the bar fills and "+N" pops.
+ set(heal.from);gain.style.transform=`scaleX(${Math.min(1,heal.to/start)})`;plus.textContent=`+${heal.to-heal.from}`;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,delay=reduce?0:900,dur=reduce?0:850;
+ setTimeout(()=>{if(!courseRun.active||layer.hidden)return;box.classList.add('healing');playUiSfx('heal','seq');const t0=performance.now(),step=now=>{const k=dur?Math.min(1,(now-t0)/dur):1,e=1-(1-k)**3;set(heal.from+(heal.to-heal.from)*e);if(k<1)courseHealAnim=requestAnimationFrame(step);else box.classList.add('healed')};courseHealAnim=requestAnimationFrame(step)},delay)}
 /* ======================= sound: UI effects + loudness-matched levels =======================
    Reference: songs / BGM play at -14 LUFS (loudness.json standard). Effects are matched by
    momentary loudness (400 ms window) of a single hit, well below the music:
      note judgement -27 · count-in -24 · UI -26…-34 · clear jingle -18 · clear voice -16 LUFS.
    A dense stream of ~6 judgement hits/s then sits roughly 6–8 dB under the music. */
-const SFX_TARGET_LUFS=Object.freeze({judge:-27,judgeEx:-27,clock:-24,fc:-18,ap:-18,fcVoice:-16,fcPlusVoice:-16,apVoice:-16});
+// Effects trim: ×5/3 (+4.44 dB) on top of the base targets — at BGM 100 % / SFX 100 % this matches
+// the balance that sounded natural at BGM 60 % / SFX 100 % with the base targets.
+const SFX_TRIM_DB=20*Math.log10(5/3);
+const SFX_TARGET_LUFS=Object.freeze(Object.fromEntries(Object.entries({judge:-27,judgeEx:-27,clock:-24,fc:-18,ap:-18,fcVoice:-16,fcPlusVoice:-16,apVoice:-16}).map(([k,v])=>[k,v+SFX_TRIM_DB])));
 const RESULT_BGM_TARGET_LUFS=-14;
 var resultBgmLevel=null;
-function sfxNormalGain(key,buffer){const target=SFX_TARGET_LUFS[key];if(target==null||!buffer)return null;const channels=Array.from({length:buffer.numberOfChannels},(_,i)=>buffer.getChannelData(i)),m=measureLoudness(channels,buffer.sampleRate);if(!Number.isFinite(m.lufs))return null;return Math.min(10**((target-m.lufs)/20),m.peak>0?.95/m.peak:1)}
+function sfxNormalGain(key,buffer){const target=SFX_TARGET_LUFS[key];if(target==null||!buffer)return null;const channels=Array.from({length:buffer.numberOfChannels},(_,i)=>buffer.getChannelData(i)),m=measureLoudness(channels,buffer.sampleRate);if(!Number.isFinite(m.lufs))return null;return Math.min(10**((target-m.lufs)/20),m.peak>0?.98/m.peak:1)}
 // Result BGM is an HTMLAudio element (volume ≤ 1): measured once, attenuate-only to -14 LUFS.
 async function measureResultBgmLevel(){if(resultBgmLevel!=null||!gameplayAudio.ctx)return;try{const buf=await decodeEmbeddedAudio(gameplayAudio.ctx,RESULT_BGM_DATA),m=measureLoudness(Array.from({length:buf.numberOfChannels},(_,i)=>buf.getChannelData(i)),buf.sampleRate);if(Number.isFinite(m.lufs)){resultBgmLevel=Math.min(1,10**((RESULT_BGM_TARGET_LUFS-m.lufs)/20));if(!resultBgmState.fading)resultBgmAudio.volume=resultBgmBaseVolume()}}catch(error){console.warn('Result BGM loudness check failed.',error)}}
 
@@ -1172,6 +1192,7 @@ const UI_SFX_DEFS={
  launch:{len:.8,lufs:-23,draw:(c,s)=>{s.noise(0,.6,'bandpass',500,6000,.35,.45);s.tone(0,220,.6,'sawtooth',.18,880,1800,.4)}},
  rankReveal:{len:1,lufs:-20,draw:(c,s)=>{s.tone(0,90,.4,'sine',.9,45);s.noise(0,.18,'lowpass',2000,500,.45);s.tone(.02,1568,.6,'sine',.2);s.tone(.04,2349,.5,'sine',.12)}},
  pass:{len:1.2,lufs:-21,draw:(c,s)=>{[523,659,784,1046].forEach((f,i)=>s.tone(i*.07,f,.75-i*.05,'triangle',.4))}},
+ heal:{len:.9,lufs:-24,draw:(c,s)=>{[1046,1318,1568,2093].forEach((f,i)=>s.tone(i*.06,f,.45,'sine',.35));s.noise(.05,.5,'highpass',5000,9000,.12)}},
  fail:{len:1,lufs:-22,draw:(c,s)=>{s.tone(0,196,.7,'sawtooth',.4,147,700);s.tone(0,98,.7,'sine',.5,74)}}
 };
 const uiSfx={buffers:new Map(),building:null,last:{},voices:{ui:null,seq:null},lastAt:0};
@@ -1181,7 +1202,7 @@ async function renderUiSfx(name,def){const Offline=window.OfflineAudioContext||w
   noise:(t,dur,type,f0,f1,peak=.3,attack=.004)=>{const n=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=noise;f.type=type;f.frequency.setValueAtTime(f0,t);f.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dur);env(g,t,peak,dur,attack);n.connect(f);f.connect(g);g.connect(bus);n.start(t,Math.random()*.5,dur+.02)},
   pad:(t,f,dur,peak=.3)=>{for(const det of [-6,6]){const o=ctx.createOscillator(),lp=ctx.createBiquadFilter(),g=ctx.createGain();o.type='sawtooth';o.frequency.value=f;o.detune.value=det;lp.type='lowpass';lp.frequency.value=1600;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(peak*.5,t+dur*.25);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(lp);lp.connect(g);g.connect(bus);o.start(t);o.stop(t+dur+.02)}}};
  def.draw(ctx,s);const rendered=await new Promise((resolve,reject)=>{ctx.oncomplete=e=>resolve(e.renderedBuffer);const p=ctx.startRendering();if(p?.then)p.then(resolve,reject)});
- const channels=[0,1].map(i=>rendered.getChannelData(i)),m=measureLoudness(channels,rate),g=Number.isFinite(m.lufs)?Math.min(10**((def.lufs-m.lufs)/20),m.peak>0?.9/m.peak:1):1;channels.forEach(d=>{for(let i=0;i<d.length;i++)d[i]*=g});return rendered}
+ const channels=[0,1].map(i=>rendered.getChannelData(i)),m=measureLoudness(channels,rate),g=Number.isFinite(m.lufs)?Math.min(10**((def.lufs+SFX_TRIM_DB-m.lufs)/20),m.peak>0?.98/m.peak:1):1;channels.forEach(d=>{for(let i=0;i<d.length;i++)d[i]*=g});return rendered}
 function buildUiSfx(){if(uiSfx.building)return uiSfx.building;uiSfx.building=(async()=>{for(const [name,def] of Object.entries(UI_SFX_DEFS)){try{uiSfx.buffers.set(name,await renderUiSfx(name,def))}catch(error){console.warn('UI sound failed:',name,error)}}})();return uiSfx.building}
 // One voice per channel: a new UI sound replaces the previous one instead of stacking on top of it.
 function playUiSfx(name,channel='ui'){const ctx=gameplayAudio.ctx,buffer=uiSfx.buffers.get(name),now=performance.now();uiSfx.lastAt=now;if(!ctx||!buffer){if(ctx)void buildUiSfx();return}if(now-(uiSfx.last[name]||0)<35)return;uiSfx.last[name]=now;if(ctx.state==='suspended')ctx.resume();
@@ -1869,6 +1890,42 @@ body[data-course-special="true"]{--ca:#ffd56b;--ca-ink:#1a1204;--ca-title:#fff6d
 #gameVeil{position:absolute;inset:0;z-index:950;background:#000;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
 #gameVeil.on{opacity:1}
 @media(prefers-reduced-motion:reduce){#gameLoading.gl-intro *,#gameLoading.gl-outro *{animation-duration:.01s!important;animation-delay:0s!important}}
+
+/* ===== course loading: track + life ===== */
+#gameLoading .gl-course{display:grid;justify-items:center;gap:8px;width:100%;margin-top:18px;padding:14px 18px 16px;border:1px solid color-mix(in srgb,var(--ca) 40%,transparent);border-radius:14px;background:color-mix(in srgb,var(--ca-deep) 70%,transparent)}
+#gameLoading .gl-course[hidden]{display:none}
+#gameLoading.is-course .gl-arc{stroke:var(--ca);filter:drop-shadow(0 0 6px var(--ca))}
+.glc-head{display:flex;align-items:baseline;gap:10px}
+.glc-tier{color:var(--ca);font-size:11px;font-weight:700;letter-spacing:.22em}
+.glc-name{color:var(--ca-title);font-size:14px;font-weight:700;letter-spacing:.04em}
+.glc-track{display:flex;align-items:baseline;gap:8px;color:#9fb0cf;font-size:12px;font-weight:600;letter-spacing:.2em}
+.glc-track b{color:#fff;font-size:30px;line-height:1;letter-spacing:0}
+.glc-track i{font-style:normal;color:#5f6f90}
+.glc-track .glc-total{color:#cfdbf2;font-size:18px;letter-spacing:0}
+.glc-pips{display:flex;gap:8px;margin:0;padding:0;list-style:none}
+.glc-pips li{width:26px;height:4px;border-radius:2px;background:rgba(255,255,255,.14)}
+.glc-pips li.done{background:color-mix(in srgb,var(--ca) 70%,#fff 0%)}
+.glc-pips li.current{background:var(--ca);box-shadow:0 0 10px var(--ca);animation:glc-blink 1s ease-in-out infinite}
+@keyframes glc-blink{50%{opacity:.45}}
+.glc-life{position:relative;display:flex;align-items:baseline;gap:8px;margin-top:4px;font-variant-numeric:tabular-nums}
+.glc-heart{color:var(--life-tone,#6fe0a0);font-size:18px;transition:color .3s}
+.glc-num{color:#fff;font-size:30px;font-weight:700;line-height:1}
+.glc-max{color:#7f92b6;font-size:13px}
+.glc-heal{position:absolute;left:100%;top:-6px;margin-left:8px;color:#8ff0b5;font-size:16px;font-style:normal;font-weight:700;opacity:0;white-space:nowrap}
+.glc-bar{position:relative;width:min(260px,100%);height:6px;overflow:hidden;border-radius:3px;background:rgba(255,255,255,.1)}
+.glc-bar i{position:absolute;inset:0;transform:scaleX(0);transform-origin:left center}
+.glc-bar .glc-gain{background:rgba(143,240,181,.25)}
+.glc-bar .glc-fill{background:#6fe0a0}
+.gl-course.healing .glc-heal{animation:glc-plus 1.3s ease-out forwards}
+.gl-course.healing .glc-heart{animation:glc-beat .45s ease 2}
+.gl-course.healing .glc-bar{box-shadow:0 0 12px rgba(111,224,160,.55)}
+.gl-course.healing .glc-num{text-shadow:0 0 16px rgba(111,224,160,.8)}
+.gl-course.healed .glc-num{text-shadow:none;transition:text-shadow .6s}
+@keyframes glc-plus{0%{opacity:0;transform:translateY(6px) scale(.8)}20%{opacity:1;transform:translateY(0) scale(1.15)}70%{opacity:1;transform:translateY(-6px)}100%{opacity:0;transform:translateY(-14px)}}
+@keyframes glc-beat{50%{transform:scale(1.35)}}
+#gameLoading.gl-intro .gl-course{animation:gl-rise .5s .32s both}
+#gameLoading.gl-outro .gl-course{animation:gl-fade-out .35s ease forwards}
+@media(prefers-reduced-motion:reduce){.glc-pips li.current,.gl-course.healing .glc-heart,.gl-course.healing .glc-heal{animation:none}.gl-course.healing .glc-heal{opacity:1}}
 </style><script>
 // Cancel only browser defaults; retain pointer, click, keyboard and slider events.
 for(const eventName of ['selectstart','dragstart','contextmenu']){
