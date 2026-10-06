@@ -1187,7 +1187,6 @@ const UI_SFX_DEFS={
  loadIn:{len:.9,lufs:-26,draw:(c,s)=>{s.noise(0,.6,'lowpass',300,1600,.3,.25);s.pad(.02,110,.75,.35)}},
  ready:{len:.8,lufs:-24,draw:(c,s)=>{[1046,1318,1568].forEach((f,i)=>s.tone(i*.025,f,.55,'sine',.35))}},
  launch:{len:.8,lufs:-23,draw:(c,s)=>{s.noise(0,.6,'bandpass',500,6000,.35,.45);s.tone(0,220,.6,'sawtooth',.18,880,1800,.4)}},
- gauge:{len:2.7,lufs:-27,draw:(c,s)=>{s.tone(0,180,2.6,'sawtooth',.22,900,2400,.05);s.tone(0,360,2.6,'triangle',.14,1800,0,.05);s.noise(0,2.6,'bandpass',600,5000,.06,.4)}},
  rankStep:{len:.12,lufs:-26,draw:(c,s)=>{s.tone(0,660,.07,'triangle',.5);s.tone(0,1320,.04,'sine',.2)}},
  rankT0:{len:.6,lufs:-24,draw:(c,s)=>{s.tone(0,392,.18,'triangle',.4);s.tone(.16,330,.35,'triangle',.4)}},
  rankT1:{len:.7,lufs:-22,draw:(c,s)=>{[523,659,784].forEach((f,i)=>s.tone(i*.09,f,i===2?.4:.15,'triangle',.4))}},
@@ -1251,27 +1250,38 @@ function revealGameplay(){const layer=$('#gameLoading');gameVeil.style.transitio
 {const modal=$('#settingsModal');let open=modal?.classList.contains('open');if(modal)new MutationObserver(()=>{const now=modal.classList.contains('open');if(now!==open){open=now;playUiSfx(now?'open':'close')}}).observe(modal,{attributes:true,attributeFilter:['class']})}
 $('#rscNextButton').onclick=()=>courseAdvance();
 /* ======================= result sequence =======================
-   1) achievement counts up while the meter fills (gauge sound); the rank climbs from D in real time
+   1) achievement counts up; once it reaches the visible meter (85 %+) the bar fills with a live charge sound; the rank climbs from D in real time
       (a step sound per change); 2) when the meter stops, the final rank bursts with a jingle by tier;
    3) then the clear badge, judgement details, ranking, course info and buttons appear.
    Enter / Space / Esc during the sequence skips straight to the end. */
 const RANK_ORDER=['D','C','B','BB','BBB','A','AA','AAA','S','S+','SS','SS+','SSS','SSS+'];
 const rankTier=rank=>{const i=RANK_ORDER.indexOf(rank);return i<5?0:i<8?1:i<10?2:i<12?3:4};
 const resultSeq={active:false,result:null,raf:0,timers:[],gauge:null,shownRank:null,value:0,finalPlayed:false};
+/* ---- charge sound: follows the meter in real time (only while the bar itself is filling, 85 %+) ----
+   Rising saw + octave square through a resonant low-pass, with a tremolo that speeds up as it charges. */
+const CHARGE_TARGET_LUFS=-26;let chargeGain=null;
+function buildChargeGraph(ctx,dest){const saw=ctx.createOscillator(),sq=ctx.createOscillator(),sqGain=ctx.createGain(),lp=ctx.createBiquadFilter(),amp=ctx.createGain(),lfo=ctx.createOscillator(),depth=ctx.createGain(),out=ctx.createGain();
+ saw.type='sawtooth';sq.type='square';sqGain.gain.value=.35;lp.type='lowpass';lp.Q.value=7;amp.gain.value=.6;lfo.type='sine';depth.gain.value=.4;
+ saw.connect(lp);sq.connect(sqGain);sqGain.connect(lp);lp.connect(amp);amp.connect(out);lfo.connect(depth);depth.connect(amp.gain);out.connect(dest);
+ const set=(p,t)=>{const f=170*2**(p*2.4);saw.frequency.setTargetAtTime(f,t,.03);sq.frequency.setTargetAtTime(f*2.003,t,.03);lp.frequency.setTargetAtTime(500+p*4200,t,.04);lfo.frequency.setTargetAtTime(7+p*26,t,.05)};
+ return {saw,sq,lfo,out,set,start(t){saw.start(t);sq.start(t);lfo.start(t)},stop(t){for(const o of [saw,sq,lfo])try{o.stop(t)}catch{}}}}
+async function calibrateCharge(){if(chargeGain!=null)return chargeGain;try{const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext,rate=44100,ctx=new Offline(2,rate,rate),g=buildChargeGraph(ctx,ctx.destination);g.set(.6,0);g.out.gain.value=1;g.start(0);g.stop(1);const buf=await new Promise((resolve,reject)=>{ctx.oncomplete=e=>resolve(e.renderedBuffer);const p=ctx.startRendering();if(p?.then)p.then(resolve,reject)}),m=measureLoudness([buf.getChannelData(0),buf.getChannelData(1)],rate);chargeGain=Number.isFinite(m.lufs)?10**((CHARGE_TARGET_LUFS+SFX_TRIM_DB-m.lufs)/20):.05}catch{chargeGain=.05}return chargeGain}
+function startCharge(p){const ctx=gameplayAudio.ctx;if(!ctx||chargeGain==null){void calibrateCharge();return null}const g=buildChargeGraph(ctx,gameplayAudio.sfxBus||ctx.destination),now=ctx.currentTime;g.set(p,now);g.out.gain.setValueAtTime(.0001,now);g.out.gain.linearRampToValueAtTime(chargeGain,now+.08);g.start(now);return g}
+function stopCharge(g,fade=.06){const ctx=gameplayAudio.ctx;if(!g||!ctx)return;const now=ctx.currentTime;try{g.out.gain.cancelScheduledValues(now);g.out.gain.setValueAtTime(g.out.gain.value,now);g.out.gain.linearRampToValueAtTime(.0001,now+fade)}catch{}g.stop(now+fade+.03)}
 function paintResultSeq(){const r=resultSeq.result;if(!r)return;$('#resultAchievement').textContent=formatAchievement(resultSeq.value);$('#resultMeterFill').style.transform=`scaleX(${resultMeterPos(resultSeq.value)})`;const rank=resultSeq.shownRank||'D',el=$('#resultRank');el.textContent=rank;el.dataset.rank=rank}
 function clearResultSeqTimers(){cancelAnimationFrame(resultSeq.raf);resultSeq.timers.forEach(clearTimeout);resultSeq.timers=[]}
-function startResultSequence(r){clearResultSeqTimers();stopUiVoice(resultSeq.gauge);const screen=$('#resultScreen'),rankEl=$('#resultRank'),box=$('.rs-rank-box');
+function startResultSequence(r){clearResultSeqTimers();stopCharge(resultSeq.gauge);void calibrateCharge();const screen=$('#resultScreen'),rankEl=$('#resultRank'),box=$('.rs-rank-box');
  Object.assign(resultSeq,{active:true,result:r,value:0,shownRank:'D',finalPlayed:false,gauge:null});
  screen.classList.remove('rs-revealed');screen.classList.add('rs-animating');rankEl.classList.remove('final','pop');box?.classList.remove('burst');
  const fill=$('#resultMeterFill');fill.style.transition='none';paintResultSeq();void fill.offsetWidth;
  if(matchMedia('(prefers-reduced-motion: reduce)').matches){finishResultSequence(true);return}
  const target=Math.max(0,Number(r.achievement)||0),duration=600+2000*Math.min(1,target/101),t0=performance.now()+350;
- resultSeq.timers.push(setTimeout(()=>{if(resultSeq.result===r&&resultSeq.active)resultSeq.gauge=playUiSfx('gauge','gauge')},350));
  const step=now=>{if(resultSeq.result!==r||!resultSeq.active)return;const k=Math.max(0,Math.min(1,(now-t0)/duration)),e=1-(1-k)**2.2;resultSeq.value=target*e;const rank=getRankFromAchievement(resultSeq.value);
   if(rank!==resultSeq.shownRank){resultSeq.shownRank=rank;playUiSfx('rankStep','rank',2**(RANK_ORDER.indexOf(rank)/12));rankEl.classList.remove('pop');void rankEl.offsetWidth;rankEl.classList.add('pop')}
+  if(resultSeq.value>=RESULT_METER_MIN){const p=resultMeterPos(resultSeq.value);if(!resultSeq.gauge)resultSeq.gauge=startCharge(p);else resultSeq.gauge.set(p,gameplayAudio.ctx.currentTime)}
   paintResultSeq();if(k<1)resultSeq.raf=requestAnimationFrame(step);else finishResultSequence(false)};
  resultSeq.raf=requestAnimationFrame(step)}
-function finishResultSequence(skipped){const r=resultSeq.result;if(!r||!resultSeq.active)return;clearResultSeqTimers();stopUiVoice(resultSeq.gauge,skipped?.05:.12);resultSeq.gauge=null;
+function finishResultSequence(skipped){const r=resultSeq.result;if(!r||!resultSeq.active)return;clearResultSeqTimers();stopCharge(resultSeq.gauge,skipped?.04:.07);resultSeq.gauge=null;
  resultSeq.value=Number(r.achievement)||0;resultSeq.shownRank=r.rank;paintResultSeq();resultSeq.active=false;
  const screen=$('#resultScreen'),rankEl=$('#resultRank'),box=$('.rs-rank-box');rankEl.classList.remove('pop');void rankEl.offsetWidth;rankEl.classList.add('final');box?.classList.remove('burst');void box?.offsetWidth;box?.classList.add('burst');
  if(!resultSeq.finalPlayed){resultSeq.finalPlayed=true;playUiSfx(`rankT${rankTier(r.rank)}`,'seq')}
