@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBIT 곡 업로드 · 음량 도구</title>
+<style>
+:root{--bg:#070b16;--line:#22304d;--text:#e9f0ff;--muted:#8796b3;--cyan:#51e6ff;--ok:#6fe0a0;--bad:#ff7d97;--warn:#ffc23d}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#14244a,var(--bg) 55%);color:var(--text);font:14px/1.5 Inter,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:36px 24px 60px}
+h1{margin:0;font-size:24px}
+.lead{margin:8px 0 22px;color:var(--muted)}
+section{margin-top:18px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(14,21,39,.85)}
+h2{margin:0 0 12px;font-size:14px;color:#cfdbf2}
+.grid{display:grid;grid-template-columns:2fr 110px 1fr 1fr 1.1fr;gap:12px}
+label{display:grid;gap:6px;color:var(--muted);font-size:12px}
+input,select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#0a1020;color:var(--text);font:inherit}
+input:focus,select:focus{outline:2px solid var(--cyan);outline-offset:1px}
+.checks{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px}
+.check{display:flex;align-items:center;gap:8px;color:#cfdbf2;font-size:13px}
+.check input{width:auto;accent-color:var(--cyan)}
+.tasks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.task{display:grid;gap:6px;justify-items:start;padding:16px;border:1px solid var(--line);border-radius:12px;background:#0b1224}
+.task p{margin:0;color:var(--muted);font-size:12px}
+button{padding:10px 16px;border:1px solid var(--line);border-radius:9px;background:#121c33;color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+button.primary{border-color:var(--cyan);background:var(--cyan);color:#06101c}
+button:disabled{opacity:.45;cursor:not-allowed}
+.hint{margin:10px 0 0;color:var(--muted);font-size:12px}
+.progress{display:flex;align-items:center;gap:12px}
+.bar{flex:1;height:6px;overflow:hidden;border-radius:3px;background:rgba(140,170,230,.15)}
+.bar i{display:block;width:0;height:100%;background:linear-gradient(90deg,#51e6ff,#a979ff);transition:width .2s}
+#count{min-width:72px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.table-wrap{margin-top:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap}
+td small{color:var(--muted)}
+td.s-ok,td.s-keep,td.s-run,td.s-wait,td.s-bad{white-space:nowrap}
+td:nth-child(2){white-space:normal!important}
+td.num,th.num{text-align:right;white-space:nowrap}
+th[hidden]{display:none}
+.s-ok{color:var(--ok)}.s-keep{color:#9fb0cf}.s-bad{color:var(--bad)}.s-run{color:var(--cyan)}.s-wait{color:var(--muted)}.s-warn{color:var(--warn)}.s-up{color:#c9a8ff}
+.boost{color:var(--warn)}
+.out-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;background:#0a1020}
+summary{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer}
+summary span{color:var(--muted);font-size:12px}
+summary button{margin-left:auto;padding:6px 12px}
+details textarea{display:block;width:100%;height:200px;padding:10px 12px;border:0;border-top:1px solid var(--line);background:transparent;color:#cfe0ff;font:12px/1.5 ui-monospace,Consolas,monospace;resize:vertical}
+ol{margin:12px 0 0;padding-left:20px;color:#cfdbf2}
+ol li{margin-bottom:4px}
+code{padding:1px 5px;border-radius:4px;background:#0a1020;color:#bfe9ff}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.tasks{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>ORBIT 곡 업로드 · 음량 도구</h1>
+<p class="lead">곡 폴더를 점검해 <code>library.json</code>·업로드 스크립트를 만들어 줍니다. 음량은 새 곡과 음원이 바뀐 곡만 측정하고, 업로드도 바뀐 파일만 올립니다.</p>
+
+<section>
+<h2>설정</h2>
+<div class="grid">
+<label>R2 곡 폴더 공개 주소<input id="root" value="https://pub-849b22da350243e78d1a5a9186797eb0.r2.dev/level"></label>
+<label>목표 음량 (LUFS)<input id="target" type="number" step="0.5" min="-30" max="-5" value="-14"></label>
+<label>R2 버킷 이름<input id="bucket" value="oribt-level"></label>
+<label>버킷 안 경로<input id="prefix" value="level"></label>
+<label>업로드 스크립트<select id="scriptType"><option value="bat">Windows (.bat)</option><option value="sh">macOS · Linux (.sh)</option></select></label>
+</div>
+<div class="checks">
+<label class="check"><input id="forceAll" type="checkbox">이미 측정한 곡도 음량을 전부 다시 측정</label>
+<label class="check"><input id="keepMissing" type="checkbox" checked>선택한 폴더에 없는 기존 곡도 목록에 유지</label>
+</div>
+</section>
+
+<section>
+<h2>작업</h2>
+<div class="tasks">
+<div class="task"><button id="runLocal" class="primary" type="button">로컬 level 폴더로 업로드 준비</button><p>곡 폴더들이 바로 아래에 있는 폴더를 고르세요. 점검 → 음량 측정 → R2와 비교 → 곡 목록·난이도·음량·업로드 스크립트 생성.</p></div>
+<div class="task"><button id="runR2" type="button">R2 곡 정보 불러오기 · 편집</button><p>목록·난이도·음량을 함께 편집하고 library.json 하나로 저장합니다.</p></div>
+</div>
+<input id="folder" type="file" webkitdirectory multiple hidden>
+<p class="hint">R2 비교와 음량 측정은 공개 주소로 파일을 받아오므로, 브라우저가 CORS로 막으면 이 파일을 게임과 같은 주소에 올려서 열어 주세요. 현재 목록을 읽지 못하면 기존 정보를 보호하기 위해 작업을 중단합니다.</p>
+</section>
+
+<section><h2>곡 정보 편집</h2><button id="measureAll" disabled>새 곡 · 변경된 음원 측정</button><p class="hint">빈 레벨은 maidata.txt 값을 사용합니다. 노출 해제 시 정보는 보존됩니다.</p><div id="metadataEditor" class="table-wrap"></div></section>
+<section>
+<h2>진행</h2>
+<div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">0 / 0</span></div>
+<p id="summary" class="hint"></p><p id="progressNote" class="hint"></p>
+<div class="table-wrap"><table><thead><tr><th>곡 폴더</th><th id="colCheck" hidden>점검</th><th>음량</th><th class="num">LUFS</th><th class="num">게임 보정</th><th id="colUpload" hidden>업로드할 파일</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+
+<section>
+<div class="out-head"><h2 style="margin:0">결과 파일</h2><button id="downloadAll" type="button" hidden>전부 내려받기</button></div>
+<div id="outputs"><p class="hint">작업이 끝나면 여기에 결과 파일이 나옵니다.</p></div>
+<ol id="steps"></ol>
+<p class="hint">게임은 목표보다 큰 곡만 줄입니다(보정 0 dB 이하). 노란색은 목표보다 작아 원래 크기로 재생되는 곡입니다. 목표 음량만 바꿀 때는 다시 측정하지 않고 숫자만 바꿔 내려받으면 됩니다. R2에서 파일을 지우는 작업은 이 도구가 하지 않습니다.</p>
+</section>
+</main>
+<script>
+/* ---- loudness meter: ITU-R BS.1770-4 integrated loudness (K-weighted, gated), LUFS ----
+   Shared verbatim by loudness-tool.html and the game (built-in tracks). */
+function kWeightingStages(rate){
+ // Pre-filter coefficients derived for any sample rate (Brecht De Man); at 48 kHz they equal the BS.1770 table.
+ const shelf=(()=>{const G=3.999843853973347,Q=.7071752369554196,fc=1681.974450955533,K=Math.tan(Math.PI*fc/rate),Vh=10**(G/20),Vb=Vh**.4996667741545416,a0=1+K/Q+K*K;return {b0:(Vh+Vb*K/Q+K*K)/a0,b1:2*(K*K-Vh)/a0,b2:(Vh-Vb*K/Q+K*K)/a0,a1:2*(K*K-1)/a0,a2:(1-K/Q+K*K)/a0}})();
+ const hp=(()=>{const Q=.5003270373238773,fc=38.13547087602444,K=Math.tan(Math.PI*fc/rate),a0=1+K/Q+K*K;return {b0:1,b1:-2,b2:1,a1:2*(K*K-1)/a0,a2:(1-K/Q+K*K)/a0}})();
+ return [shelf,hp]}
+function measureLoudness(channels,rate){
+ const [s1,s2]=kWeightingStages(rate),len=channels[0]?.length||0,step=Math.round(rate*.1),segments=new Float64Array(Math.max(4,Math.ceil(len/step)));let peak=0;
+ for(const data of channels){let x1=0,x2=0,y1=0,y2=0,u1=0,u2=0,v1=0,v2=0;for(let i=0;i<len;i++){const x=data[i],ax=x<0?-x:x;if(ax>peak)peak=ax;const y=s1.b0*x+s1.b1*x1+s1.b2*x2-s1.a1*y1-s1.a2*y2;x2=x1;x1=x;y2=y1;y1=y;const v=s2.b0*y+s2.b1*u1+s2.b2*u2-s2.a1*v1-s2.a2*v2;u2=u1;u1=y;v2=v1;v1=v;segments[(i/step)|0]+=v*v}}
+ // 400 ms blocks with 75 % overlap = four consecutive 100 ms segments.
+ const block=step*4,energies=[];for(let j=0;j+3<segments.length;j++)energies.push((segments[j]+segments[j+1]+segments[j+2]+segments[j+3])/block);
+ const L=z=>-.691+10*Math.log10(z),mean=list=>list.reduce((a,b)=>a+b,0)/list.length;
+ const absolute=energies.filter(z=>z>0&&L(z)>-70);if(!absolute.length)return {lufs:-Infinity,peakDb:peak>0?20*Math.log10(peak):-Infinity,peak};
+ const relative=L(mean(absolute))-10,gated=absolute.filter(z=>L(z)>relative);
+ return {lufs:L(mean(gated.length?gated:absolute)),peakDb:20*Math.log10(peak),peak}}
+const $=s=>document.querySelector(s);
+const GAME_FILES=Object.freeze({'maidata.txt':'text/plain; charset=utf-8','track.mp3':'audio/mpeg','bg.jpg':'image/jpeg','bg.mp4':'video/mp4'});
+const state={mode:null,items:[],existing:null,remoteManifest:null,result:null,manifest:null,script:null,removed:0,keepOthers:null,notes:[]};
+const fmt=(v,d=1)=>Number.isFinite(v)?v.toFixed(d):'—';
+const esc=v=>String(v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const STATUS={wait:['대기','wait'],check:['확인 중','run'],run:['측정 중','run'],ok:['새로 측정','ok'],keep:['기존 값 유지','keep'],fail:['실패','bad'],skip:['건너뜀','wait']};
+function root(){return $('#root').value.trim().replace(/\/+$/,'')}
+function target(){const v=Number($('#target').value);return Number.isFinite(v)?Math.max(-30,Math.min(-5,v)):-14}
+function finished(x){return ['ok','keep','fail','skip'].includes(x.status)}
+function setBusy(on){for(const b of ['#runLocal','#runR2'])$(b).disabled=on;$('#progressNote').textContent=on?'작업 중… 창을 닫지 마세요.':''}
+
+/* ---------- rendering ---------- */
+function render(){const items=state.items,total=items.length,done=items.filter(finished).length,local=state.mode==='local';$('#count').textContent=`${done} / ${total}`;$('#bar').style.width=total?`${done/total*100}%`:'0';
+ const n=k=>items.filter(x=>x.status===k).length,bad=items.filter(x=>x.check&&!x.check.ok).length,uploads=items.reduce((a,x)=>a+(x.upload?.length||0),0);
+ $('#summary').textContent=total?[`음량 새로 측정 ${n('ok')} · 기존 값 유지 ${n('keep')} · 실패 ${n('fail')}`,local?`점검 오류 ${bad}곡 · 업로드할 파일 ${uploads}개`:'',state.removed?`목록에서 빠진 곡 ${state.removed}개`:''].filter(Boolean).join('  ·  '):'';
+ $('#colCheck').hidden=$('#colUpload').hidden=!local;
+ $('#rows').innerHTML=total?items.map(x=>{const gain=Number.isFinite(x.lufs)?target()-x.lufs:NaN,[label,cls]=STATUS[x.status];
+  const check=!local?'':x.check.ok?`<td class="s-ok" title="${esc(x.check.warnings.join(' · '))}">정상${x.check.warnings.length?` <span class="s-warn">· ${esc(x.check.warnings.join(' · '))}</span>`:''}</td>`:`<td class="s-bad">${esc(x.check.errors.join(' · '))}</td>`;
+  const upload=!local?'':`<td>${x.uploadState==='checking'?'<span class="s-run">비교 중</span>':x.upload?.length?`<span class="s-up">${esc(x.upload.join(', '))}</span>`:x.check.ok?'<span class="s-keep">변경 없음</span>':'—'}</td>`;
+  return `<tr><td><b>${esc(x.dir)}</b>${x.check?.title&&x.check.title!==x.dir?`<br><small>${esc(x.check.title)}</small>`:''}</td>${check}<td class="s-${cls}" title="${esc(x.error||x.reason||'')}">${label}${x.reason?` · ${esc(x.reason)}`:''}${x.error?` · ${esc(x.error)}`:''}</td><td class="num">${fmt(x.lufs)}</td><td class="num ${gain>0?'boost':''}">${Number.isFinite(gain)?(gain>0?'0.0 dB':gain>-.05?'0.0 dB':fmt(gain)+' dB'):'—'}</td>${upload}</tr>`}).join(''):`<tr><td colspan="6" class="s-wait">아직 작업하지 않았습니다.</td></tr>`}
+
+/* ---------- loudness (incremental) ---------- */
+async function decode(buffer){const Ctx=window.OfflineAudioContext||window.webkitOfflineAudioContext,ctx=new Ctx(2,1,48000);return await new Promise((resolve,reject)=>{const p=ctx.decodeAudioData(buffer,resolve,reject);if(p?.then)p.then(resolve,reject)})}
+// A file is "unchanged" when its ETag matches (if both sides have one), otherwise when its byte size matches.
+function sameFile(prev,info){if(!prev||!info)return false;if(info.sha256)return !!prev.sha256&&prev.sha256===info.sha256;if(prev.etag&&info.etag)return prev.etag===info.etag;return Number.isFinite(prev.bytes)&&prev.bytes===info.bytes}
+async function measureItem(item,force){const prev=state.existing?.songs?.[item.dir],hasPrev=Number.isFinite(prev?.lufs);
+ if(!force&&hasPrev){item.status='check';render();let info=null;try{info=await item.info()}catch{}
+  if(info){item.bytes=info.bytes;item.etag=info.etag||prev.etag}
+  const legacy=!Number.isFinite(prev.bytes)&&!prev.etag;
+  if(!force&&info&&!legacy&&sameFile(prev,info)){Object.assign(item,{lufs:prev.lufs,peakDb:prev.peakDb,measuredAt:prev.measuredAt,status:'keep',reason:!info?'파일 정보를 확인하지 못해 기존 값 사용':legacy?'파일 정보 새로 기록':''});if(!info){item.bytes=prev.bytes;item.etag=prev.etag}render();return}
+  item.reason='음원이 바뀌어 다시 측정'}
+ item.status='run';render();
+ try{const {buffer,info}=await item.load(),audio=await decode(buffer),channels=Array.from({length:audio.numberOfChannels},(_,i)=>audio.getChannelData(i)),m=measureLoudness(channels,audio.sampleRate);if(!Number.isFinite(m.lufs))throw new Error('무음');Object.assign(item,{lufs:m.lufs,peakDb:m.peakDb,bytes:info.bytes,etag:info.etag||null,sha256:info.sha256||null,measuredAt:new Date().toISOString(),status:'ok'})}
+ catch(error){item.status='fail';item.error=error?.message||String(error);if(hasPrev)Object.assign(item,{lufs:prev.lufs,peakDb:prev.peakDb,bytes:prev.bytes,etag:prev.etag,measuredAt:prev.measuredAt,reason:'기존 값 유지'})}
+ render()}
+async function pool(items,fn,size=2){let next=0;await Promise.all(Array.from({length:size},async()=>{while(next<items.length)await fn(items[next++])}))}
+
+/* ---------- local folder: check, diff, manifest, script ---------- */
+function parseMaidataInfo(text){const field=name=>{const m=text.match(new RegExp(`^&${name}=(.*)$`,'m'));return m?m[1].trim():''};return {title:field('title'),charts:(text.match(/^&inote_\d+=/gm)||[]).length}}
+async function checkSong(item){const errors=[],warnings=[];let title='';const f=item.files;
+ if(!f['maidata.txt'])errors.push('maidata.txt 없음');else{try{const info=parseMaidataInfo(await f['maidata.txt'].text());title=info.title;if(!info.title)warnings.push('&title 없음');if(!info.charts)errors.push('채보(&inote_) 없음')}catch{errors.push('maidata.txt 읽기 실패')}}
+ if(!f['track.mp3'])errors.push('track.mp3 없음');
+ if(!f['bg.jpg']&&!f['bg.mp4'])warnings.push('배경 없음');
+ const extra=Object.keys(f).filter(n=>!GAME_FILES[n]);if(extra.length)warnings.push(`게임이 쓰지 않는 파일 ${extra.length}개(올리지 않음)`);
+ if(/[\\%#?]/.test(item.dir))warnings.push('폴더 이름에 \\ % # ? 가 있으면 주소 문제가 생길 수 있음');
+ item.check={ok:!errors.length,errors,warnings,title}}
+async function remoteSize(dir,name){try{const r=await fetch(`${root()}/${encodeURIComponent(dir)}/${encodeURIComponent(name)}`,{method:'HEAD',cache:'no-store'});if(r.status===404)return {missing:true};if(!r.ok)return null;const n=Number(r.headers.get('content-length'));return Number.isFinite(n)?{bytes:n}:null}catch{return null}}
+function buildScript(){const bucket=$('#bucket').value.trim()||'oribt-level',prefix=$('#prefix').value.trim().replace(/^\/+|\/+$/g,''),bat=$('#scriptType').value==='bat',key=(...parts)=>[bucket,prefix,...parts].filter(Boolean).join('/'),jobs=[];
+ for(const x of state.items)if(x.check?.ok)for(const name of x.upload||[])jobs.push({key:key(x.dir,name),file:bat?`${x.dir}\\${name}`:`${x.dir}/${name}`,type:GAME_FILES[name]});
+ jobs.push({key:key('library.json'),file:'library.json',type:'application/json'});
+ if(bat){const q=v=>`"${String(v).replace(/%/g,'%%')}"`;state.script={name:'upload-to-r2.bat',text:['@echo off','setlocal DisableDelayedExpansion','chcp 65001 >nul','cd /d "%~dp0"',`echo ORBIT upload: ${jobs.length} files`,...jobs.flatMap((j,i)=>[`echo [${i+1}/${jobs.length}]`,`call npx wrangler r2 object put ${q(j.key)} --file ${q(j.file)} --content-type ${q(j.type)} --remote || goto :fail`]),'echo.','echo Done.','pause','exit /b 0',':fail','echo Upload failed. Fix the error above and run this file again.','pause','exit /b 1',''].join('\r\n')}}
+ else{const q=v=>`'${String(v).replace(/'/g,`'\\''`)}'`;state.script={name:'upload-to-r2.sh',text:['#!/usr/bin/env sh','set -e','cd "$(dirname "$0")"',`echo "ORBIT upload: ${jobs.length} files"`,...jobs.flatMap((j,i)=>[`echo "[${i+1}/${jobs.length}]" ${q(j.key)}`,`npx wrangler r2 object put ${q(j.key)} --file ${q(j.file)} --content-type ${q(j.type)} --remote`]),'echo "Done."',''].join('\n')}}}
+function buildLoudness(){const t=target(),songs={};for(const x of state.items){if(!Number.isFinite(x.lufs))continue;const e={lufs:+x.lufs.toFixed(2),peakDb:Number.isFinite(x.peakDb)?+x.peakDb.toFixed(2):null,gainDb:+(t-x.lufs).toFixed(2)};if(Number.isFinite(x.bytes))e.bytes=x.bytes;if(x.etag)e.etag=x.etag;if(x.sha256)e.sha256=x.sha256;if(x.measuredAt)e.measuredAt=x.measuredAt;songs[x.dir]=e}
+ for(const [dir,entry] of Object.entries(state.keepOthers||{}))if(Number.isFinite(entry?.lufs)&&!songs[dir])songs[dir]={...entry,gainDb:+(t-entry.lufs).toFixed(2)};
+ state.result={version:2,method:'ITU-R BS.1770-4 integrated loudness (LUFS)',targetLufs:t,updatedAt:new Date().toISOString(),songs}}
+function download(f){const url=URL.createObjectURL(new Blob([f.text],{type:f.type})),a=document.createElement('a');a.href=url;a.download=f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+/* Unified catalog: library.json is the only normal metadata source. */
+function validateCatalog(c){if(c?.version!==1||!Array.isArray(c.songs)||!Number.isFinite(c.targetLufs)||c.targetLufs< -30||c.targetLufs> -5)throw Error('library.json 형식이 올바르지 않습니다.');const names=new Set();for(const s of c.songs){if(!s||typeof s.directory!=='string'||!s.directory.trim()||/[\\/\r\n]/.test(s.directory)||['.','..'].includes(s.directory)||names.has(s.directory))throw Error('곡 폴더가 잘못되었거나 중복되었습니다.');names.add(s.directory);if(s.enabled!==undefined&&typeof s.enabled!=='boolean')throw Error('노출 값이 올바르지 않습니다.');if(!s.levels||typeof s.levels!=='object'||Array.isArray(s.levels))throw Error('난이도 정보가 올바르지 않습니다.');for(const v of Object.values(s.levels))if(v!==null&&(typeof v!=='number'||!Number.isFinite(v)||v<=0||v>=100))throw Error('난이도를 확인하세요.');if(s.loudness!=null&&!Number.isFinite(s.loudness.lufs))throw Error('음량 정보를 확인하세요.');}return c;}
+async function fetchRemote(){const r=await fetch(`${root()}/library.json`,{cache:'no-store'});if(!r.ok)throw Error(`library.json HTTP ${r.status}`);const catalog=validateCatalog(await r.json());return {catalog,manifestRaw:{songs:catalog.songs.filter(s=>s.enabled!==false).map(s=>s.directory)},manifest:catalog.songs.filter(s=>s.enabled!==false).map(s=>s.directory),loud:{targetLufs:catalog.targetLufs,songs:Object.fromEntries(catalog.songs.map(s=>[s.directory,s.loudness]))}};}
+function acceptRemote(remote){state.catalog=remote.catalog;state.remoteManifest=remote.manifest;state.remoteManifestRaw=remote.manifestRaw;state.existing=remote.loud;$('#target').value=remote.catalog.targetLufs;}
+function renderEditor(){if(!state.catalog)return;$('#metadataEditor').innerHTML='<table><thead><tr><th>노출</th><th>곡 폴더</th><th>난이도별 레벨</th></tr></thead><tbody>'+state.catalog.songs.map((s,i)=>`<tr><td><input type="checkbox" data-entry="${i}" data-enabled ${s.enabled!==false?'checked':''}></td><td>${esc(s.directory)}</td><td style="display:flex;flex-wrap:wrap;gap:8px">${[...new Set([...Object.keys(s.levels),'expert','master','remaster'])].map(k=>`<label>${esc(k)}<input type="number" style="width:85px" min="0.1" max="99.9" step="0.1" data-entry="${i}" data-level="${esc(k)}" value="${s.levels[k]??''}"></label>`).join('')}</td></tr>`).join('')+'</tbody></table>';$('#metadataEditor').querySelectorAll('input').forEach(el=>el.onchange=()=>{const song=state.catalog.songs[Number(el.dataset.entry)];if(el.hasAttribute('data-enabled'))song.enabled=el.checked;else{const n=el.value===''?null:Number(el.value);if(n!==null&&(!Number.isFinite(n)||n<=0||n>=100)){alert('레벨은 0보다 크고 100보다 작은 숫자여야 합니다.');renderEditor();return;}song.levels[el.dataset.level]=n;}refreshOutputs();});}
+function buildCatalog(){buildLoudness();const c=structuredClone(state.catalog);c.targetLufs=target();c.updatedAt=new Date().toISOString();for(const s of c.songs){if(state.result.songs[s.directory])s.loudness={...s.loudness,...state.result.songs[s.directory]};if(Number.isFinite(s.loudness?.lufs))s.loudness.gainDb=+(c.targetLufs-s.loudness.lufs).toFixed(2);}return validateCatalog(c);}
+function outputFiles(){const catalog=buildCatalog();return [{name:'library.json',text:JSON.stringify(catalog,null,2)+'\n',type:'application/json',note:`${catalog.songs.filter(s=>s.enabled!==false).length}곡 노출 · 목록/난이도/음량 통합`},{name:state.script.name,text:state.script.text,type:'text/plain',note:'리소스 업로드 후 통합 JSON 갱신'}];}
+function refreshOutputs(){if(!state.catalog||state.busy)return;try{const bat=$('#scriptType').value==='bat',parts=[$('#bucket').value,$('#prefix').value,...state.items.filter(x=>x.check?.ok).map(x=>x.dir)];if(bat&&parts.some(p=>/[&|<>()"%\r\n^]/.test(p)))throw Error('특수문자가 있는 폴더는 macOS · Linux (.sh) 스크립트를 사용하세요.');if(!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test($('#bucket').value.trim()))throw Error('버킷 이름을 확인하세요.');buildScript();const files=outputFiles();$('#outputs').innerHTML=files.map(f=>`<details><summary><b>${esc(f.name)}</b><span>${esc(f.note)}</span><button type="button" data-download="${esc(f.name)}">내려받기</button></summary><textarea readonly>${esc(f.text)}</textarea></details>`).join('');$('#outputs').querySelectorAll('[data-download]').forEach(b=>b.onclick=e=>{e.preventDefault();download(outputFiles().find(f=>f.name===b.dataset.download));});$('#downloadAll').hidden=false;$('#steps').innerHTML='<li>두 파일을 level 폴더에 내려받습니다.</li><li>처음 한 번 <code>npx wrangler login</code>으로 로그인합니다.</li><li>업로드 스크립트를 실행합니다. 곡 리소스에 성공한 뒤 마지막에 <code>library.json</code>을 갱신합니다.</li><li>게임을 새로 고칩니다. 기존 세 JSON 파일은 더 이상 갱신할 필요가 없습니다.</li>';render();}catch(e){$('#outputs').textContent=e.message;$('#downloadAll').hidden=true;}}
+function setBusy(on){state.busy=on;for(const id of ['runLocal','runR2','measureAll','target','root','bucket','prefix','scriptType','forceAll','keepMissing','downloadAll'])$('#'+id).disabled=on;$('#metadataEditor').querySelectorAll('input').forEach(el=>el.disabled=on);$('#progressNote').textContent=on?'작업 중… 창을 닫지 마세요.':'';if(on){$('#outputs').innerHTML='';$('#downloadAll').hidden=true;}}
+function startRun(mode){state.mode=mode;state.items=[];state.result=null;state.script=null;state.removed=0;state.keepOthers=null;state.catalog=null;$('#metadataEditor').innerHTML='';$('#outputs').innerHTML='';$('#steps').innerHTML='';$('#downloadAll').hidden=true;setBusy(true);render();}
+async function sha(buffer){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',buffer))].map(x=>x.toString(16).padStart(2,'0')).join('');}
+async function diffUploads(item){item.uploadState='checking';render();item.upload=[];for(const name of Object.keys(item.files).filter(n=>GAME_FILES[n])){let same=false;try{const r=await fetch(`${root()}/${encodeURIComponent(item.dir)}/${name}`,{cache:'no-store'});same=r.ok&&await sha(await r.arrayBuffer())===await sha(await item.files[name].arrayBuffer());}catch{}if(!same)item.upload.push(name);}item.uploadState='done';render();}
+function remoteItems(){const url=dir=>`${root()}/${encodeURIComponent(dir)}/track.mp3`,info=r=>({bytes:Number(r.headers.get('content-length'))||null,etag:r.headers.get('etag')||null});return state.catalog.songs.filter(s=>s.enabled!==false).map(s=>({dir:s.directory,status:'wait',info:async()=>{const r=await fetch(url(s.directory),{method:'HEAD',cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return info(r);},load:async()=>{const r=await fetch(url(s.directory),{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);const buffer=await r.arrayBuffer();return {buffer,info:{...info(r),bytes:buffer.byteLength}};}}));}
+$('#runR2').onclick=async()=>{startRun('r2');try{acceptRemote(await fetchRemote());state.keepOthers=state.existing.songs;state.result={};}catch(e){alert(e.message);}finally{setBusy(false);renderEditor();if(state.catalog)refreshOutputs();}};
+$('#measureAll').onclick=async()=>{if(!state.catalog)return;const previousMode=state.mode,previousItems=state.items;setBusy(true);try{state.mode='r2';state.items=remoteItems();await pool(state.items,x=>measureItem(x,$('#forceAll').checked));const measured=buildCatalog();state.catalog=measured;state.existing={songs:Object.fromEntries(measured.songs.map(s=>[s.directory,s.loudness]))};state.keepOthers=state.existing.songs;}catch(e){alert(e.message);}finally{if(previousMode==='local'){state.mode=previousMode;state.items=previousItems;}setBusy(false);renderEditor();refreshOutputs();}};
+$('#runLocal').onclick=()=>$('#folder').click();
+$('#folder').onchange=async e=>{const files=[...e.target.files];e.target.value='';const dirs=new Map();for(const f of files){const p=(f.webkitRelativePath||'').split('/');if(p.length!==3)continue;if(!dirs.has(p[1]))dirs.set(p[1],{});dirs.get(p[1])[p[2]]=f;}if(!dirs.size){alert('곡 폴더들의 바로 위 폴더를 선택하세요.');return;}startRun('local');try{acceptRemote(await fetchRemote());state.items=[...dirs].map(([dir,f])=>({dir,files:f,status:'wait',info:async()=>({bytes:f['track.mp3'].size,sha256:await sha(await f['track.mp3'].arrayBuffer())}),load:async()=>{const buffer=await f['track.mp3'].arrayBuffer();return {buffer,info:{bytes:buffer.byteLength,sha256:await sha(buffer)}};}}));for(const x of state.items)await checkSong(x);const errors=state.items.filter(x=>!x.check.ok);if(errors.length)throw Error(errors.map(x=>`${x.dir}: ${x.check.errors.join(', ')}`).join('\n'));for(const x of state.items){let entry=state.catalog.songs.find(s=>s.directory===x.dir);if(!entry){entry={directory:x.dir,enabled:true,levels:{},loudness:null};state.catalog.songs.push(entry);}const chart=await x.files['maidata.txt'].text();for(const m of chart.matchAll(/^\s*&lv_(\d+)=(.*)$/gm)){const k=({1:'easy',2:'basic',3:'advanced',4:'expert',5:'master',6:'remaster'})[m[1]]||m[1],raw=m[2].trim();if(!Object.hasOwn(entry.levels,k))entry.levels[k]=/^\d+(?:\.\d+)?$/.test(raw)?Number(raw):null;}}
+ if(!$('#keepMissing').checked)for(const s of state.catalog.songs)if(!dirs.has(s.directory))s.enabled=false;
+ state.keepOthers=state.existing.songs;await pool(state.items,x=>measureItem(x,$('#forceAll').checked));await pool(state.items,diffUploads,4);state.result={};
+ }catch(e){state.catalog=null;alert(e.message);}finally{setBusy(false);renderEditor();render();if(state.catalog)refreshOutputs();}};
+for(const id of ['#target','#bucket','#prefix','#scriptType'])$(id).addEventListener('change',refreshOutputs);
+$('#downloadAll').onclick=()=>outputFiles().forEach((f,i)=>setTimeout(()=>download(f),i*400));
+render();
+
+</script>
+</body>
+</html>
